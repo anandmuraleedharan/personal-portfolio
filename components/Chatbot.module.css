@@ -22,7 +22,7 @@
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   border: none;
-  color: #ffffff;
+  color: var(--heading-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
 
 .launcherActive {
   background: #1f2937;
-  color: #ffffff;
+  color: var(--heading-color);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
@@ -48,7 +48,7 @@
   top: -4px;
   right: -4px;
   background-color: var(--secondary);
-  color: #ffffff;
+  color: var(--heading-color);
   font-size: 0.7rem;
   font-weight: 700;
   width: 18px;
@@ -115,7 +115,7 @@
 .botName {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .botStatus {
@@ -139,7 +139,7 @@
 
 .headerBtn:hover {
   background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .chatMessages {
@@ -199,7 +199,7 @@
 
 .userRow .messageBubble {
   background: linear-gradient(135deg, #0891b2 0%, var(--primary) 100%);
-  color: #ffffff;
+  color: var(--heading-color);
   border-bottom-right-radius: 2px;
 }
 
@@ -240,7 +240,7 @@
 .suggestionTag {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-color);
-  color: #ffffff;
+  color: var(--heading-color);
   font-size: 0.75rem;
   padding: 0.25rem 0.6rem;
   border-radius: 99px;
@@ -269,7 +269,7 @@
   border: 1px solid var(--border-color);
   padding: 0.6rem 1rem;
   border-radius: 99px;
-  color: #ffffff;
+  color: var(--heading-color);
   font-size: 0.85rem;
   outline: none;
 }
@@ -284,7 +284,7 @@
   border-radius: 50%;
   background: var(--primary);
   border: none;
-  color: #ffffff;
+  color: var(--heading-color);
   display: flex;
   align-items: center;
   justify-content: center;

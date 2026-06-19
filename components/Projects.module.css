@@ -81,7 +81,7 @@
 .impactVal {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .tagsContainer {

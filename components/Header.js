@@ -1,19 +1,39 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
-import { Terminal, Menu, X } from "lucide-react";
+import { Terminal, Menu, X, Sun, Moon } from "lucide-react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
+    
+    // Load theme from localStorage on mount
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+    if (savedTheme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  };
 
   // Custom Inline SVG Icons for Brands (removed in newer lucide-react versions)
   const GithubIcon = ({ size }) => (
@@ -54,6 +74,9 @@ export default function Header() {
 
         {/* Social Icons */}
         <div className={styles.socials}>
+          <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle Theme">
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
           <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <GithubIcon size={20} />
           </a>
@@ -87,6 +110,9 @@ export default function Header() {
               Interview AI
             </button>
             <div className={styles.mobileSocials}>
+              <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle Theme">
+                {theme === "dark" ? <Sun size={22} /> : <Moon size={22} />}
+              </button>
               <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer">
                 <GithubIcon size={22} />
               </a>

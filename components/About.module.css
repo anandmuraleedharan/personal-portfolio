@@ -38,7 +38,7 @@
 }
 
 .bio strong {
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 /* Education Styles */
@@ -72,7 +72,7 @@
 .eduDegree {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
   margin-bottom: 0.25rem;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .eduHighlights strong {
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 /* Certifications Styles */
@@ -116,7 +116,7 @@
 .certTitle {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .certMeta {
@@ -166,7 +166,7 @@
 }
 
 .skillName {
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .skillLevel {

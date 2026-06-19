@@ -51,7 +51,7 @@
 
 .timelineItem:hover .timelineDot {
   border-color: var(--primary);
-  color: #ffffff;
+  color: var(--heading-color);
   box-shadow: 0 0 15px var(--primary-glow);
 }
 
@@ -96,7 +96,7 @@
 .roleTitle {
   font-size: 1.35rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .tag {
@@ -130,7 +130,7 @@
 
 .companyName {
   font-weight: 600;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .divider {
@@ -160,7 +160,7 @@
 }
 
 .expandButton:hover {
-  color: #ffffff;
+  color: var(--heading-color);
   transform: scale(1.1);
 }
 
@@ -222,7 +222,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1.1rem;
-  color: #ffffff;
+  color: var(--heading-color);
   margin-bottom: 1rem;
   font-weight: 700;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -301,7 +301,7 @@
 .subRoleTitle {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .subRolePeriod {
@@ -375,7 +375,7 @@
 .clientName {
   font-size: 1rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
   margin: 0;
 }
 

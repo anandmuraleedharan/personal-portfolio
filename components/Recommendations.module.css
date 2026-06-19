@@ -48,7 +48,7 @@
 .navButton:hover {
   border-color: var(--primary);
   background: var(--primary-glow);
-  color: #ffffff;
+  color: var(--heading-color);
   transform: scale(1.05);
 }
 
@@ -81,7 +81,7 @@
 .userName {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .userTitle {

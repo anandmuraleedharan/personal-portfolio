@@ -20,7 +20,7 @@
   font-size: 1.4rem;
   font-weight: 600;
   margin: 0;
-  color: #fff;
+  color: var(--heading-color);
   letter-spacing: -0.3px;
 }
 
@@ -31,7 +31,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 1.2rem;
-  color: #fff;
+  color: var(--heading-color);
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.6;
@@ -85,7 +85,7 @@
 .loadingTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--heading-color);
   margin: 0 0 1.5rem 0;
 }
 
@@ -198,7 +198,7 @@
 .gaugeScore {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--heading-color);
   line-height: 1;
 }
 
@@ -217,7 +217,7 @@
 .resultTitle {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--heading-color);
   margin: 0 0 0.5rem 0;
   letter-spacing: -0.3px;
 }
@@ -251,7 +251,7 @@
 .analysisCard h4 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--heading-color);
   margin: 0 0 1rem 0;
   display: flex;
   align-items: center;
@@ -290,7 +290,7 @@
 .projectsCard h4 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--heading-color);
   margin: 0 0 1.2rem 0;
   display: flex;
   align-items: center;
