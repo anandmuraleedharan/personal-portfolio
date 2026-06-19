@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Hero.module.css";
-import { MessageSquare, ArrowDown, Database, Cpu, HardDrive } from "lucide-react";
+import { MessageSquare, Mail, Database, Cpu, HardDrive } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -27,9 +27,9 @@ export default function Hero() {
             <a href="/resume?print=true" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}>
               <span>Download A4 Resume</span>
             </a>
-            <a href="#experience" className="btn btn-secondary">
-              <span>View Experience</span>
-              <ArrowDown size={18} />
+            <a href="mailto:anand.muraleedharan@gmail.com" className="btn btn-secondary">
+              <Mail size={18} />
+              <span>Email Anand</span>
             </a>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import About from "../components/About";
+import DrivesMe from "../components/DrivesMe";
 import Experience from "../components/Experience";
 import Projects from "../components/Projects";
 import RecruiterAgent from "../components/RecruiterAgent";
@@ -21,6 +22,9 @@ export default function Home() {
 
         {/* Bio, Education and Certifications */}
         <About />
+
+        {/* Core Principles (What Drives Me) */}
+        <DrivesMe />
 
         {/* Chronological Work Timeline */}
         <Experience />
@@ -58,6 +62,7 @@ export default function Home() {
             Built with Next.js and Vanilla CSS. Hosted on anandmuraleedharan.com
           </p>
           <div className="footer-links" style={{ display: "flex", gap: "1.5rem" }}>
+            <a href="mailto:anand.muraleedharan@gmail.com">Email</a>
             <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/anand-muraleedharan/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>

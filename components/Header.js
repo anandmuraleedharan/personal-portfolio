@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
-import { Terminal, Menu, X, Sun, Moon } from "lucide-react";
+import { Terminal, Menu, X, Sun, Moon, Mail } from "lucide-react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -77,6 +77,9 @@ export default function Header() {
           <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle Theme">
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
+          <a href="mailto:anand.muraleedharan@gmail.com" aria-label="Email">
+            <Mail size={20} />
+          </a>
           <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <GithubIcon size={20} />
           </a>
@@ -113,6 +116,9 @@ export default function Header() {
               <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle Theme">
                 {theme === "dark" ? <Sun size={22} /> : <Moon size={22} />}
               </button>
+              <a href="mailto:anand.muraleedharan@gmail.com" aria-label="Email">
+                <Mail size={22} />
+              </a>
               <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer">
                 <GithubIcon size={22} />
               </a>
