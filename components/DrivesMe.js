@@ -1,29 +1,29 @@
 "use client";
 import React from "react";
 import styles from "./DrivesMe.module.css";
-import { Code, Rocket, Users, Award } from "lucide-react";
+import { Cpu, ShieldCheck, TrendingUp, Users } from "lucide-react";
 
 export default function DrivesMe() {
   const principles = [
     {
-      icon: <Code size={28} className={styles.icon} />,
-      title: "Clean Code",
-      description: "Writing maintainable, scalable, and well-documented code that stands the test of time."
+      icon: <Cpu size={28} className={styles.icon} />,
+      title: "Navigating Ambiguity",
+      description: "Thriving in complex environments, designing simple and reliable data architectures out of unstructured business requirements."
     },
     {
-      icon: <Rocket size={28} className={styles.icon} />,
-      title: "Innovation",
-      description: "Constantly exploring new technologies and methodologies to deliver cutting-edge solutions."
+      icon: <ShieldCheck size={28} className={styles.icon} />,
+      title: "Extreme Ownership",
+      description: "Taking full end-to-end accountability for project execution, maintaining transparency, and delivering under pressure."
+    },
+    {
+      icon: <TrendingUp size={28} className={styles.icon} />,
+      title: "Rapid Adaptability",
+      description: "Constantly expanding my technical capabilities, learning on the fly, and quickly scaling up to master new data frameworks."
     },
     {
       icon: <Users size={28} className={styles.icon} />,
-      title: "Collaboration",
-      description: "Building strong teams and fostering an environment of knowledge sharing and growth."
-    },
-    {
-      icon: <Award size={28} className={styles.icon} />,
-      title: "Excellence",
-      description: "Committed to delivering high-quality work that exceeds expectations and creates value."
+      title: "Value-Driven Collaboration",
+      description: "Fostering team growth, maintaining proactive communications, and bridging complex pipelines with direct stakeholder value."
     }
   ];
 
