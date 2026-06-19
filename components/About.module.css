@@ -1,0 +1,191 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.titleIcon {
+  color: var(--primary);
+}
+
+.bio {
+  color: var(--foreground-muted);
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.bio strong {
+  color: #ffffff;
+}
+
+/* Education Styles */
+.educationItem {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--border-color);
+}
+
+.educationItem::after {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.year {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.eduDegree {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.school {
+  color: var(--foreground-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.eduHighlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: var(--foreground-muted);
+}
+
+.eduHighlights strong {
+  color: #ffffff;
+}
+
+/* Certifications Styles */
+.certsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.certItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.certIcon {
+  color: var(--secondary);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.certTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.certMeta {
+  font-size: 0.85rem;
+  color: var(--foreground-muted);
+}
+
+/* Skills Column Styles */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.skillGroupCard {
+  background: rgba(17, 24, 39, 0.3) !important;
+}
+
+.groupHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.groupIcon {
+  color: var(--primary);
+}
+
+.skillsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.skillItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.skillMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.skillName {
+  color: #ffffff;
+}
+
+.skillLevel {
+  color: var(--foreground-muted);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 1s ease-in-out;
+}

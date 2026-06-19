@@ -1,0 +1,432 @@
+.timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.timelineItem {
+  display: flex;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .timelineItem {
+    flex-direction: column;
+  }
+}
+
+/* Marker (Line & Dot) */
+.timelineMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .timelineMarker {
+    flex-direction: row;
+    margin-right: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}
+
+.timelineDot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-main);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  transition: var(--transition-smooth);
+}
+
+.timelineItem:hover .timelineDot {
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.timelineLine {
+  width: 2px;
+  flex-grow: 1;
+  background: var(--border-color);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .timelineLine {
+    display: none;
+  }
+}
+
+/* Content Card */
+.timelineContent {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.roleRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.roleTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  font-family: var(--font-mono);
+}
+
+.tagFulltime {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: var(--secondary);
+}
+
+.tagConsultant {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: var(--accent);
+}
+
+.companyRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  color: var(--foreground-muted);
+  font-size: 0.95rem;
+}
+
+.companyName {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.divider {
+  color: var(--foreground-dim);
+}
+
+.metaText {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.metaIcon {
+  color: var(--foreground-dim);
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  color: var(--foreground-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.expandButton:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.cardBody {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--foreground-muted);
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+
+.bulletList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bulletList li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+}
+
+.bulletList li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Consulting Clients Layout */
+.clientsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-top: 1.5rem;
+}
+
+.clientSection {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 1.25rem;
+  border-radius: 12px;
+}
+
+.clientName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.5rem;
+}
+
+.clientIcon {
+  color: var(--primary);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sub Timeline Styles */
+.subTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.subTimelineItem {
+  display: flex;
+  position: relative;
+}
+
+.subMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.25rem;
+  flex-shrink: 0;
+}
+
+.subDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-main);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  z-index: 5;
+}
+
+.subLine {
+  width: 2px;
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.08);
+  margin-top: 0.25rem;
+  margin-bottom: -1.75rem; /* Extends line to next dot */
+}
+
+.subContent {
+  flex-grow: 1;
+  padding-bottom: 0.5rem;
+}
+
+.subRoleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subRoleTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.subRolePeriod {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--foreground-muted);
+}
+
+.subRoleDetails {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.subRoleDetails li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: var(--foreground-muted);
+  line-height: 1.4;
+}
+
+.subRoleDetails li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Client Project Cards */
+.clientProjectCard {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-fast);
+}
+
+.clientProjectCard:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+  border-left-color: var(--secondary);
+}
+
+.clientProjectHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.clientBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(0, 242, 254, 0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.clientName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.clientPeriod {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+  margin-left: auto;
+}
+
+.clientRoleName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+.clientProjectDetails {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.clientProjectDetails li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+  color: var(--foreground-muted);
+  line-height: 1.4;
+}
+
+.clientProjectDetails li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+.clientSkills, .roleSkills {
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.35rem 0.60rem;
+  border-radius: 6px;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.clientSkills strong, .roleSkills strong {
+  color: var(--accent);
+}

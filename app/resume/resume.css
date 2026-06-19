@@ -1,0 +1,403 @@
+/* Resume Styling - Zety Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --zety-blue: #0f4c81;
+  --zety-text-dark: #333333;
+  --zety-text-light: #666666;
+  --zety-bg-light: #f4f4f6;
+  --zety-border: #dcdcdc;
+  --zety-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.screenControls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #111;
+  border-bottom: 1px solid #222;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.controlBtn {
+  background: var(--zety-blue);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--zety-font);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(15, 76, 129, 0.3);
+  text-decoration: none;
+}
+
+.controlBtn:hover {
+  background: #0d3d68;
+}
+
+.controlBtnSecondary {
+  background: #333;
+  box-shadow: none;
+}
+
+.controlBtnSecondary:hover {
+  background: #444;
+}
+
+.resumeContainer {
+  background: #2a2a2a;
+  min-height: 100vh;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+/* Page base styled exactly as A4 */
+.resumePage {
+  width: 210mm;
+  height: 297mm;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--zety-font);
+  color: var(--zety-text-dark);
+}
+
+/* Header Banner - Deep Blue */
+.headerBanner {
+  background: var(--zety-blue);
+  color: #ffffff;
+  padding: 35px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nameTitle {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.roleTitle {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Columns container */
+.columnsContainer {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Left main column */
+.leftColumn {
+  width: 65%;
+  padding: 30px 40px 30px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Right side column */
+.rightColumn {
+  width: 35%;
+  background: var(--zety-bg-light);
+  padding: 30px 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-left: 1px solid var(--zety-border);
+}
+
+/* Section styling */
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--zety-blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0;
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--zety-blue);
+  padding-bottom: 5px;
+}
+
+.summaryText {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--zety-text-dark);
+  margin: 0;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.timelineItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jobHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.jobTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--zety-text-dark);
+  margin: 0;
+}
+
+.jobMeta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zety-blue);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.jobCompany {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zety-text-light);
+}
+
+.clientGroup {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clientHeader {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--zety-blue);
+  margin-bottom: 2px;
+}
+
+.bulletList {
+  margin: 0;
+  padding-left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bulletList li {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--zety-text-dark);
+}
+
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skillItem {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.skillInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.skillName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zety-text-dark);
+}
+
+.skillLevel {
+  font-size: 0.72rem;
+  color: var(--zety-text-light);
+  font-style: italic;
+}
+
+.skillMeters {
+  display: flex;
+  gap: 4px;
+}
+
+.bubble {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--zety-border);
+}
+
+.bubbleFilled {
+  background: var(--zety-blue);
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contactLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--zety-text-light);
+  letter-spacing: 0.5px;
+}
+
+.contactValue {
+  font-size: 0.85rem;
+  color: var(--zety-text-dark);
+  word-break: break-all;
+}
+
+.contactValue a {
+  color: var(--zety-text-dark);
+  text-decoration: none;
+}
+
+.contactValue a:hover {
+  text-decoration: underline;
+  color: var(--zety-blue);
+}
+
+.eduHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.degreeTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--zety-text-dark);
+}
+
+.schoolMeta {
+  font-size: 0.82rem;
+  color: var(--zety-text-light);
+  display: flex;
+  justify-content: space-between;
+}
+
+.certList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.certItem {
+  font-size: 0.82rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.certName {
+  font-weight: 600;
+  color: var(--zety-text-dark);
+}
+
+.certDate {
+  font-size: 0.78rem;
+  color: var(--zety-text-light);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Page Break styling */
+.pageBreak {
+  display: none;
+}
+
+/* Printing styles */
+@media print {
+  /* Set document size */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: var(--zety-text-dark) !important;
+  }
+
+  .screenControls {
+    display: none !important;
+  }
+
+  .resumeContainer {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+  }
+
+  .resumePage {
+    margin: 0 !important;
+    box-shadow: none !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .pageBreak {
+    display: block !important;
+    page-break-before: always !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+}
