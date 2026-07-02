@@ -15,4 +15,4 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json" \
-            https://newsletter-generator-iota.vercel.app/api/cron
+            https://newsletter-generator-zeta.vercel.app/api/cron
