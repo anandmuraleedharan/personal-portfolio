@@ -1,0 +1,3 @@
+[submodule "apps/newsletter-generator"]
+	path = apps/newsletter-generator
+	url = https://github.com/anandmuraleedharan/newsletter-generator.git

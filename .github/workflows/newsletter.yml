@@ -1,0 +1,18 @@
+name: Scheduled Newsletter Generation
+
+on:
+  schedule:
+    # Run daily at 11:00 UTC (6:00 AM Central)
+    - cron: '0 11 * * *'
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  trigger-newsletter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Serverless Newsletter Pipeline
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            https://newsletter-generator-iota.vercel.app/api/cron

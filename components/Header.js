@@ -61,10 +61,11 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className={styles.nav}>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
+          <a href="/#about">About</a>
+          <a href="/#skills">Skills</a>
+          <a href="/#experience">Experience</a>
+          <a href="/#projects">Projects</a>
+          <a href="/apps">Apps</a>
           <a href="/resume?print=true" target="_blank" rel="noopener noreferrer" className={styles.resumeLink}>Resume PDF</a>
           <button onClick={() => window.dispatchEvent(new CustomEvent("portfolio-chat:open"))} className={styles.chatLink}>
             <span>Interview AI</span>
@@ -102,10 +103,11 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <nav className={styles.mobileNav}>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="#skills" onClick={() => setMobileMenuOpen(false)}>Skills</a>
-            <a href="#experience" onClick={() => setMobileMenuOpen(false)}>Experience</a>
-            <a href="#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a>
+            <a href="/#about" onClick={() => setMobileMenuOpen(false)}>About</a>
+            <a href="/#skills" onClick={() => setMobileMenuOpen(false)}>Skills</a>
+            <a href="/#experience" onClick={() => setMobileMenuOpen(false)}>Experience</a>
+            <a href="/#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a>
+            <a href="/apps" onClick={() => setMobileMenuOpen(false)}>Apps</a>
             <a href="/resume?print=true" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={() => setMobileMenuOpen(false)}>
               Resume PDF
             </a>
