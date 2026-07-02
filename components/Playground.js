@@ -13,6 +13,15 @@ export default function Playground() {
       url: "https://newsletter.anandmuraleedharan.com",
       icon: <Mail size={22} className={styles.iconBlue} />,
       status: "Active"
+    },
+    {
+      title: "CogPoker",
+      subtitle: "AI-Era Story Pointing",
+      description: "A real-time, stateless estimation poker platform that shifts focus to cognitive/architectural uncertainty using factor sliders and active peer AI estimators.",
+      badges: ["Next.js 16", "Supabase Realtime", "Gemini 2.5", "Tailwind CSS"],
+      url: "https://poker.anandmuraleedharan.com",
+      icon: <Cpu size={22} className={styles.iconViolet || styles.iconBlue} />,
+      status: "Active"
     }
   ]);
 
@@ -20,11 +29,15 @@ export default function Playground() {
     if (typeof window !== "undefined") {
       const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
       if (isLocal) {
-        setAppsData(prev => prev.map(app => 
-          app.title === "The Daily Read" 
-            ? { ...app, url: "http://localhost:3001" } 
-            : app
-        ));
+        setAppsData(prev => prev.map(app => {
+          if (app.title === "The Daily Read") {
+            return { ...app, url: "http://localhost:3001" };
+          }
+          if (app.title === "CogPoker") {
+            return { ...app, url: "http://localhost:3002" };
+          }
+          return app;
+        }));
       }
     }
   }, []);
