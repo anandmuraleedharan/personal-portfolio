@@ -1,3 +1,6 @@
 [submodule "apps/newsletter-generator"]
 	path = apps/newsletter-generator
 	url = https://github.com/anandmuraleedharan/newsletter-generator.git
+[submodule "apps/cogpoker"]
+	path = apps/cogpoker
+	url = ./apps/cogpoker
