@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Playground.module.css";
-import { Sparkles, ArrowUpRight, Cpu, Mail } from "lucide-react";
+import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare } from "lucide-react";
 
 export default function Playground() {
   const [appsData, setAppsData] = React.useState([
@@ -22,6 +22,15 @@ export default function Playground() {
       url: "https://poker.anandmuraleedharan.com",
       icon: <Cpu size={22} className={styles.iconViolet || styles.iconBlue} />,
       status: "Active"
+    },
+    {
+      title: "DeltaForge",
+      subtitle: "Stateless Diff Workspace",
+      description: "A premium, stateless code comparison and diff alignment workspace. Highlights inline and split differences at character level, featuring gzip-compressed sharing URLs.",
+      badges: ["Next.js 16", "Tailwind CSS v4", "TypeScript", "CompressionStream"],
+      url: "https://diff.anandmuraleedharan.com",
+      icon: <GitCompare size={22} className={styles.iconGreen} />,
+      status: "Active"
     }
   ]);
 
@@ -35,6 +44,9 @@ export default function Playground() {
           }
           if (app.title === "CogPoker") {
             return { ...app, url: "http://localhost:3002" };
+          }
+          if (app.title === "DeltaForge") {
+            return { ...app, url: "http://localhost:3003" };
           }
           return app;
         }));
