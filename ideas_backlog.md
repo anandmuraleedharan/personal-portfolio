@@ -35,7 +35,8 @@ This backlog records potential future projects and micro-apps discussed with Ant
   * **Gamification:** Streak tracking, xp rewards, and level-up popups.
 * **Architecture Constraints:**
   * Curriculum and audio references stored in client-side JSON maps.
-  * Audio recordings pre-compiled to tiny WebM/MP3 formats and hosted on free CDNs or static assets.
+  * Audio recordings pre-compiled to tiny WebM/MP3 formats and hosted as static assets or powered via browser Web Speech TTS API.
+  * User progression (streaks, unlocked levels, XP, hearts) saved entirely in browser `localStorage` to guarantee 100% database-free, zero-cost, and instant-start execution.
 
 ---
 
