@@ -61,3 +61,17 @@ This backlog records potential future projects and micro-apps discussed with Ant
   * Client-side stream chunking for large log files (up to 100MB) without freezing the UI thread.
   * High-speed Canvas rendering for thousands of trace blocks.
 
+---
+
+## 5. InterviewForge (AI-Powered Interview Coach & Prep Suite)
+* **The Concept:** An interactive workspace designed to help candidates prepare for job interviews. It acts as a mock interviewer, behavioral story builder, and salary negotiation sandbox.
+* **Key Features & Ideation:**
+  * **Interactive AI Mock Interviewer:** Users upload a target job description and their CV. The AI asks tailored behavioral or technical questions (using voice-to-text or typing) and grades their responses.
+  * **The STAR Reformatter:** Helps users structure their past project accomplishments into the STAR method (Situation, Task, Action, Result), auto-summarizing raw notes into polished interview talk-tracks.
+  * **Interview Cheat-Sheet Generator:** Produces a downloadable "one-pager" summarizing the target company, 5 key questions to expect, and 5 highly strategic questions to ask the interviewer.
+  * **Salary Negotiation Simulator:** An interactive text sandbox where candidates practice negotiation strategies against an AI recruiter with anchor boundaries.
+* **Architecture Constraints:**
+  * Uses Gemini API for audio-to-text evaluation and structured grading feedback.
+  * Stores user practice stories and history locally in `localStorage` for privacy.
+
+
