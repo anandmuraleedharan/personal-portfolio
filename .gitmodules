@@ -4,6 +4,6 @@
 [submodule "apps/cogpoker"]
 	path = apps/cogpoker
 	url = ./apps/cogpoker
-[submodule "apps/diffchecker"]
-	path = apps/diffchecker
-	url = https://github.com/anandmuraleedharan/deltaforge.git
+[submodule "apps/codeforge"]
+	path = apps/codeforge
+	url = https://github.com/anandmuraleedharan/codeforge.git

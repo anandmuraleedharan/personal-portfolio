@@ -24,11 +24,11 @@ export default function Playground() {
       status: "Active"
     },
     {
-      title: "DeltaForge",
-      subtitle: "Stateless Diff Workspace",
-      description: "A premium, stateless code comparison and diff alignment workspace. Highlights inline and split differences at character level, featuring gzip-compressed sharing URLs.",
+      title: "CodeForge",
+      subtitle: "Developer Utility Suite",
+      description: "A premium, stateless developer utility workspace featuring side-by-side code diffing, multi-format syntax validators (JSON/XML/YAML/HTML/CSS), and interactive cron builders.",
       badges: ["Next.js 16", "Tailwind CSS v4", "TypeScript", "CompressionStream"],
-      url: "https://diff.anandmuraleedharan.com",
+      url: "https://codeforge.anandmuraleedharan.com",
       icon: <GitCompare size={22} className={styles.iconGreen} />,
       status: "Active"
     }
@@ -45,7 +45,7 @@ export default function Playground() {
           if (app.title === "CogPoker") {
             return { ...app, url: "http://localhost:3002" };
           }
-          if (app.title === "DeltaForge") {
+          if (app.title === "CodeForge") {
             return { ...app, url: "http://localhost:3003" };
           }
           return app;

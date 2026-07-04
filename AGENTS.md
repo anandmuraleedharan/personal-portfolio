@@ -8,13 +8,13 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Workspace Context
 - **Workspace Location:** `/Users/anandmuraleedharan/.gemini/antigravity/scratch/personal-portfolio`
-- **Structure:** Monorepo using Git Submodules located in the `apps/` directory (e.g., `apps/newsletter-generator`, `apps/cogpoker`, `apps/diffchecker`).
+- **Structure:** Monorepo using Git Submodules located in the `apps/` directory (e.g., `apps/newsletter-generator`, `apps/cogpoker`, `apps/codeforge`).
 - **Core Stack:** Next.js (App Router), TypeScript, Tailwind CSS, local/edge Supabase Realtime, Gemini API, OpenRouter fallback.
 - **Port Allocation Mappings:**
   - Port `3000`: Main Portfolio App (`personal-portfolio` root)
   - Port `3001`: Newsletter App (`apps/newsletter-generator`)
   - Port `3002`: CogPoker App (`apps/cogpoker`)
-  - Port `3003`: DiffChecker App (`apps/diffchecker`)
+  - Port `3003`: CodeForge App (`apps/codeforge`)
 
 ## Backend & Cost Philosophy ("Minimal Backend, No-Money")
 - **Zero-DB / Stateless Lifecycles:** Prefer ephemeral, client-side, or in-memory synchronization (e.g., Supabase Realtime Channels Broadcast + Presence, localStorage) over persistent databases. Avoid database bloat, regulatory storage tracking, or servers that accrue monthly charges.
