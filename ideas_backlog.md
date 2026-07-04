@@ -48,3 +48,16 @@ This backlog records potential future projects and micro-apps discussed with Ant
 * **Architecture Constraints:**
   * Statical pages compiled via Next.js for sub-second SEO.
   * Code blocks highlighted with Prism/Shiki client-side.
+
+---
+
+## 4. TraceForge (Structured Log & Flamegraph Analyzer)
+* **The Concept:** A high-performance, offline developer utility to analyze structured JSON logs (e.g. OpenTelemetry runs, dbt logs, Winston logs, AWS CloudWatch dumps) and visualize them in trace graphs.
+* **Key Features:**
+  * **Flamegraphs & Timelines:** Renders execution trace trees dynamically using Canvas, highlighting performance bottlenecks and execution blocks.
+  * **Diagnostics:** Automatically parses stack traces, loops, and database queries, highlighting latency anomalies.
+  * **Privacy Sandbox:** Performs all calculations entirely inside the user's browser, preventing sensitive corporate log data from being uploaded to any cloud server.
+* **Architecture Constraints:**
+  * Client-side stream chunking for large log files (up to 100MB) without freezing the UI thread.
+  * High-speed Canvas rendering for thousands of trace blocks.
+
