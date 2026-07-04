@@ -762,9 +762,126 @@ export default function ArchitecturePage() {
               </div>
             </div>
 
+            {/* Zero-Cost Stack Section */}
+            <div className={styles.stackSection}>
+              <div className={styles.stackHeader}>
+                <h2 className={styles.stackTitle}>Zero-Cost Tech Stack ($0/month)</h2>
+                <p className={styles.stackSubtitle}>
+                  How this entire portfolio ecosystem is engineered to run on serverless free tiers and native web APIs.
+                </p>
+              </div>
+
+              <div className={styles.stackGrid}>
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Layers size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Next.js & Vercel</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Application framework & Serverless edge hosting. Handles static prerendering and runs secure API proxy routes with zero cold starts.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Cpu size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Gemini API</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Advanced reasoning, estimation scoring, and profile Q&A using the Google AI Studio developer tier (gemini-2.5-flash).
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Network size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>OpenRouter API</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Acts as our API failover route. Pools and iterates across open-weight free model endpoints (e.g. Llama 3.3 70B) in case of primary API outages.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Terminal size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>GitHub & Actions</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Code versioning, submodule mapping, and automated GitHub Actions workflow runners acting as a serverless cron triggers.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Zap size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Supabase Realtime</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Bypasses heavy database writes by utilizing active WebSocket broadcast/presence channels for instant scrum poker peer estimation sync.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Mail size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Resend API</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Serverless transactional email gateway. Dispatches daily morning AI news briefings compiled dynamically without background mail servers.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Code size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Browser Web APIs</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Leverages CompressionStream for stateless URLs, PDF.js for sandbox document parsing, and SessionStorage for custom resume state.
+                  </p>
+                </div>
+
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon}>
+                      <Cpu size={18} />
+                    </div>
+                    <span className={styles.stackCardTitle}>Antigravity</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Autonomous AI coding partner designed by Google DeepMind, orchestrating, coding, and deploying this visualizer and app suite.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
       </main>
     </div>
   );
 }
+
