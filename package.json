@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "dev:all": "concurrently \"next dev -p 3000\" \"npm run dev --prefix apps/newsletter-generator\" \"npm run dev --prefix apps/cogpoker\" \"npm run dev --prefix apps/codeforge\"",
-    "dev:apps": "concurrently \"npm run dev --prefix apps/newsletter-generator\" \"npm run dev --prefix apps/cogpoker\" \"npm run dev --prefix apps/codeforge\"",
+    "dev:all": "concurrently \"next dev -p 3000\" \"npm run dev --prefix apps/newsletter-generator\" \"npm run dev --prefix apps/cogpoker\" \"npm run dev --prefix apps/codeforge\" \"npm run dev --prefix apps/pdfforge\"",
+    "dev:apps": "concurrently \"npm run dev --prefix apps/newsletter-generator\" \"npm run dev --prefix apps/cogpoker\" \"npm run dev --prefix apps/codeforge\" \"npm run dev --prefix apps/pdfforge\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

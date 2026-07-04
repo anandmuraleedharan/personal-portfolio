@@ -7,3 +7,7 @@
 [submodule "apps/codeforge"]
 	path = apps/codeforge
 	url = https://github.com/anandmuraleedharan/codeforge.git
+[submodule "apps/pdfforge"]
+	path = apps/pdfforge
+	url = ./apps/pdfforge
+

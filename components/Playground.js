@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Playground.module.css";
-import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare } from "lucide-react";
+import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare, FileText } from "lucide-react";
 
 export default function Playground() {
   const [appsData, setAppsData] = React.useState([
@@ -31,6 +31,15 @@ export default function Playground() {
       url: "https://codeforge.anandmuraleedharan.com",
       icon: <GitCompare size={22} className={styles.iconGreen} />,
       status: "Active"
+    },
+    {
+      title: "PDFForge",
+      subtitle: "Client-Side PDF Workspace",
+      description: "A serverless, high-performance utility workspace to merge, split, reorder, encrypt, and convert PDFs, featuring client-side page rendering and a local OpenRouter AI doc assistant.",
+      badges: ["Next.js 16", "Tailwind CSS v4", "PDF-Lib", "PDF.js", "OpenRouter API"],
+      url: "https://pdf.anandmuraleedharan.com",
+      icon: <FileText size={22} className={styles.iconRed} />,
+      status: "Active"
     }
   ]);
 
@@ -48,6 +57,9 @@ export default function Playground() {
           if (app.title === "CodeForge") {
             return { ...app, url: "http://localhost:3003" };
           }
+          if (app.title === "PDFForge") {
+            return { ...app, url: "http://localhost:3004" };
+          }
           return app;
         }));
       }
@@ -58,9 +70,16 @@ export default function Playground() {
     <section id="playground" className="section">
       <div className="container">
         <h2 className="section-title">Developer Playground & AI Apps</h2>
-        <p className="section-subtitle" style={{ textAlign: "center", color: "var(--foreground-muted)", marginTop: "-1.5rem", marginBottom: "3rem" }}>
+        <p className="section-subtitle" style={{ textAlign: "center", color: "var(--foreground-muted)", marginTop: "-1.5rem", marginBottom: "2rem" }}>
           Explore interactive serverless micro-apps built as extensions of this portfolio
         </p>
+        
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "3rem" }}>
+          <a href="/architecture" className="btn btn-primary" style={{ textDecoration: "none" }}>
+            <Sparkles size={16} />
+            <span>Interactive Architecture Visualizer</span>
+          </a>
+        </div>
 
         <div className={styles.grid}>
           {appsData.map((app, i) => (

@@ -40,6 +40,11 @@
   color: #10b981;
 }
 
+.iconRed {
+  color: #ef4444;
+}
+
+
 .statusBadge {
   font-size: 0.7rem;
   font-weight: 700;

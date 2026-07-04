@@ -24,6 +24,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - If Gemini limits are hit (e.g. rate limits or quota depletion), automatically fall back to **OpenRouter free models** via standard HTTPS requests to `https://openrouter.ai/api/v1/chat/completions`.
   - Target fallback models: `meta-llama/llama-3.3-70b-instruct:free`, `google/gemma-2-9b-it:free`, etc.
 
-## Git Submodule Management
 - All apps in `apps/` must be structured as Git submodules to maintain separation of concerns while keeping them aggregated under the `personal-portfolio` repository.
+
+## Interactive Architecture Visualizer Updates
+- **Visualizer Maintenance:** Whenever a new micro-app is added to the `apps/` directory or significant architectural changes are made to any existing app, the Interactive Architecture Visualizer (`app/architecture/page.js`) must be updated. Ensure that the app metadata, design patterns list, SVG block diagrams, simulation steps, and code spotlights are updated to match the current state of the workspace.
+
 
