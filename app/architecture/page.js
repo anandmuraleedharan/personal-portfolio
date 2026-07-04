@@ -765,17 +765,20 @@ export default function ArchitecturePage() {
             {/* Zero-Cost Stack Section */}
             <div className={styles.stackSection}>
               <div className={styles.stackHeader}>
-                <h2 className={styles.stackTitle}>Zero-Cost Tech Stack ($0/month)</h2>
+                <h2 className={styles.stackTitle}>Tech Stack & Cost Breakdown</h2>
                 <p className={styles.stackSubtitle}>
-                  How this entire portfolio ecosystem is engineered to run on serverless free tiers and native web APIs.
+                  How this entire ecosystem is structured across serverless free tiers, browser-side utilities, and professional paid upgrades.
                 </p>
               </div>
 
               <div className={styles.stackGrid}>
+                {/* 1. Next.js & Vercel */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
                     <div className={styles.stackCardIcon}>
-                      <Layers size={18} />
+                      <svg viewBox="0 0 512 512" width="18" height="18" fill="currentColor">
+                        <path d="M256,48,496,464H16Z"/>
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>Next.js & Vercel</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -785,23 +788,30 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 2. Gemini AI */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <Cpu size={18} />
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(56, 189, 248, 0.05)', borderColor: 'rgba(56, 189, 248, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#38bdf8' }}>
+                        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" fill="currentColor"/>
+                      </svg>
                     </div>
-                    <span className={styles.stackCardTitle}>Gemini API</span>
-                    <span className={styles.stackCardCost}>$0</span>
+                    <span className={styles.stackCardTitle}>Gemini AI</span>
+                    <span className={styles.stackCardCost} style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.2)' }}>$20/mo</span>
                   </div>
                   <p className={styles.stackCardDesc}>
-                    Advanced reasoning, estimation scoring, and profile Q&A using the Google AI Studio developer tier (gemini-2.5-flash).
+                    Advanced reasoning, estimation scoring, and profile Q&A using the Google AI Studio developer tier (gemini-2.5-flash) backed by AI Pro context quotas.
                   </p>
                 </div>
 
+                {/* 3. OpenRouter API */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
                     <div className={styles.stackCardIcon}>
-                      <Network size={18} />
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 2v20M2 12h20M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>OpenRouter API</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -811,10 +821,14 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 4. GitHub & Actions */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
                     <div className={styles.stackCardIcon}>
-                      <Terminal size={18} />
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                        <path d="M9 18c-4.51 2-5-2-7-2" />
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>GitHub & Actions</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -824,10 +838,13 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 5. Supabase Realtime */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <Zap size={18} />
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(62, 207, 142, 0.05)', borderColor: 'rgba(62, 207, 142, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#3ecf8e' }}>
+                        <path d="M13.92 2L5 12.86h6.92L10.08 22 19 11.14h-6.92z"/>
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>Supabase Realtime</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -837,10 +854,14 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 6. Resend API */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
                     <div className={styles.stackCardIcon}>
-                      <Mail size={18} />
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>Resend API</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -850,10 +871,49 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 7. DuckDuckGo Grounding */}
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(222, 88, 51, 0.05)', borderColor: 'rgba(222, 88, 51, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#de5833' }}>
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <path d="M10 8c1.5 0 2.5 1 2.5 2H7.5c0-1 1-2 2.5-2z" fill="currentColor" />
+                      </svg>
+                    </div>
+                    <span className={styles.stackCardTitle}>DuckDuckGo Grounding</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Zero-cost fallback search context grounding, crawling DuckDuckGo to feed fresh AI headlines to The Daily Read compiler daily.
+                  </p>
+                </div>
+
+                {/* 8. Spaceship DNS */}
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(129, 140, 248, 0.05)', borderColor: 'rgba(129, 140, 248, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#818cf8' }}>
+                        <path d="M4.5 16.5c-1.5 1.25-2.5 3.5-2.5 3.5s2.25-1 3.5-2.5" />
+                        <path d="M12 2C6.5 2 2 6.5 2 12c0 2.5 1 4.5 2.5 6l11.5-11.5c-1.5-1.5-3.5-2.5-6-2.5z" />
+                        <path d="M22 2s-3 1-5 3L5.5 16.5c2 2 3 5 3 5s1-1 2.5-2.5L22 2z" />
+                      </svg>
+                    </div>
+                    <span className={styles.stackCardTitle}>Spaceship DNS</span>
+                    <span className={styles.stackCardCost} style={{ background: 'rgba(99, 102, 241, 0.1)', color: '#6366f1', borderColor: 'rgba(99, 102, 241, 0.2)' }}>$12/yr</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Domain Registrar & custom DNS subdomain mapping. Binds newsletter, cogpoker, codeforge, and pdf targets to anandmuraleedharan.com.
+                  </p>
+                </div>
+
+                {/* 9. Browser Web APIs */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
                     <div className={styles.stackCardIcon}>
-                      <Code size={18} />
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                      </svg>
                     </div>
                     <span className={styles.stackCardTitle}>Browser Web APIs</span>
                     <span className={styles.stackCardCost}>$0</span>
@@ -863,12 +923,17 @@ export default function ArchitecturePage() {
                   </p>
                 </div>
 
+                {/* 10. Antigravity 2.0 */}
                 <div className={styles.stackCard}>
                   <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <Cpu size={18} />
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(6, 182, 212, 0.05)', borderColor: 'rgba(6, 182, 212, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)' }}>
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        <path d="M2 12h20" />
+                      </svg>
                     </div>
-                    <span className={styles.stackCardTitle}>Antigravity</span>
+                    <span className={styles.stackCardTitle}>Antigravity 2.0</span>
                     <span className={styles.stackCardCost}>$0</span>
                   </div>
                   <p className={styles.stackCardDesc}>
