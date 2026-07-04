@@ -940,6 +940,50 @@ export default function ArchitecturePage() {
                     Autonomous AI coding partner designed by Google DeepMind, orchestrating, coding, and deploying this visualizer and app suite.
                   </p>
                 </div>
+
+                {/* 11. Playwright */}
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(46, 139, 87, 0.05)', borderColor: 'rgba(46, 139, 87, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#2e8b57' }}>
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                        <path d="m10 8 6 4-6 4V8z" fill="currentColor" />
+                      </svg>
+                    </div>
+                    <span className={styles.stackCardTitle}>Playwright</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    E2E integration testing framework. Simulates real-time multi-user WebSocket voting and presence sessions to verify scrum room reliability.
+                  </p>
+                </div>
+
+                {/* 12. Docker */}
+                <div className={styles.stackCard}>
+                  <div className={styles.stackCardHeader}>
+                    <div className={styles.stackCardIcon} style={{ background: 'rgba(36, 150, 237, 0.05)', borderColor: 'rgba(36, 150, 237, 0.2)' }}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#2496ed' }}>
+                        <rect x="2" y="10" width="3" height="2.5" rx="0.5" />
+                        <rect x="5.5" y="10" width="3" height="2.5" rx="0.5" />
+                        <rect x="9" y="10" width="3" height="2.5" rx="0.5" />
+                        <rect x="12.5" y="10" width="3" height="2.5" rx="0.5" />
+                        
+                        <rect x="3.75" y="7" width="3" height="2.5" rx="0.5" />
+                        <rect x="7.25" y="7" width="3" height="2.5" rx="0.5" />
+                        <rect x="10.75" y="7" width="3" height="2.5" rx="0.5" />
+                        
+                        <rect x="7.25" y="4" width="3" height="2.5" rx="0.5" />
+                        
+                        <path d="M1 13.5c0-1 .8-1.8 1.8-1.8h13.7c1.3 0 2.2-1.3 3-2.5.4-.6 1.3-.6 1.7 0 .5.8 1.1 1.7 1.8 1.7.5 0 .8.4.8.9v1.5c0 3.3-2.7 6-6 6H4.5C2.6 19.3 1 17.7 1 15.8v-2.3z" />
+                      </svg>
+                    </div>
+                    <span className={styles.stackCardTitle}>Docker</span>
+                    <span className={styles.stackCardCost}>$0</span>
+                  </div>
+                  <p className={styles.stackCardDesc}>
+                    Local infrastructure orchestrator. Runs Supabase CLI container engines locally, supporting database-free real-time WebSocket connection targets.
+                  </p>
+                </div>
               </div>
             </div>
 
