@@ -36,3 +36,25 @@ This document records the architectural standards and core principles agreed upo
 ## 5. Security & Scheduled Automation
 * **Secured API Endpoints:** All state-modifying or execution endpoints (like `/api/cron`) must be guarded by Bearer tokens checked against a serverless secret (`process.env.CRON_SECRET`).
 * **Cron via GitHub Actions:** Handle scheduled execution natively using GitHub Actions workflow schedules (`cron: '...'`) to invoke API routes rather than relying on background loop servers.
+
+---
+
+## 6. Aileron: Continuous AI Learning Flywheel
+* **Decoupled Python SDK backend**: Runs a dedicated FastAPI gateway in Python which communicates with the Next.js frontend over HTTP, separating SDK logic from the presentation layer.
+* **Storage Circuit Breaker**: Protects database storage from exceeding free-tier limits by auditing row count caps before writing. Automatically purges older trace logs to maintain database footprint under 1MB.
+* **SQL Sandbox Execution**: Executes generated SQL queries against a real database sandbox containing mock tables (`customers`, `orders`, `order_items`) to verify correctness.
+* **Flywheel Pipeline**: Mutates prompt system instructions and injects user corrections as few-shot exemplars, evaluating accuracy against a validation benchmark test suite before deployment.
+
+```mermaid
+graph TD
+    A["1. Production Usage (User NL Query)"] --> B["2. Observe & Route (TensorZero Gateway)"]
+    B --> C["3. Observe & Evaluate (Opik Trace Spans)"]
+    C --> D["4. Feedback Collection (Thumbs & Corrections)"]
+    D --> E["5. Aileron Learning Layer (Supabase / SQLite)"]
+    E --> F["6. Optimization Engine (DSPy Prompt Mutation)"]
+    F --> G["7. Evaluate & Validate (Sandbox Test Suite)"]
+    G --> H["8. Deploy Config (Promote Prompt v2)"]
+    H --> I["9. Flywheel Loop (Auto-reloaded Context)"]
+    I -.-> A
+```
+

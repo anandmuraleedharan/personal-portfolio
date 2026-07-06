@@ -40,6 +40,15 @@ export default function Playground() {
       url: "https://pdf.anandmuraleedharan.com",
       icon: <FileText size={22} className={styles.iconRed} />,
       status: "Active"
+    },
+    {
+      title: "Aileron",
+      subtitle: "Continuous AI Learning Flywheel",
+      description: "A self-improving SQL generator workspace using a Python SDK, Supabase PostgreSQL, and local SQLite. Features a flight telemetry dashboard visualising the live prompt optimization loop.",
+      badges: ["Next.js 16", "Python FastAPI", "Supabase Postgres", "SQLite DB", "OpenRouter API"],
+      url: "https://aileron.anandmuraleedharan.com",
+      icon: <Sparkles size={22} className={styles.iconCyan || styles.iconBlue} />,
+      status: "Active"
     }
   ]);
 
@@ -59,6 +68,9 @@ export default function Playground() {
           }
           if (app.title === "PDFForge") {
             return { ...app, url: "http://localhost:3004" };
+          }
+          if (app.title === "Aileron") {
+            return { ...app, url: "http://localhost:3005" };
           }
           return app;
         }));

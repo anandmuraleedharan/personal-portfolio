@@ -10,4 +10,7 @@
 [submodule "apps/pdfforge"]
 	path = apps/pdfforge
 	url = ./apps/pdfforge
+[submodule "apps/aileron"]
+	path = apps/aileron
+	url = ./apps/aileron
 

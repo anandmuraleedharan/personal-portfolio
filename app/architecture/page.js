@@ -413,7 +413,69 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return Response.json({ response: "Error." }, { status: 500 });
   }
-}`
+}
+  },
+  aileron: {
+    title: "Aileron",
+    subtitle: "Continuous AI Learning Flywheel",
+    description: "A self-improving prompt optimization and continuous feedback flywheel for SQL Generation. Uses a Python SDK backend to run natural language translations, executes query results against a sandbox SQLite database, logs traces in Supabase PostgreSQL, and mutates system prompt configurations dynamically.",
+    badges: ["Next.js 16", "Python FastAPI", "Supabase Postgres", "SQLite DB", "OpenRouter API", "TDD & Playwright"],
+    patterns: [
+      {
+        name: "Database Adapter Pattern",
+        desc: "Abstracts the database adapter layer to support a local file-based SQLite database for offline development, and a cloud-based Supabase PostgreSQL cluster for live production hosting."
+      },
+      {
+        name: "Storage Circuit Breaker",
+        desc: "Defines safe row cap thresholds (200 traces, 50 corrections) in the database write layer, auto-purging historical records to maintain a zero-cost database tier."
+      },
+      {
+        name: "DSPy Prompt Compiler Loop",
+        desc: "Extracts user corrections and formats them into system few-shot prompt exemplars, runs validation test benchmarks to compute accuracy scores, and tracks prompt version configurations."
+      }
+    ],
+    nodes: [
+      { id: 0, label: "User UI", sublabel: "SQL Sandbox", x: 50, y: 110, w: 90, h: 50 },
+      { id: 1, label: "FastAPI Route", sublabel: "/api/execute", x: 175, y: 110, w: 100, h: 50 },
+      { id: 2, label: "Supabase DB", sublabel: "Adapter Layer", x: 300, y: 50, w: 95, h: 50 },
+      { id: 3, label: "OpenRouter", sublabel: "Llama-3 Free", x: 300, y: 170, w: 95, h: 50 },
+      { id: 4, label: "Feedback/TDD", sublabel: "Correction Log", x: 425, y: 110, w: 100, h: 50 },
+      { id: 5, label: "DSPy Optimizer", sublabel: "Flywheel Compile", x: 550, y: 110, w: 110, h: 50 }
+    ],
+    links: [
+      { from: 0, to: 1, path: "M 95 110 L 175 110" },
+      { from: 1, to: 2, path: "M 225 110 L 300 50" },
+      { from: 1, to: 3, path: "M 225 110 L 300 170" },
+      { from: 2, to: 4, path: "M 395 50 L 475 110" },
+      { from: 3, to: 4, path: "M 395 170 L 475 110" },
+      { from: 4, to: 5, path: "M 475 110 L 550 110" }
+    ],
+    simulationSteps: [
+      { nodeIds: [0], activeLink: -1, status: "User inputs a natural language query in the SQL Sandbox." },
+      { nodeIds: [1], activeLink: 0, status: "Requests are dispatched to the FastAPI Python server at /execute." },
+      { nodeIds: [3], activeLink: 2, status: "Gateway calls OpenRouter requesting SQL generation from Llama 3." },
+      { nodeIds: [2], activeLink: 1, status: "Executes SQL in sandbox tables and writes trace metadata to Supabase (Circuit Breaker active)." },
+      { nodeIds: [4], activeLink: 3, status: "User rates output, logging corrections back to Supabase feedback dataset." },
+      { nodeIds: [5], activeLink: 5, status: "DSPy optimizer compiles corrections, runs benchmarks, and saves the new prompt version." }
+    ],
+    code: `# Database adapter with storage circuit breaker
+def log_trace(self, input_query, generated_sql, is_success, error_message, latency_ms, token_count, cost_usd):
+    conn = self.get_connection()
+    cursor = conn.cursor()
+    
+    # Write trace data ...
+    placeholder = "%s" if self.is_postgres else "?"
+    cursor.execute(f"""
+        INSERT INTO aileron_traces 
+        (input_query, generated_sql, is_success, error_message, latency_ms, token_count, cost_usd) 
+        VALUES ({placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder})
+    """, (input_query, generated_sql, is_success, error_message, latency_ms, token_count, cost_usd))
+    
+    conn.commit()
+    conn.close()
+    
+    # ENFORCE STORAGE SAFETY LIMITS (Circuit Breaker)
+    return self.enforce_circuit_breaker()`
   }
 };
 
@@ -563,6 +625,13 @@ export default function ArchitecturePage() {
                 <Layers size={16} />
                 <span>Personal Portfolio</span>
               </button>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'aileron' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('aileron')}
+              >
+                <Zap size={16} />
+                <span>Aileron</span>
+              </button>
             </div>
 
             {/* Main Visualizer Workspace */}
@@ -690,6 +759,9 @@ export default function ArchitecturePage() {
                           nodeClass += ` ${styles.diagramNodeFallback}`;
                         }
                         if (activeTab === 'portfolio' && (node.id === 1 || node.id === 2) && isActive) {
+                          nodeClass += ` ${styles.diagramNodeFallback}`;
+                        }
+                        if (activeTab === 'aileron' && (node.id === 2 || node.id === 3) && isActive) {
                           nodeClass += ` ${styles.diagramNodeFallback}`;
                         }
 
