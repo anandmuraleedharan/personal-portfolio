@@ -440,11 +440,62 @@
   margin: 0 auto;
 }
 
-.stackGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+.marqueeContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  /* Dual fade mask at the edges */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  padding: 1rem 0;
+}
+
+.marqueeRow {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marqueeTrack {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Pause the animation on hover */
+.marqueeRow:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+.scrollLeft {
+  animation: scrollLeft 45s linear infinite;
+}
+
+.scrollRight {
+  animation: scrollRight 45s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .stackCard {
@@ -458,6 +509,8 @@
   gap: 0.75rem;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  width: 320px;
+  flex-shrink: 0;
 }
 
 .stackCard:hover {

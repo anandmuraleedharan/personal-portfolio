@@ -16,7 +16,10 @@ import {
   Layers, 
   Network, 
   Zap, 
-  Code
+  Code,
+  Activity,
+  Database,
+  Sliders
 } from "lucide-react";
 
 // App technical details and coordinates for animated SVG diagrams
@@ -480,6 +483,187 @@ def log_trace(self, input_query, generated_sql, is_success, error_message, laten
   }
 };
 
+const TECH_STACK_ROW_1 = [
+  {
+    title: "Next.js & Vercel",
+    cost: "$0",
+    desc: "Application framework & Serverless edge hosting. Handles static prerendering and runs secure API proxy routes with zero cold starts.",
+    icon: (
+      <svg viewBox="0 0 512 512" width="18" height="18" fill="currentColor">
+        <path d="M256,48,496,464H16Z"/>
+      </svg>
+    )
+  },
+  {
+    title: "Gemini AI",
+    cost: "$20/mo",
+    desc: "Advanced reasoning, estimation scoring, and profile Q&A using the Google AI Studio developer tier (gemini-2.5-flash) backed by AI Pro context quotas.",
+    costStyle: { background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.2)' },
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#38bdf8' }}>
+        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" fill="currentColor"/>
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(56, 189, 248, 0.05)', borderColor: 'rgba(56, 189, 248, 0.2)' }
+  },
+  {
+    title: "OpenRouter API",
+    cost: "$0",
+    desc: "Acts as our API failover route. Pools and iterates across open-weight free model endpoints (e.g. Llama 3.3 70B) in case of primary API outages.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2v20M2 12h20M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+      </svg>
+    )
+  },
+  {
+    title: "GitHub & Actions",
+    cost: "$0",
+    desc: "Code versioning, submodule mapping, and automated GitHub Actions workflow runners acting as a serverless cron triggers.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+      </svg>
+    )
+  },
+  {
+    title: "Supabase Realtime",
+    cost: "$0",
+    desc: "Bypasses heavy database writes by utilizing active WebSocket broadcast/presence channels for instant scrum poker peer estimation sync.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#3ecf8e' }}>
+        <path d="M13.92 2L5 12.86h6.92L10.08 22 19 11.14h-6.92z"/>
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(62, 207, 142, 0.05)', borderColor: 'rgba(62, 207, 142, 0.2)' }
+  },
+  {
+    title: "Resend API",
+    cost: "$0",
+    desc: "Serverless transactional email gateway. Dispatches daily morning AI news briefings compiled dynamically without background mail servers.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="20" height="16" x="2" y="4" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    )
+  },
+  {
+    title: "DuckDuckGo Grounding",
+    cost: "$0",
+    desc: "Zero-cost fallback search context grounding, crawling DuckDuckGo to feed fresh AI headlines to The Daily Read compiler daily.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#de5833' }}>
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <path d="M10 8c1.5 0 2.5 1 2.5 2H7.5c0-1 1-2 2.5-2z" fill="currentColor" />
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(222, 88, 51, 0.05)', borderColor: 'rgba(222, 88, 51, 0.2)' }
+  },
+  {
+    title: "Spaceship DNS",
+    cost: "$12/yr",
+    costStyle: { background: 'rgba(99, 102, 241, 0.1)', color: '#6366f1', borderColor: 'rgba(99, 102, 241, 0.2)' },
+    desc: "Domain Registrar & custom DNS subdomain mapping. Binds newsletter, cogpoker, codeforge, and pdf targets to anandmuraleedharan.com.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#818cf8' }}>
+        <path d="M4.5 16.5c-1.5 1.25-2.5 3.5-2.5 3.5s2.25-1 3.5-2.5" />
+        <path d="M12 2C6.5 2 2 6.5 2 12c0 2.5 1 4.5 2.5 6l11.5-11.5c-1.5-1.5-3.5-2.5-6-2.5z" />
+        <path d="M22 2s-3 1-5 3L5.5 16.5c2 2 3 5 3 5s1-1 2.5-2.5L22 2z" />
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(129, 140, 248, 0.05)', borderColor: 'rgba(129, 140, 248, 0.2)' }
+  }
+];
+
+const TECH_STACK_ROW_2 = [
+  {
+    title: "Browser Web APIs",
+    cost: "$0",
+    desc: "Leverages CompressionStream for stateless URLs, PDF.js for sandbox document parsing, and SessionStorage for custom resume state.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+      </svg>
+    )
+  },
+  {
+    title: "Antigravity 2.0",
+    cost: "$0",
+    desc: "Autonomous AI coding partner designed by Google DeepMind, orchestrating, coding, and deploying this visualizer and app suite.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)' }}>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        <path d="M2 12h20" />
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(6, 182, 212, 0.05)', borderColor: 'rgba(6, 182, 212, 0.2)' }
+  },
+  {
+    title: "Playwright",
+    cost: "$0",
+    desc: "E2E integration testing framework. Simulates real-time multi-user WebSocket voting and presence sessions to verify scrum room reliability.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#2e8b57' }}>
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+        <path d="m10 8 6 4-6 4V8z" fill="currentColor" />
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(46, 139, 87, 0.05)', borderColor: 'rgba(46, 139, 87, 0.2)' }
+  },
+  {
+    title: "Docker",
+    cost: "$0",
+    desc: "Local infrastructure orchestrator. Runs Supabase CLI container engines locally, supporting database-free real-time WebSocket connection targets.",
+    icon: (
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#2496ed' }}>
+        <rect x="2" y="10" width="3" height="2.5" rx="0.5" />
+        <rect x="5.5" y="10" width="3" height="2.5" rx="0.5" />
+        <rect x="9" y="10" width="3" height="2.5" rx="0.5" />
+        <rect x="12.5" y="10" width="3" height="2.5" rx="0.5" />
+        <rect x="3.75" y="7" width="3" height="2.5" rx="0.5" />
+        <rect x="7.25" y="7" width="3" height="2.5" rx="0.5" />
+        <rect x="10.75" y="7" width="3" height="2.5" rx="0.5" />
+        <rect x="7.25" y="4" width="3" height="2.5" rx="0.5" />
+        <path d="M1 13.5c0-1 .8-1.8 1.8-1.8h13.7c1.3 0 2.2-1.3 3-2.5.4-.6 1.3-.6 1.7 0 .5.8 1.1 1.7 1.8 1.7.5 0 .8.4.8.9v1.5c0 3.3-2.7 6-6 6H4.5C2.6 19.3 1 17.7 1 15.8v-2.3z" />
+      </svg>
+    ),
+    iconStyle: { background: 'rgba(36, 150, 237, 0.05)', borderColor: 'rgba(36, 150, 237, 0.2)' }
+  },
+  {
+    title: "FastAPI & Python",
+    cost: "$0",
+    desc: "High-performance API gateway and SDK running Aileron's evaluation sandbox and DSPy prompts optimization on Python 3.14.",
+    icon: <Terminal size={18} style={{ color: '#009688' }} />,
+    iconStyle: { background: 'rgba(0, 150, 136, 0.05)', borderColor: 'rgba(0, 150, 136, 0.2)' }
+  },
+  {
+    title: "DSPy Optimizer",
+    cost: "$0",
+    desc: "Programmatic few-shot prompt compiler, validating and scoring system instructions against benchmark test suites.",
+    icon: <Sliders size={18} style={{ color: '#ec4899' }} />,
+    iconStyle: { background: 'rgba(236, 72, 153, 0.05)', borderColor: 'rgba(236, 72, 153, 0.2)' }
+  },
+  {
+    title: "Opik Tracing & Metrics",
+    cost: "$0",
+    desc: "Execution observability framework, capturing SQL generation latency, costs, and traces.",
+    icon: <Activity size={18} style={{ color: '#a855f7' }} />,
+    iconStyle: { background: 'rgba(168, 85, 247, 0.05)', borderColor: 'rgba(168, 85, 247, 0.2)' }
+  },
+  {
+    title: "SQLite Sandbox",
+    cost: "$0",
+    desc: "Secure, read-only SQL compilation and sandbox database environment for local code execution and verification.",
+    icon: <Database size={18} style={{ color: '#f97316' }} />,
+    iconStyle: { background: 'rgba(249, 115, 22, 0.05)', borderColor: 'rgba(249, 115, 22, 0.2)' }
+  }
+];
+
 export default function ArchitecturePage() {
   const [activeTab, setActiveTab] = useState("dailyread");
   const [simulationIndex, setSimulationIndex] = useState(-1);
@@ -844,218 +1028,67 @@ export default function ArchitecturePage() {
                 </p>
               </div>
 
-              <div className={styles.stackGrid}>
-                {/* 1. Next.js & Vercel */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <svg viewBox="0 0 512 512" width="18" height="18" fill="currentColor">
-                        <path d="M256,48,496,464H16Z"/>
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Next.js & Vercel</span>
-                    <span className={styles.stackCardCost}>$0</span>
+              <div className={styles.marqueeContainer}>
+                {/* Row 1: scrolls left */}
+                <div className={styles.marqueeRow}>
+                  <div className={`${styles.marqueeTrack} ${styles.scrollLeft}`}>
+                    {TECH_STACK_ROW_1.map((item, idx) => (
+                      <div key={`r1-${idx}`} className={styles.stackCard}>
+                        <div className={styles.stackCardHeader}>
+                          <div className={styles.stackCardIcon} style={item.iconStyle}>
+                            {item.icon}
+                          </div>
+                          <span className={styles.stackCardTitle}>{item.title}</span>
+                          <span className={styles.stackCardCost} style={item.costStyle}>{item.cost}</span>
+                        </div>
+                        <p className={styles.stackCardDesc}>{item.desc}</p>
+                      </div>
+                    ))}
+                    {/* Duplicate list to achieve seamless infinite scroll */}
+                    {TECH_STACK_ROW_1.map((item, idx) => (
+                      <div key={`r1-dup-${idx}`} className={styles.stackCard}>
+                        <div className={styles.stackCardHeader}>
+                          <div className={styles.stackCardIcon} style={item.iconStyle}>
+                            {item.icon}
+                          </div>
+                          <span className={styles.stackCardTitle}>{item.title}</span>
+                          <span className={styles.stackCardCost} style={item.costStyle}>{item.cost}</span>
+                        </div>
+                        <p className={styles.stackCardDesc}>{item.desc}</p>
+                      </div>
+                    ))}
                   </div>
-                  <p className={styles.stackCardDesc}>
-                    Application framework & Serverless edge hosting. Handles static prerendering and runs secure API proxy routes with zero cold starts.
-                  </p>
                 </div>
 
-                {/* 2. Gemini AI */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(56, 189, 248, 0.05)', borderColor: 'rgba(56, 189, 248, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#38bdf8' }}>
-                        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" fill="currentColor"/>
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Gemini AI</span>
-                    <span className={styles.stackCardCost} style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', borderColor: 'rgba(59, 130, 246, 0.2)' }}>$20/mo</span>
+                {/* Row 2: scrolls right */}
+                <div className={styles.marqueeRow}>
+                  <div className={`${styles.marqueeTrack} ${styles.scrollRight}`}>
+                    {TECH_STACK_ROW_2.map((item, idx) => (
+                      <div key={`r2-${idx}`} className={styles.stackCard}>
+                        <div className={styles.stackCardHeader}>
+                          <div className={styles.stackCardIcon} style={item.iconStyle}>
+                            {item.icon}
+                          </div>
+                          <span className={styles.stackCardTitle}>{item.title}</span>
+                          <span className={styles.stackCardCost} style={item.costStyle}>{item.cost}</span>
+                        </div>
+                        <p className={styles.stackCardDesc}>{item.desc}</p>
+                      </div>
+                    ))}
+                    {/* Duplicate list to achieve seamless infinite scroll */}
+                    {TECH_STACK_ROW_2.map((item, idx) => (
+                      <div key={`r2-dup-${idx}`} className={styles.stackCard}>
+                        <div className={styles.stackCardHeader}>
+                          <div className={styles.stackCardIcon} style={item.iconStyle}>
+                            {item.icon}
+                          </div>
+                          <span className={styles.stackCardTitle}>{item.title}</span>
+                          <span className={styles.stackCardCost} style={item.costStyle}>{item.cost}</span>
+                        </div>
+                        <p className={styles.stackCardDesc}>{item.desc}</p>
+                      </div>
+                    ))}
                   </div>
-                  <p className={styles.stackCardDesc}>
-                    Advanced reasoning, estimation scoring, and profile Q&A using the Google AI Studio developer tier (gemini-2.5-flash) backed by AI Pro context quotas.
-                  </p>
-                </div>
-
-                {/* 3. OpenRouter API */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2v20M2 12h20M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>OpenRouter API</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Acts as our API failover route. Pools and iterates across open-weight free model endpoints (e.g. Llama 3.3 70B) in case of primary API outages.
-                  </p>
-                </div>
-
-                {/* 4. GitHub & Actions */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                        <path d="M9 18c-4.51 2-5-2-7-2" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>GitHub & Actions</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Code versioning, submodule mapping, and automated GitHub Actions workflow runners acting as a serverless cron triggers.
-                  </p>
-                </div>
-
-                {/* 5. Supabase Realtime */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(62, 207, 142, 0.05)', borderColor: 'rgba(62, 207, 142, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#3ecf8e' }}>
-                        <path d="M13.92 2L5 12.86h6.92L10.08 22 19 11.14h-6.92z"/>
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Supabase Realtime</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Bypasses heavy database writes by utilizing active WebSocket broadcast/presence channels for instant scrum poker peer estimation sync.
-                  </p>
-                </div>
-
-                {/* 6. Resend API */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect width="20" height="16" x="2" y="4" rx="2" />
-                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Resend API</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Serverless transactional email gateway. Dispatches daily morning AI news briefings compiled dynamically without background mail servers.
-                  </p>
-                </div>
-
-                {/* 7. DuckDuckGo Grounding */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(222, 88, 51, 0.05)', borderColor: 'rgba(222, 88, 51, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#de5833' }}>
-                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        <path d="M10 8c1.5 0 2.5 1 2.5 2H7.5c0-1 1-2 2.5-2z" fill="currentColor" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>DuckDuckGo Grounding</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Zero-cost fallback search context grounding, crawling DuckDuckGo to feed fresh AI headlines to The Daily Read compiler daily.
-                  </p>
-                </div>
-
-                {/* 8. Spaceship DNS */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(129, 140, 248, 0.05)', borderColor: 'rgba(129, 140, 248, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#818cf8' }}>
-                        <path d="M4.5 16.5c-1.5 1.25-2.5 3.5-2.5 3.5s2.25-1 3.5-2.5" />
-                        <path d="M12 2C6.5 2 2 6.5 2 12c0 2.5 1 4.5 2.5 6l11.5-11.5c-1.5-1.5-3.5-2.5-6-2.5z" />
-                        <path d="M22 2s-3 1-5 3L5.5 16.5c2 2 3 5 3 5s1-1 2.5-2.5L22 2z" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Spaceship DNS</span>
-                    <span className={styles.stackCardCost} style={{ background: 'rgba(99, 102, 241, 0.1)', color: '#6366f1', borderColor: 'rgba(99, 102, 241, 0.2)' }}>$12/yr</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Domain Registrar & custom DNS subdomain mapping. Binds newsletter, cogpoker, codeforge, and pdf targets to anandmuraleedharan.com.
-                  </p>
-                </div>
-
-                {/* 9. Browser Web APIs */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="16 18 22 12 16 6" />
-                        <polyline points="8 6 2 12 8 18" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Browser Web APIs</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Leverages CompressionStream for stateless URLs, PDF.js for sandbox document parsing, and SessionStorage for custom resume state.
-                  </p>
-                </div>
-
-                {/* 10. Antigravity 2.0 */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(6, 182, 212, 0.05)', borderColor: 'rgba(6, 182, 212, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary)' }}>
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                        <path d="M2 12h20" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Antigravity 2.0</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Autonomous AI coding partner designed by Google DeepMind, orchestrating, coding, and deploying this visualizer and app suite.
-                  </p>
-                </div>
-
-                {/* 11. Playwright */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(46, 139, 87, 0.05)', borderColor: 'rgba(46, 139, 87, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#2e8b57' }}>
-                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                        <path d="m10 8 6 4-6 4V8z" fill="currentColor" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Playwright</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    E2E integration testing framework. Simulates real-time multi-user WebSocket voting and presence sessions to verify scrum room reliability.
-                  </p>
-                </div>
-
-                {/* 12. Docker */}
-                <div className={styles.stackCard}>
-                  <div className={styles.stackCardHeader}>
-                    <div className={styles.stackCardIcon} style={{ background: 'rgba(36, 150, 237, 0.05)', borderColor: 'rgba(36, 150, 237, 0.2)' }}>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ color: '#2496ed' }}>
-                        <rect x="2" y="10" width="3" height="2.5" rx="0.5" />
-                        <rect x="5.5" y="10" width="3" height="2.5" rx="0.5" />
-                        <rect x="9" y="10" width="3" height="2.5" rx="0.5" />
-                        <rect x="12.5" y="10" width="3" height="2.5" rx="0.5" />
-                        
-                        <rect x="3.75" y="7" width="3" height="2.5" rx="0.5" />
-                        <rect x="7.25" y="7" width="3" height="2.5" rx="0.5" />
-                        <rect x="10.75" y="7" width="3" height="2.5" rx="0.5" />
-                        
-                        <rect x="7.25" y="4" width="3" height="2.5" rx="0.5" />
-                        
-                        <path d="M1 13.5c0-1 .8-1.8 1.8-1.8h13.7c1.3 0 2.2-1.3 3-2.5.4-.6 1.3-.6 1.7 0 .5.8 1.1 1.7 1.8 1.7.5 0 .8.4.8.9v1.5c0 3.3-2.7 6-6 6H4.5C2.6 19.3 1 17.7 1 15.8v-2.3z" />
-                      </svg>
-                    </div>
-                    <span className={styles.stackCardTitle}>Docker</span>
-                    <span className={styles.stackCardCost}>$0</span>
-                  </div>
-                  <p className={styles.stackCardDesc}>
-                    Local infrastructure orchestrator. Runs Supabase CLI container engines locally, supporting database-free real-time WebSocket connection targets.
-                  </p>
                 </div>
               </div>
             </div>
