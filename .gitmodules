@@ -12,5 +12,5 @@
 	url = ./apps/pdfforge
 [submodule "apps/aileron"]
 	path = apps/aileron
-	url = ./apps/aileron
+	url = https://github.com/anandmuraleedharan/aileron.git
 
