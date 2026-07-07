@@ -27,7 +27,11 @@ This document records the architectural standards and core principles agreed upo
 ---
 
 ## 4. LLM & API Integrations
-* **Official SDKs:** Always prefer official vendor-supported SDKs (e.g., `@google/genai` and `resend`) over custom wrappers or HTTP fetch scripts.
+* **Official SDKs & Platforms:** Always prefer official vendor-supported SDKs (e.g., `@google/genai` and `resend`) over custom wrappers.
+* **Stateless Gateways & Observability**: Integrate production-grade tools:
+  - **TensorZero**: For inference gateway routing, fallback setups, and experimentation.
+  - **Opik**: For trace evaluation, spans mapping, and observability.
+  - **DSPy / GEPA**: For programmatic prompt/pipeline optimization based on user feedback.
 * **Free-Tier Optimization:** Optimize prompts and models to run within free-tier quotas (e.g., model fallback strategies like `gemini-2.5-flash-lite` if standard flash models exhaust developer quotas).
 * **Search Grounding:** Rely on Gemini's native Search Grounding tool (`google_search`) for live web access rather than incorporating expensive third-party web scrapers.
 
