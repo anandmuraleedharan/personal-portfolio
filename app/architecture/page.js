@@ -458,7 +458,7 @@ export async function POST(request: NextRequest) {
       { nodeIds: [4], activeLink: 3, status: "User rates output, logging corrections back to Supabase feedback dataset." },
       { nodeIds: [5], activeLink: 5, status: "DSPy optimizer compiles corrections, runs benchmarks, and saves the new prompt version." }
     ],
-    code: `# Database adapter with storage circuit breaker
+    code: \`# Database adapter with storage circuit breaker
 def log_trace(self, input_query, generated_sql, is_success, error_message, latency_ms, token_count, cost_usd):
     conn = self.get_connection()
     cursor = conn.cursor()
