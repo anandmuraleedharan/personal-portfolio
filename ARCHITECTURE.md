@@ -40,6 +40,8 @@ This document records the architectural standards and core principles agreed upo
 ## 5. Security & Scheduled Automation
 * **Secured API Endpoints:** All state-modifying or execution endpoints (like `/api/cron`) must be guarded by Bearer tokens checked against a serverless secret (`process.env.CRON_SECRET`).
 * **Cron via GitHub Actions:** Handle scheduled execution natively using GitHub Actions workflow schedules (`cron: '...'`) to invoke API routes rather than relying on background loop servers.
+* **2FA Gated Analytics Dashboard:** Access to visitor analytics data (`/analytics`) is protected using a custom Time-based One-Time Password (TOTP) algorithm using Node's `crypto` module, validating against `ANALYTICS_TOTP_SECRET` with dynamic clock drift window tolerance, keeping the authentication mechanism entirely free and self-contained.
+* **Separation of Concerns for Analytics:** Instead of mixing analytics logs with other application tables, a dedicated database stores visitor traffic telemetry (such as country code, browser engine, and referrer) with a strict 100-row FIFO database pruning limit to maintain a negligible storage footprint.
 
 ---
 

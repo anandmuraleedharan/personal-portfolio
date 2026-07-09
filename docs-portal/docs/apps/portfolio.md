@@ -10,7 +10,12 @@ Located at the root of the project:
 ```
 personal-portfolio/
 ├── app/
+│   ├── analytics/
+│   │   ├── page.js        # Visitor Analytics dashboard page
+│   │   └── analytics.module.css
 │   ├── api/
+│   │   ├── analytics/
+│   │   │   └── route.js   # Analytics telemetry API (IP geolocation & FIFO DB cap)
 │   │   ├── chat/
 │   │   │   └── route.ts   # Chatbot API (Profile context injection)
 │   │   └── tailor/
@@ -24,7 +29,8 @@ personal-portfolio/
 │   └── page.js            # Portfolio landing page
 ├── components/
 │   ├── Header.js
-│   └── Playground.js      # Sandbox selector drawer
+│   ├── Playground.js      # Sandbox selector drawer
+│   └── AnalyticsTracker.js # Client-side pageview tracker hook
 ├── data/
 │   └── profile.json       # Career context database
 └── package.json

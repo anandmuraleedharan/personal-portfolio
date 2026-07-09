@@ -11,6 +11,8 @@ This codebase is structured as a Next.js monorepo containing multiple independen
 ```
 personal-portfolio/ (Main Repo)
 ├── app/                  # Main Portfolio Next.js app pages
+│   ├── analytics/        # Visitor Analytics & secure 2FA Dashboard
+│   └── api/analytics/    # Serverless analytics logger API
 ├── components/           # Shared portfolio UI components
 ├── docs-portal/          # This MkDocs documentation portal
 └── apps/                 # Git submodules directory
@@ -30,12 +32,16 @@ When running the entire workspace concurrently via `npm run dev:all`, services a
 | Service | Port | Directory Path | Core Stack |
 | :--- | :--- | :--- | :--- |
 | **Portfolio Hub** | `3000` | `./` | Next.js 16, Vanilla CSS |
+| **Visitor Analytics** | `3000` | `./app/analytics` | Next.js 16, TOTP, DB FIFO Pruning |
 | **The Daily Read** | `3001` | `apps/newsletter-generator` | Next.js, Gemini API, Resend |
 | **CogPoker** | `3002` | `apps/cogpoker` | Next.js, Supabase Realtime, Web Audio |
 | **CodeForge** | `3003` | `apps/codeforge` | Next.js, CompressionStreams |
 | **PDFForge** | `3004` | `apps/pdfforge` | Next.js, PDF.js, PDF-Lib, OpenRouter |
 | **Aileron UI** | `3005` | `apps/aileron` | Next.js, SQL Sandbox |
 | **Aileron Backend** | `8005` | `apps/aileron/backend` | FastAPI Python, SQLite, DSPy |
+
+> [!NOTE]
+> The **Visitor Analytics Dashboard** (`/analytics`) is built directly into the **Portfolio Hub** on port `3000` rather than running as a standalone server submodule.
 
 ---
 
