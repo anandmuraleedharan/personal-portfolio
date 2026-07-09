@@ -138,6 +138,8 @@ export default function AnalyticsDashboard() {
 
   // 2. Database Setup Warning Screen
   if (setupRequired) {
+    const isOffline = data?.databaseOffline;
+
     return (
       <div className={styles.pageContainer}>
         <Header />
@@ -145,14 +147,42 @@ export default function AnalyticsDashboard() {
           <div className={styles.gateWrapper}>
             <div className="glass-card">
               <div className={styles.setupCard}>
-                <AlertTriangle size={48} className={styles.warningIcon} />
-                <h1 className={styles.setupTitle}>Database Table Required</h1>
-                <p className={styles.setupDesc}>
-                  The connection to Supabase was successful, but the table <code>visitor_logs</code> does not exist in your database.
-                </p>
-                <div className={styles.sqlCodeBox}>
-                  <p className={styles.sqlLabel}>Run this SQL in your Supabase SQL Editor:</p>
-                  <pre className={styles.sqlCode}>
+                <AlertTriangle size={48} className={styles.warningIcon} style={isOffline ? { color: "#ef4444" } : {}} />
+                <h1 className={styles.setupTitle}>
+                  {isOffline ? "Database Offline" : "Database Table Required"}
+                </h1>
+                
+                {isOffline ? (
+                  <>
+                    <p className={styles.setupDesc}>
+                      {data.error || "The serverless function could not connect to the database."}
+                    </p>
+                    <p style={{ color: "#94a3b8", fontSize: "12px", marginTop: "8px", marginBottom: "16px", lineHeight: "1.5", textAlign: "center" }}>
+                      {data.message || "Please check your environment variables."}
+                    </p>
+                    <div style={{ width: "100%", marginTop: "16px", border: "1px solid rgba(239, 68, 68, 0.15)", borderRadius: "6px", backgroundColor: "rgba(239, 68, 68, 0.02)", padding: "14px", textAlign: "left" }}>
+                      <p style={{ fontWeight: "bold", fontSize: "12px", color: "#f87171", marginBottom: "8px" }}>How to configure production database:</p>
+                      <ol style={{ fontSize: "11px", color: "#cbd5e1", paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px", margin: 0 }}>
+                        <li>Create a free database project on <strong>Supabase</strong> (or use an existing one).</li>
+                        <li>In your Vercel Project Settings, add the environment variables:
+                          <div style={{ marginTop: "4px", padding: "6px", backgroundColor: "rgba(0, 0, 0, 0.3)", borderRadius: "4px", fontFamily: "monospace", fontSize: "10px", color: "#38bdf8", border: "1px solid rgba(255,255,255,0.05)" }}>
+                            ANALYTICS_SUPABASE_URL<br />
+                            ANALYTICS_SUPABASE_ANON_KEY
+                          </div>
+                        </li>
+                        <li>Provide the URL and Key from your Supabase dashboard.</li>
+                        <li>Redeploy your portfolio on Vercel to apply the changes.</li>
+                      </ol>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className={styles.setupDesc}>
+                      The connection to Supabase was successful, but the table <code>visitor_logs</code> does not exist in your database.
+                    </p>
+                    <div className={styles.sqlCodeBox}>
+                      <p className={styles.sqlLabel}>Run this SQL in your Supabase SQL Editor:</p>
+                      <pre className={styles.sqlCode}>
 {`CREATE TABLE IF NOT EXISTS visitor_logs (
     id SERIAL PRIMARY KEY,
     timestamp TIMESTAMPTZ DEFAULT NOW(),
@@ -163,11 +193,14 @@ export default function AnalyticsDashboard() {
     os TEXT,
     session_id TEXT NOT NULL
 );`}
-                  </pre>
-                </div>
-                <button onClick={fetchStats} className={styles.refreshButton}>
+                      </pre>
+                    </div>
+                  </>
+                )}
+                
+                <button onClick={fetchStats} className={styles.refreshButton} style={{ marginTop: "20px" }}>
                   <RefreshCw size={16} />
-                  <span>Check Table Connection</span>
+                  <span>{isOffline ? "Retry Connection" : "Check Table Connection"}</span>
                 </button>
               </div>
             </div>

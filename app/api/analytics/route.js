@@ -46,6 +46,19 @@ export async function GET(request) {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 
+  const isVercel = process.env.VERCEL === "1";
+  const isLocalhostDb = supabaseUrl.includes("127.0.0.1") || supabaseUrl.includes("localhost");
+
+  if (isVercel && isLocalhostDb) {
+    return NextResponse.json({
+      authenticated: true,
+      setupRequired: true,
+      databaseOffline: true,
+      error: "Database URL points to localhost (127.0.0.1) in production.",
+      message: "Your portfolio is live on Vercel, but the analytics database is configured to localhost. Local databases are only reachable during local development. To connect a database in production, please set up a cloud Supabase project and add its credentials (ANALYTICS_SUPABASE_URL and ANALYTICS_SUPABASE_ANON_KEY) to your Vercel project settings."
+    });
+  }
+
   try {
     // Fetch logs from Supabase
     const res = await fetch(`${supabaseUrl}/rest/v1/visitor_logs?order=timestamp.desc&limit=100`, {
@@ -113,7 +126,13 @@ export async function GET(request) {
     });
 
   } catch (err) {
-    return NextResponse.json({ error: "Failed to connect to Supabase: " + err.message }, { status: 500 });
+    return NextResponse.json({
+      authenticated: true,
+      setupRequired: true,
+      databaseOffline: true,
+      error: "Failed to connect to database: " + err.message,
+      message: "The serverless function could not connect to the database. Make sure your database is online and reachable from Vercel. If you are using a local Supabase instance, it is only reachable on localhost during development."
+    });
   }
 }
 
@@ -149,6 +168,14 @@ export async function POST(request) {
     const { page_path, referrer, session_id } = body;
     if (!page_path || !session_id) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const isVercel = process.env.VERCEL === "1";
+    const isLocalhostDb = supabaseUrl.includes("127.0.0.1") || supabaseUrl.includes("localhost");
+
+    if (isVercel && isLocalhostDb) {
+      console.warn("Analytics post skipped: Localhost database configured in production.");
+      return NextResponse.json({ success: false, warning: "Database is configured to localhost in production." });
     }
     
     // Resolve headers
@@ -209,6 +236,7 @@ export async function POST(request) {
     return NextResponse.json({ success: true });
 
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.error("Analytics POST error:", err.message);
+    return NextResponse.json({ success: false, error: err.message }, { status: 200 });
   }
 }
