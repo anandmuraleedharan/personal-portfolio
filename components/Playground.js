@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Playground.module.css";
-import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare, FileText } from "lucide-react";
+import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare, FileText, Activity } from "lucide-react";
 
 export default function Playground() {
   const [appsData, setAppsData] = React.useState([
@@ -48,6 +48,15 @@ export default function Playground() {
       badges: ["Next.js 16", "Python FastAPI", "Supabase Postgres", "SQLite DB", "OpenRouter API"],
       url: "https://aileron.anandmuraleedharan.com",
       icon: <Sparkles size={22} className={styles.iconCyan || styles.iconBlue} />,
+      status: "Active"
+    },
+    {
+      title: "Visitor Analytics",
+      subtitle: "Secure Telemetry Dashboard",
+      description: "A private traffic observer. Uses a client-side tracking hook to push pageview events, resolves Vercel edge geolocations, executes a 100-row FIFO database clean-up, and gates access using Google Authenticator (TOTP) codes.",
+      badges: ["Next.js 16", "TOTP/Authenticator", "Supabase Postgres", "Vercel Edge", "FIFO Pruning"],
+      url: "/analytics",
+      icon: <Activity size={22} className={styles.iconCyan || styles.iconBlue} />,
       status: "Active"
     }
   ]);

@@ -1,0 +1,454 @@
+.pageContainer {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.mainContent {
+  padding: 3rem 0;
+}
+
+.loadingWrapper {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 1rem;
+  color: var(--foreground-muted);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: var(--primary);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Gate Lock Screen Styles */
+.gateWrapper {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+.gateCard, .setupCard {
+  padding: 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lockIconContainer {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 242, 254, 0.05);
+  border: 1px solid rgba(0, 242, 254, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00f2fe;
+  margin-bottom: 1.5rem;
+}
+
+.gateTitle, .setupTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.gateDesc, .setupDesc {
+  font-size: 0.95rem;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.gateForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.passcodeInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-align: center;
+  color: var(--foreground);
+  transition: all 0.25s ease;
+}
+
+.passcodeInput:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.15);
+}
+
+.submitButton, .refreshButton {
+  width: 100%;
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  border: none;
+  border-radius: 12px;
+  color: #0d1117;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--foreground-muted);
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 242, 254, 0.3);
+}
+
+.errorMessage {
+  font-size: 0.85rem;
+  color: #ff5722;
+  font-weight: 600;
+  margin-top: -0.25rem;
+}
+
+.totpHelper {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+  text-align: left;
+  line-height: 1.4;
+}
+
+.totpHelperTitle {
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+}
+
+.secretKey {
+  display: block;
+  margin-top: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #00f2fe;
+}
+
+/* Database Setup Styles */
+.warningIcon {
+  color: #ffb300;
+  margin-bottom: 1.5rem;
+}
+
+.sqlCodeBox {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.sqlLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.sqlCode {
+  background: #010409;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #8bb2d9;
+  overflow-x: auto;
+}
+
+/* Dashboard Header */
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--foreground) 30%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--foreground-muted);
+  max-width: 640px;
+}
+
+.refreshButton {
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--foreground);
+}
+
+.refreshButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Stats Cards Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.statCard {
+  padding: 1.8rem;
+}
+
+.statIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--foreground-muted);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.statValue {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.statDetail {
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+}
+
+/* Breakdowns Grid */
+.breakdownsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .breakdownsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sectionCard {
+  padding: 1.8rem;
+}
+
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+}
+
+/* Bar Item Progress Bars */
+.barList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.barItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.barLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pathName {
+  font-family: monospace;
+  color: #8bb2d9;
+}
+
+.barCount {
+  color: var(--foreground-muted);
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Row List Styles */
+.rowList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.rowItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.locationBadge {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.rowCount {
+  color: var(--foreground-muted);
+}
+
+.subSection .subTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--foreground-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+}
+
+/* Terminal live feed styles */
+.terminalCard {
+  background: #010409;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Fira Code', monospace;
+}
+
+.terminalHeader {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.dotContainer {
+  display: flex;
+  gap: 0.4rem;
+  margin-right: 1.5rem;
+}
+
+.redDot, .yellowDot, .greenDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.redDot { background: #ff5f56; }
+.yellowDot { background: #ffbd2e; }
+.greenDot { background: #27c93f; }
+
+.terminalTitle {
+  font-size: 0.75rem;
+  color: var(--foreground-muted);
+}
+
+.terminalBody {
+  padding: 1.5rem;
+  max-height: 350px;
+  overflow-y: auto;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #a5d6ff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.terminalEmpty {
+  color: var(--foreground-muted);
+  text-align: center;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+.terminalLine {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.termTime { color: #8b949e; }
+.termCountry { color: #ff7b72; font-weight: bold; }
+.termPath { color: #00f2fe; }
+.termAgent { color: #d2a8ff; }
+.termRef { color: #79c0ff; }

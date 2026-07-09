@@ -20,7 +20,8 @@ import {
   Activity,
   Database,
   Sliders,
-  ExternalLink
+  ExternalLink,
+  Lock
 } from "lucide-react";
 
 // App technical details and coordinates for animated SVG diagrams
@@ -570,7 +571,94 @@ def log_trace(self, input_query, generated_sql, is_success, error_message, laten
         { key: "SQLite Database", type: "Read-only file", purpose: "Local sandboxed database executing generated SQL queries safely." },
         { key: "Storage Circuit Breaker", type: "Database Middleware", purpose: "Locks and purges historical traces (> 200) and corrections (> 50) to preserve free-tier storage capacities (< 1MB)." }
       ],
-      resilience: "Integrates a DB adapter layer to swap backends (SQLite local for offline test runs, Supabase Postgres for live). Evaluates query results against an automated test suite before saving updates to prevent compiling broken prompts."
+    }
+  },
+  analytics: {
+    title: "Visitor Analytics",
+    subtitle: "Secure Telemetry Dashboard",
+    description: "A private traffic observer. Uses a client-side tracking hook to push pageview events, resolves Vercel edge geolocations, executes a 100-row FIFO database clean-up, and gates access using Google Authenticator (TOTP) codes.",
+    badges: ["Next.js 16", "TOTP/Authenticator", "Supabase Postgres", "Vercel Edge", "FIFO Pruning"],
+    patterns: [
+      {
+        name: "Time-based One-Time Password (TOTP)",
+        desc: "Uses Node's native crypto module to perform time-synchronized HMAC-SHA1 mathematical validation of 6-digit passcode codes from Authenticator apps, avoiding third-party authentication fees."
+      },
+      {
+        name: "FIFO Database Pruning",
+        desc: "Restricts database costs on free-tier projects by running a delete loop after each log insert, maintaining a strict 100-row limit in the database logs table."
+      },
+      {
+        name: "Geographic Header Extraction",
+        desc: "Extracts client IP metadata and Vercel Edge location headers (x-vercel-ip-country) at the gateway, logging visitor countries without third-party geolocating APIs."
+      }
+    ],
+    nodes: [
+      { id: 0, label: "Visitor Client", sublabel: "Layout Tracker", x: 50, y: 110, w: 90, h: 50 },
+      { id: 1, label: "Serverless Route", sublabel: "/api/analytics", x: 185, y: 110, w: 100, h: 50 },
+      { id: 2, label: "TOTP Verifier", sublabel: "Crypto HMAC", x: 315, y: 50, w: 95, h: 50 },
+      { id: 3, label: "Database Layer", sublabel: "Supabase / Vercel", x: 315, y: 170, w: 100, h: 50 },
+      { id: 4, label: "FIFO Pruner", sublabel: "Row Cap Delete", x: 445, y: 170, w: 100, h: 50 },
+      { id: 5, label: "Secure View", sublabel: "/analytics", x: 565, y: 110, w: 80, h: 50 }
+    ],
+    links: [
+      { from: 0, to: 1, path: "M 95 110 L 185 110" },
+      { from: 1, to: 2, path: "M 235 110 L 315 50" },
+      { from: 1, to: 3, path: "M 235 110 L 315 170" },
+      { from: 3, to: 4, path: "M 415 170 L 445 170" },
+      { from: 2, to: 5, path: "M 410 50 L 565 110" },
+      { from: 4, to: 5, path: "M 545 170 L 565 110" }
+    ],
+    simulationSteps: [
+      { nodeIds: [0], activeLink: -1, status: "Visitor navigates to a portfolio route, triggering the client tracker hook." },
+      { nodeIds: [1], activeLink: 0, status: "Sends visitor telemetry payload to Next.js API route (/api/analytics)." },
+      { nodeIds: [3], activeLink: 2, status: "Resolves country header and writes visitor hit metadata to the isolated database." },
+      { nodeIds: [4], activeLink: 3, status: "Queries total log count; executes FIFO delete script to prune logs exceeding 100 rows." },
+      { nodeIds: [2], activeLink: 4, status: "Admin visits /analytics, entering TOTP code to establish secure session cookie." },
+      { nodeIds: [5], activeLink: 5, status: "Passcode verification succeeds; fetches stats and unlocks the live dashboard!" }
+    ],
+    code: `// Node Native Crypto TOTP Validator
+import crypto from "crypto";
+
+export function verifyTOTP(token: string, secret: string): boolean {
+  const keyHex = base32ToHex(secret);
+  const epoch = Math.round(new Date().getTime() / 1000.0);
+  const currentWindow = Math.floor(epoch / 30);
+
+  // Validate token across window offsets to mitigate clock drift
+  for (let offset = -1; offset <= 1; offset++) {
+    const timeWindow = currentWindow + offset;
+    const timeHex = timeWindow.toString(16).padStart(16, '0');
+
+    const hmac = crypto.createHmac("sha1", Buffer.from(keyHex, "hex"));
+    hmac.update(Buffer.from(timeHex, "hex"));
+    const hmacResult = hmac.digest();
+
+    const resultOffset = hmacResult[hmacResult.length - 1] & 0xf;
+    const code = ((hmacResult[resultOffset] & 0x7f) << 24) |
+                 ((hmacResult[resultOffset + 1] & 0xff) << 16) |
+                 ((hmacResult[resultOffset + 2] & 0xff) << 8) |
+                 (hmacResult[resultOffset + 3] & 0xff);
+
+    const calculatedCode = (code % 1000000).toString().padStart(6, '0');
+    if (calculatedCode === token.trim()) return true;
+  }
+  return false;
+}`,
+    docs: {
+      overview: "Visitor Analytics is a secure, lightweight visitor metrics tracker and dashboard. It is completely decoupled from other submodules. It logs page transitions, parses edge geographic headers, prunes database tables to keep a strict 100-row limit, and gates access to stats using time-based authenticator passcodes.",
+      systemFlow: [
+        { step: "1. Navigation Trigger", detail: "A client-side layout hook tracks page pathname transitions and sends a hit log request." },
+        { step: "2. Geolocation extraction", detail: "The API endpoint parses x-vercel-ip-country edge headers to resolve countries instantly." },
+        { step: "3. FIFO Database Pruning", detail: "Writes the log to the dedicated database, checks total rows, and deletes excess records older than the top 100." },
+        { step: "4. Passcode Challenge", detail: "Restricts dashboard entries. Validates 6-digit user input against a shared secret using native Node crypto HMAC computations." },
+        { step: "5. Cookie Session", detail: "Upon successful authentication, writes an HttpOnly session cookie, unlocking access to aggregated charts and live visitor feeds." }
+      ],
+      stateStorage: [
+        { key: "Analytics DB", type: "PostgreSQL Database", purpose: "Dedicated database housing visitor records (geography, timestamp, browser, referrer)." },
+        { key: "Session Cookie", type: "HttpOnly cookie", purpose: "Retains the authorized admin token to bypass passcode gates on subsequent page loads." },
+        { key: "Pruner Limit", type: "Database Middleware", purpose: "Limits database storage size by ensuring the visitor table never holds more than 100 logs." }
+      ],
+      resilience: "TOTP passcode verification runs strictly locally on edge servers, requiring zero third-party auth services or external networks. If database write calls return errors, the client tracker fails silently without disrupting the visitor's page transition."
     }
   }
 };
@@ -760,6 +848,20 @@ const TECH_STACK_ROW_2 = [
     desc: "Dedicated project technical documentation portal. Custom styled slate theme, Outfit/Inter typography, and local search indexing.",
     icon: <FileText size={18} style={{ color: '#00bcd4' }} />,
     iconStyle: { background: 'rgba(0, 188, 212, 0.05)', borderColor: 'rgba(0, 188, 212, 0.2)' }
+  },
+  {
+    title: "Vercel Postgres (Neon)",
+    cost: "$0",
+    desc: "Dedicated, serverless analytics storage database. Holds visitor telemetry in complete isolation with zero-cost bounds.",
+    icon: <Database size={18} style={{ color: '#00f2fe' }} />,
+    iconStyle: { background: 'rgba(0, 242, 254, 0.05)', borderColor: 'rgba(0, 242, 254, 0.2)' }
+  },
+  {
+    title: "TOTP / Google Authenticator",
+    cost: "$0",
+    desc: "Mathematical 2FA passcode gate. Uses local Node crypto HMAC computations to verify codes and protect visitor logs privacy.",
+    icon: <Lock size={18} style={{ color: '#ffb300' }} />,
+    iconStyle: { background: 'rgba(255, 179, 0, 0.05)', borderColor: 'rgba(255, 179, 0, 0.2)' }
   }
 ];
 
@@ -938,6 +1040,13 @@ export default function ArchitecturePage() {
               >
                 <Zap size={16} />
                 <span>Aileron</span>
+              </button>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'analytics' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('analytics')}
+              >
+                <Activity size={16} />
+                <span>Visitor Analytics</span>
               </button>
             </div>
 
