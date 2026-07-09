@@ -14,6 +14,8 @@ The table below lists all tools, platforms, plans, and monthly costs of the proj
 | **Serverless Routes** | Vercel | Edge Functions | `$0.00` | Executions: 1M per month. |
 | **Cron Dispatcher** | GitHub | Actions Run | `$0.00` | Time: 2,000 minutes/month. |
 | **Database Logs** | Supabase | Free Tier | `$0.00` | Storage: 500MB, Row Limit: 50k. |
+| **Analytics Storage** | Vercel Postgres (Neon) | Hobby Database | `$0.00` | Storage: 256MB, Compute: 60h/mo. |
+| **2FA Passcode Gate** | Google Authenticator | TOTP Protocol | `$0.00` | Free mobile app generator. |
 | **Email Gateway** | Resend | Developer Tier | `$0.00` | Quota: 3,000 emails/month (100/day limit). |
 | **AI Models (Main)** | Google AI | Gemini Developer | `$0.00` | Rate Limit: 15 RPM (Requests Per Minute). |
 | **AI Models (Failover)** | OpenRouter | Free Tier list | `$0.00` | Rate Limit: Varies by model (standard 10 RPM). |
@@ -28,9 +30,10 @@ The table below lists all tools, platforms, plans, and monthly costs of the proj
 To ensure active user traffic never breaches provider quotas (which can cause service suspensions or billing card charges), the workspace implements three primary guardrails:
 
 ### 1. Database Circuit Breakers
-To prevent log spam from exhausting Supabase's 500MB storage limits, the database adapter in Aileron implements a row-cap circuit breaker:
-* **Trace Limits**: Caps active rows to **200 traces**.
-* **Feedback Limits**: Caps active rows to **50 corrections**.
+To prevent log spam from exhausting free storage limits, the database adapters implement row-cap circuit breakers:
+* **Analytics Logs**: Caps active visitor telemetry to **100 rows** via a serverless FIFO delete query after each write, maintaining a ~20KB storage footprint.
+* **Trace Limits**: Caps active rows to **200 traces** in Aileron.
+* **Feedback Limits**: Caps active rows to **50 corrections** in Aileron.
 * **Purge Mechanism**: Runs a FIFO delete query after each insert to keep database storage under **1MB**:
 
 ```python
