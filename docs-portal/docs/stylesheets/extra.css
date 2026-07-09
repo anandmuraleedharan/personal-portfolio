@@ -1,0 +1,63 @@
+/* Custom styling overrides for Anand's Monorepo Docs */
+:root {
+  --md-primary-fg-color: #0a0e17;
+  --md-primary-fg-color--light: #161b22;
+  --md-primary-fg-color--dark: #010409;
+  --md-accent-fg-color: #ff5722;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #0a0e17;
+  --md-default-fg-color: #e6edf3;
+  --md-card-bg-color: rgba(13, 17, 23, 0.7);
+  --md-card-border-color: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+}
+
+code, kbd, pre {
+  font-family: 'Fira Code', 'Roboto Mono', monospace;
+}
+
+/* Glassmorphism details for cards */
+.md-content__inner {
+  background: rgba(10, 14, 23, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem !important;
+}
+
+/* Custom titles and highlight lines */
+h1 {
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem !important;
+}
+
+h2 {
+  font-weight: 700 !important;
+  color: #00f2fe !important;
+  border-bottom: 1px solid rgba(0, 242, 254, 0.15) !important;
+  padding-bottom: 0.3rem;
+}
+
+h3 {
+  font-weight: 600 !important;
+  color: #ff5722 !important;
+}
+
+/* Admonitions styling */
+.admonition {
+  border-radius: 8px !important;
+  border-left-width: 6px !important;
+}
+
+.admonition-title {
+  font-weight: 600 !important;
+}

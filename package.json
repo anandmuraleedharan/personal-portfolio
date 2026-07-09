@@ -9,7 +9,10 @@
     "dev:aileron": "concurrently \"npm run dev --prefix apps/aileron\" \"bash apps/aileron/backend/run.sh\"",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docs:setup": "cd docs-portal && python3 -m venv venv && ./venv/bin/pip install mkdocs mkdocs-material",
+    "docs:dev": "cd docs-portal && ./venv/bin/mkdocs serve -a localhost:8000",
+    "docs:build": "cd docs-portal && ./venv/bin/mkdocs build"
   },
   "dependencies": {
     "@google/genai": "^2.9.0",

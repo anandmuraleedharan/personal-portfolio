@@ -19,7 +19,8 @@ import {
   Code,
   Activity,
   Database,
-  Sliders
+  Sliders,
+  ExternalLink
 } from "lucide-react";
 
 // App technical details and coordinates for animated SVG diagrams
@@ -97,7 +98,22 @@ async function generateContentWithFallback(
   }
   
   throw new Error(\`All models exhausted. Final error: \${lastError}\`);
-}`
+}`,
+    docs: {
+      overview: "The Daily Read is an automated, stateless morning news compilation engine. Designed around serverless-first and cost-efficiency guidelines, it operates without a persistent database. It relies on GitHub Actions cron schedules to wake up a Next.js serverless route, crawls technology feeds using a stateless proxy web crawler, processes raw news with Gemini AI, and formats the final digest to deliver it to Anand's email via the Resend API.",
+      systemFlow: [
+        { step: "1. Scheduled Cron Event", detail: "At 06:00 UTC daily, a GitHub Actions workflow dispatches a secure HTTPS POST request to the Next.js `/api/cron` endpoint." },
+        { step: "2. Token Security Gate", detail: "The serverless function intercepts the request and validates the authorization header against the server's `CRON_SECRET` to block unauthorized runs." },
+        { step: "3. Stateless Search Crawl", detail: "Executes a client-side search query string to crawl tech news topics via a lightweight DuckDuckGo scraper, extracting raw article titles and links." },
+        { step: "4. Gemini AI Selection Loop", detail: "Feeds raw text to the Gemini API under strict formatting guidelines. Automatically cascading down the fallback stack if rate limits or quota boundaries are met." },
+        { step: "5. Resend Dispatch", detail: "The resulting markdown output is parsed to styled HTML and transactionally dispatched to the recipient's inbox using the Resend SDK." }
+      ],
+      stateStorage: [
+        { key: "API Keys & Secrets", type: "Vercel Env Variables", purpose: "Securely stores GEMINI_API_KEY, RESEND_API_KEY, and CRON_SECRET at the edge host level." },
+        { key: "Feed Context Cache", type: "Ephemeral Runtime Memory", purpose: "Zero database footprint. News listings are loaded and processed on-the-fly and cleaned up instantly upon request resolution." }
+      ],
+      resilience: "Guarantees morning news arrival by employing a cascading failover model for LLM generation: if gemini-2.5-flash exhausts its developer quota or throws a rate limit error, the loop dynamically catches the exception and falls back to gemini-2.5-flash-lite. The API endpoint is protected by a cryptographically strong bearer token validation step."
+    }
   },
   cogpoker: {
     title: "CogPoker",
@@ -169,7 +185,23 @@ class MockRealtimeChannel {
       }
     }, 200);
   }
-}`
+}`,
+    docs: {
+      overview: "CogPoker is a database-free, real-time scrum story pointing room. Designed to bypass database costs, it leverages Supabase Realtime Channels (Broadcast + Presence) to establish direct WebSocket connections between team members and a Gemini AI peer estimator. It incorporates Web Audio API synthesizers for themed sound effects and features active client-side presence reconciliation for self-healing connection drops.",
+      systemFlow: [
+        { step: "1. Socket Channel Join", detail: "Voter enters a room, initiating a WebSocket connection that subscribes to the room's presence channel." },
+        { step: "2. Peer Broadcast", detail: "When a player casts a vote, their selectedCard value is broadcast to all active channel peers instantly." },
+        { step: "3. Concurrent AI Sizing", detail: "When the host broadcasts a ticket update, estimation requests are triggered in parallel across free LLM endpoints (Llama-3.3-70b, Gemma-2-9b, Mistral-7b) to select the fastest response." },
+        { step: "4. Consensus Computation", detail: "Upon reveal, the room calculates consensus levels, human vs. AI alignment variance, and primary uncertainty bottlenecks." },
+        { step: "5. Safe Tab Disconnection", detail: "A 'beforeunload' event handler intercepts browser closure, forcing a channel unsubscribe to immediately purge stale presence nodes." }
+      ],
+      stateStorage: [
+        { key: "Supabase Presence", type: "WebSocket Channel", purpose: "Ephemeral storage of voter lists, connection statuses, card votes, and moderator roles." },
+        { key: "In-Memory State Hub", type: "Local API Route", purpose: "Failover fallback polling target simulating sockets using setInterval." },
+        { key: "Browser session", type: "Session Storage", purpose: "Retains voter configurations and active sound themes (Space, Cyberpunk, Tavern, Arcade)." }
+      ],
+      resilience: "Integrates a self-healing client reconciler that continually compares local player state against the server presence payload, forcing a re-track if it detects connection drops. Sizing algorithms isolate OpenRouter delays by racing multiple free model requests concurrently and falling back to local deterministic heuristic code if all APIs fail."
+    }
   },
   codeforge: {
     title: "CodeForge",
@@ -248,7 +280,22 @@ export async function compressData(oldText: string, newText: string): Promise<st
     .replace(/\\+/g, '-')
     .replace(/\\//g, '_')
     .replace(/=+$/, '');
-}`
+}`,
+    docs: {
+      overview: "CodeForge is a privacy-first, stateless developer utility suite for formatting, diffing, and converting code. It enables sharing full multi-file comparison states directly through the URL hash, achieving 100% database-free sharing.",
+      systemFlow: [
+        { step: "1. Client Input", detail: "User pastes code into the side-by-side Monaco or textarea comparison blocks." },
+        { step: "2. Myers Diff Run", detail: "Executes a client-side Myers diff algorithm to dynamically compute character, word, and line-level changes." },
+        { step: "3. Bytes Conversion", detail: "Converts text inputs into a binary byte stream (Uint8Array) via TextEncoder." },
+        { step: "4. Deflate Stream", detail: "Pipes the bytes through a native browser `CompressionStream('deflate')`, shrinking payload sizes by over 70%." },
+        { step: "5. Base64 Safe Hash", detail: "Converts the buffer to a base64 string, replaces unsafe symbols, and updates the URL hash for stateless sharing." }
+      ],
+      stateStorage: [
+        { key: "URL Location Hash", type: "Browser URL Fragment", purpose: "Serves as the primary stateless database. The entire comparison payload is encoded within the link itself." },
+        { key: "Editor Configs", type: "Local Storage", purpose: "Retains user editor settings (tab sizes, word wrap, selected visual theme)." }
+      ],
+      resilience: "All formatting, validator parsing (js-yaml), and diff calculation tasks execute locally inside the browser UI thread (optimizing for speed via chunking for files up to 100MB). There are zero backend database requirements, ensuring infinite availability."
+    }
   },
   pdfforge: {
     title: "PDFForge",
@@ -332,7 +379,22 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({ error: \`AI failed: \${lastError}\` }, { status: 502 });
-}`
+}`,
+    docs: {
+      overview: "PDFForge is a browser-based PDF utility that allows splitting, merging, and querying documents locally. It maintains absolute data privacy by performing all rendering and text extraction in the browser client sandbox, calling serverless AI proxies for processing.",
+      systemFlow: [
+        { step: "1. PDF Selection", detail: "Voter drops a document. The browser instantiates a local Blob URL." },
+        { step: "2. Sandboxed Text Extraction", detail: "PDF.js parses pages, extracting textual layers and compiling character arrays completely locally." },
+        { step: "3. Local Context Selection", detail: "Performs RAG indexing locally, selecting context snippets corresponding to user questions." },
+        { step: "4. Token Concealment Proxy", detail: "Posts data to `/api/pdfforge` which secures credentials and routes requests to model hosts." },
+        { step: "5. OpenRouter Cascade", detail: "Iterates down a failover endpoint chain (Llama 3.3 70B -> Gemini 2.5 Flash -> Generic Free) until successful completion." }
+      ],
+      stateStorage: [
+        { key: "Binary Document Blob", type: "Ephemeral memory", purpose: "PDF data arrays held in sandbox memory; never sent to any backend servers." },
+        { key: "Dialog Array", type: "React State", purpose: "Retains prompt dialogue history locally for context mapping." }
+      ],
+      resilience: "Shields developer API tokens using Next.js serverless functions as proxies. Bypasses third-party rate limits and API outages by implementing a cascade retry system across OpenRouter free model endpoints."
+    }
   },
   portfolio: {
     title: "Personal Portfolio",
@@ -416,8 +478,22 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     return Response.json({ response: "Error." }, { status: 500 });
   }
-}
-`
+}`,
+    docs: {
+      overview: "The Personal Portfolio is the stateless entry point of Anand's digital profile. It features an interactive resume chatbot with keyword fallbacks, and a resume customizer that caches tailoring parameters to export dynamic resume PDFs without a database.",
+      systemFlow: [
+        { step: "1. Chat / Tailor Input", detail: "Visitor asks the chatbot a question, or uses the Recruiter Tailor panel to customize Anand's CV." },
+        { step: "2. Profile JSON Read", detail: "The serverless function reads static career details (`profile.json`) on-the-fly." },
+        { step: "3. Context Injection", detail: "Injects career details dynamically into the Gemini prompt instruction set." },
+        { step: "4. Fallback Keyword Match", detail: "If the API returns error or quota exhaustion, a local keyword-matching parser handles basic Q&A." },
+        { step: "5. Session Cache & PDF Print", detail: "Caches customized CV points in sessionStorage; the print page `/resume` reads this memory to compile a print-ready PDF." }
+      ],
+      stateStorage: [
+        { key: "Experience Profile", type: "Static JSON file", purpose: "Acts as the source of truth for all career details, projects, and skills." },
+        { key: "Tailoring State", type: "Session Storage", purpose: "Saves customized CV adjustments to build print-ready documents without database writes." }
+      ],
+      resilience: "Integrates a client-side keyword-matching fallback engine that intercepts questions when the Gemini API is offline or quota-blocked, routing them to local regex matching to guarantee answer availability."
+    }
   },
   aileron: {
     title: "Aileron",
@@ -479,7 +555,23 @@ def log_trace(self, input_query, generated_sql, is_success, error_message, laten
     conn.close()
     
     # ENFORCE STORAGE SAFETY LIMITS (Circuit Breaker)
-    return self.enforce_circuit_breaker()`
+    return self.enforce_circuit_breaker()`,
+    docs: {
+      overview: "Aileron is a self-improving prompt optimization and continuous feedback flywheel for SQL Generation. It connects a Next.js SQL sandbox frontend to a Python FastAPI backend. The backend executes queries inside a secure SQLite sandbox, captures latency and token metrics, logs trace paths, and mutates system prompt instructions dynamically using the DSPy prompt compiler.",
+      systemFlow: [
+        { step: "1. Visual NL Query", detail: "User types a query (e.g. 'List all customers from Germany') in the visual SQL sandbox." },
+        { step: "2. FastAPI Translation", detail: "Dispatches the payload to the FastAPI Python service (port 8005) which calls OpenRouter for SQL translation." },
+        { step: "3. Read-Only Sandbox execution", detail: "Executes the compiled SQL in a local, read-only SQLite sandbox pre-populated with mock customers, orders, and items tables." },
+        { step: "4. Correction Submission", detail: "If the output has mistakes (such as the Germany query missing the filter on Prompt v1), the user casts a thumbs down and submits the correct query." },
+        { step: "5. DSPy Prompts optimization", detail: "The backend runs the compiler, injecting the correction into active system prompts as a few-shot exemplar, saving and promoting Prompt v2." }
+      ],
+      stateStorage: [
+        { key: "Supabase DB", type: "PostgreSQL Database", purpose: "Hosts production traces, feedback scores, execution metrics, and active prompt versions." },
+        { key: "SQLite Database", type: "Read-only file", purpose: "Local sandboxed database executing generated SQL queries safely." },
+        { key: "Storage Circuit Breaker", type: "Database Middleware", purpose: "Locks and purges historical traces (> 200) and corrections (> 50) to preserve free-tier storage capacities (< 1MB)." }
+      ],
+      resilience: "Integrates a DB adapter layer to swap backends (SQLite local for offline test runs, Supabase Postgres for live). Evaluates query results against an automated test suite before saving updates to prevent compiling broken prompts."
+    }
   }
 };
 
@@ -661,6 +753,13 @@ const TECH_STACK_ROW_2 = [
     desc: "Secure, read-only SQL compilation and sandbox database environment for local code execution and verification.",
     icon: <Database size={18} style={{ color: '#f97316' }} />,
     iconStyle: { background: 'rgba(249, 115, 22, 0.05)', borderColor: 'rgba(249, 115, 22, 0.2)' }
+  },
+  {
+    title: "MkDocs & Material",
+    cost: "$0",
+    desc: "Dedicated project technical documentation portal. Custom styled slate theme, Outfit/Inter typography, and local search indexing.",
+    icon: <FileText size={18} style={{ color: '#00bcd4' }} />,
+    iconStyle: { background: 'rgba(0, 188, 212, 0.05)', borderColor: 'rgba(0, 188, 212, 0.2)' }
   }
 ];
 
@@ -771,6 +870,22 @@ export default function ArchitecturePage() {
               >
                 Interactive flowcharts, pipeline designs, and structural decisions behind each micro-app.
               </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className={styles.docsLinkWrapper}
+              >
+                <a 
+                  href="http://localhost:8000" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={styles.docsButton}
+                >
+                  <ExternalLink size={16} />
+                  <span>View Dedicated Tech Docs Portal</span>
+                </a>
+              </motion.div>
             </div>
 
             {/* App selection tabs */}
@@ -1018,6 +1133,80 @@ export default function ArchitecturePage() {
                 </pre>
               </div>
             </div>
+
+            {/* Deep Dive & Technical Details Section */}
+            {activeData.docs && (
+              <div className={styles.deepDiveSection}>
+                <div className={styles.deepDiveHeader}>
+                  <h2 className={styles.deepDiveTitle}>Technical Deep Dive: {activeData.title}</h2>
+                  <p className={styles.deepDiveOverview}>{activeData.docs.overview}</p>
+                </div>
+                
+                <div className={styles.deepDiveGrid}>
+                  {/* Left Column: System Flow */}
+                  <div className="glass-card">
+                    <div className={styles.infoCard} style={{ padding: '1.75rem' }}>
+                      <h3 className={styles.deepDiveSubTitle}>
+                        <Activity size={18} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+                        System Flow & Execution Sequence
+                      </h3>
+                      <div className={styles.flowList}>
+                        {activeData.docs.systemFlow.map((flow, idx) => (
+                          <div key={idx} className={styles.flowItem}>
+                            <div className={styles.flowStepNum}>
+                              <span>{idx + 1}</span>
+                            </div>
+                            <div className={styles.flowStepContent}>
+                              <div className={styles.flowStepName}>{flow.step}</div>
+                              <p className={styles.flowStepDetail}>{flow.detail}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: State & Storage */}
+                  <div className="glass-card">
+                    <div className={styles.infoCard} style={{ padding: '1.75rem' }}>
+                      <h3 className={styles.deepDiveSubTitle}>
+                        <Database size={18} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+                        State & Storage Configuration
+                      </h3>
+                      <div className={styles.storageTableContainer}>
+                        <table className={styles.storageTable}>
+                          <thead>
+                            <tr>
+                              <th>Component</th>
+                              <th>Type</th>
+                              <th>Purpose</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {activeData.docs.stateStorage.map((store, idx) => (
+                              <tr key={idx}>
+                                <td className={styles.storageKey}>{store.key}</td>
+                                <td><span className={styles.storageTypeBadge}>{store.type}</span></td>
+                                <td className={styles.storagePurpose}>{store.purpose}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Full Width: Resilience Strategy */}
+                <div className={`${styles.resilienceCard} glass-card`}>
+                  <h3 className={styles.resilienceTitle}>
+                    <Zap size={18} style={{ color: '#eab308', flexShrink: 0 }} />
+                    Resilience & Fallback Mechanisms
+                  </h3>
+                  <p className={styles.resilienceDesc}>{activeData.docs.resilience}</p>
+                </div>
+              </div>
+            )}
 
             {/* Zero-Cost Stack Section */}
             <div className={styles.stackSection}>

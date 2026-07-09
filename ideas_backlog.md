@@ -75,4 +75,20 @@ This backlog records potential future projects and micro-apps discussed with Ant
   * Uses Gemini API for audio-to-text evaluation and structured grading feedback.
   * Stores user practice stories and history locally in `localStorage` for privacy.
 
+---
+
+## 6. Three-Way Algorithmic Trading Tournament (Robinhood & Kalshi APIs)
+* **The Concept:** Three competing automated systems (each seeded with $25 demo or real funds) trading/predicting on prediction markets and stocks to test agentic decision-making and portfolio yield.
+* **Key Features:**
+  * **Three Competing Agents:**
+    * **System A (Quantitative):** Technical indicators, trend-following, and mathematical trading rules.
+    * **System B (Sentiment Analyst):** Real-time news parsing and Gemini-based sentiment grading.
+    * **System C (Contrarian/Arbitrage):** Finding market discrepancies or trading counter to public opinion.
+  * **Unified Leaderboard:** A real-time dashboard displaying balance, trade logs, and comparative performance.
+* **Architecture Constraints:**
+  * Integrates with Kalshi API (for prediction markets) and Robinhood API (via official Agentic Trading MCP/Crypto APIs).
+  * Backend schedules trading evaluations via cron or event-driven triggers.
+  * API credentials kept secure through environment variables.
+
+
 

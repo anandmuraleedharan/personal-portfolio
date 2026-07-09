@@ -1,0 +1,50 @@
+site_name: Anand's Monorepo Docs
+site_description: Detailed technical documentation for Anand's digital portfolio monorepo projects.
+site_author: Anand Muraleedharan
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+  font:
+    text: Inter
+    code: Roboto Mono
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Projects:
+    - The Daily Read: apps/dailyread.md
+    - CogPoker: apps/cogpoker.md
+    - CodeForge: apps/codeforge.md
+    - PDFForge: apps/pdfforge.md
+    - Personal Portfolio: apps/portfolio.md
+    - Aileron Flywheel: apps/aileron.md
+  - Tech Stack & Cost: cost_breakdown.md
