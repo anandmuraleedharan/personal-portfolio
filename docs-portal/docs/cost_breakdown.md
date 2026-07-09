@@ -14,7 +14,7 @@ The table below lists all tools, platforms, plans, and monthly costs of the proj
 | **Serverless Routes** | Vercel | Edge Functions | `$0.00` | Executions: 1M per month. |
 | **Cron Dispatcher** | GitHub | Actions Run | `$0.00` | Time: 2,000 minutes/month. |
 | **Database Logs** | Supabase | Free Tier | `$0.00` | Storage: 500MB, Row Limit: 50k. |
-| **Analytics Storage** | Vercel Postgres (Neon) | Hobby Database | `$0.00` | Storage: 256MB, Compute: 60h/mo. |
+| **Analytics Storage** | Supabase Database | Free Project | `$0.00` | Storage: 500MB, Row Limit: 50k. |
 | **2FA Passcode Gate** | Google Authenticator | TOTP Protocol | `$0.00` | Free mobile app generator. |
 | **Email Gateway** | Resend | Developer Tier | `$0.00` | Quota: 3,000 emails/month (100/day limit). |
 | **AI Models (Main)** | Google AI | Gemini Developer | `$0.00` | Rate Limit: 15 RPM (Requests Per Minute). |
