@@ -768,6 +768,13 @@ export default function ArchitecturePage() {
   const [simulationIndex, setSimulationIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [docsUrl, setDocsUrl] = useState("https://docs.anandmuraleedharan.com");
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+      setDocsUrl("http://localhost:8000");
+    }
+  }, []);
 
   const activeData = APPS_ARCH_DATA[activeTab];
 
@@ -877,7 +884,7 @@ export default function ArchitecturePage() {
                 className={styles.docsLinkWrapper}
               >
                 <a 
-                  href="http://localhost:8000" 
+                  href={docsUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className={styles.docsButton}
