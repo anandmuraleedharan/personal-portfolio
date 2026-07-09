@@ -92,6 +92,15 @@ export async function GET(request) {
     const osCounts = {};
     const browserCounts = {};
 
+    // 3. Speed metrics tracking
+    let loadTimeSum = 0;
+    let loadTimeCount = 0;
+    let ttfbSum = 0;
+    let ttfbCount = 0;
+    let fcpSum = 0;
+    let fcpCount = 0;
+    const pageSpeeds = {};
+
     logs.forEach(log => {
       pageCounts[log.page_path] = (pageCounts[log.page_path] || 0) + 1;
       
@@ -103,9 +112,37 @@ export async function GET(request) {
       
       osCounts[log.os] = (osCounts[log.os] || 0) + 1;
       browserCounts[log.browser] = (browserCounts[log.browser] || 0) + 1;
+
+      if (log.load_time && log.load_time > 0) {
+        loadTimeSum += log.load_time;
+        loadTimeCount++;
+        if (!pageSpeeds[log.page_path]) {
+          pageSpeeds[log.page_path] = { sum: 0, count: 0 };
+        }
+        pageSpeeds[log.page_path].sum += log.load_time;
+        pageSpeeds[log.page_path].count++;
+      }
+      if (log.ttfb && log.ttfb > 0) {
+        ttfbSum += log.ttfb;
+        ttfbCount++;
+      }
+      if (log.fcp && log.fcp > 0) {
+        fcpSum += log.fcp;
+        fcpCount++;
+      }
     });
 
     const formatFreq = (obj) => Object.entries(obj).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+
+    const avgLoadTime = loadTimeCount > 0 ? Math.round(loadTimeSum / loadTimeCount) : null;
+    const avgTtfb = ttfbCount > 0 ? Math.round(ttfbSum / ttfbCount) : null;
+    const avgFcp = fcpCount > 0 ? Math.round(fcpSum / fcpCount) : null;
+
+    const pageSpeedsList = Object.entries(pageSpeeds).map(([name, data]) => ({
+      name,
+      avgSpeed: Math.round(data.sum / data.count),
+      count: data.count
+    })).sort((a, b) => b.count - a.count);
 
     return NextResponse.json({
       authenticated: true,
@@ -113,14 +150,18 @@ export async function GET(request) {
       stats: {
         totalHits,
         uniqueVisitors,
-        avgHits
+        avgHits,
+        avgLoadTime,
+        avgTtfb,
+        avgFcp
       },
       breakdowns: {
         pages: formatFreq(pageCounts),
         referrers: formatFreq(referrerCounts),
         countries: formatFreq(countryCounts),
         os: formatFreq(osCounts),
-        browsers: formatFreq(browserCounts)
+        browsers: formatFreq(browserCounts),
+        pageSpeeds: pageSpeedsList
       },
       logs: logs.slice(0, 20) // send only latest 20 logs for the feed
     });
@@ -165,7 +206,7 @@ export async function POST(request) {
     }
     
     // ACTION: Log visitor page hit
-    const { page_path, referrer, session_id } = body;
+    const { page_path, referrer, session_id, load_time, ttfb, fcp } = body;
     if (!page_path || !session_id) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
@@ -198,7 +239,10 @@ export async function POST(request) {
         session_id,
         country,
         browser,
-        os
+        os,
+        load_time: load_time ? parseInt(load_time) : null,
+        ttfb: ttfb ? parseInt(ttfb) : null,
+        fcp: fcp ? parseInt(fcp) : null
       })
     });
 

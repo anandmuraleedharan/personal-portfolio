@@ -66,7 +66,10 @@ CREATE TABLE IF NOT EXISTS visitor_logs (
     country TEXT,
     browser TEXT,
     os TEXT,
-    session_id TEXT NOT NULL
+    session_id TEXT NOT NULL,
+    load_time INT,
+    ttfb INT,
+    fcp INT
 );
 ```
 
@@ -90,7 +93,12 @@ This architecture guarantees that the table is strictly capped at **exactly 100 
 
 ---
 
-## 📡 Telemetry Gathering
+## 📡 Telemetry & Speed Performance Gathering
 
 * **Geolocating**: The serverless route avoids third-party location lookup APIs. Instead, it extracts the country code directly from Vercel's edge proxy request header: `x-vercel-ip-country`.
 * **Client Handshake**: Page transitions are captured dynamically by rendering a client-side component `<AnalyticsTracker />` inside the root layout. It assigns a session ID inside the browser's `sessionStorage` to count unique visits without cookies or permanent trackers.
+* **Performance Telemetry (Web Vitals)**: The tracker hooks into the browser's native **Performance Timing & Paint APIs** once the page reaches `document.readyState === "complete"`. It captures:
+  * **Page Load Time**: The total document load and parse duration in milliseconds.
+  * **TTFB (Time to First Byte)**: Server responsiveness (the difference between `responseStart` and `navigationStart`).
+  * **FCP (First Contentful Paint)**: Initial rendering speed (captured via paint timeline entries for `first-contentful-paint`).
+

@@ -11,7 +11,10 @@ import {
   Compass, 
   Laptop, 
   RefreshCw,
-  AlertTriangle
+  AlertTriangle,
+  Zap,
+  Clock,
+  Gauge
 } from "lucide-react";
 
 export default function AnalyticsDashboard() {
@@ -265,6 +268,50 @@ export default function AnalyticsDashboard() {
                 <div className={styles.statDetail}>Clicks per visitor session</div>
               </div>
             </div>
+            
+            {/* Speed & Load Performance Metrics */}
+            <div className="glass-card">
+              <div className={styles.statCard}>
+                <div className={styles.statIcon} style={{ background: "rgba(16, 185, 129, 0.05)", color: "#10b981" }}>
+                  <Zap size={20} />
+                </div>
+                <div className={styles.statLabel}>Avg Load Time</div>
+                <div className={styles.statValue}>
+                  {stats?.avgLoadTime ? `${(stats.avgLoadTime / 1000).toFixed(2)}s` : "N/A"}
+                </div>
+                <div className={styles.statDetail}>
+                  {stats?.avgLoadTime ? (stats.avgLoadTime < 1500 ? "⚡ Fast (LCP Optimal)" : "⚠️ Needs Optimization") : "No speed logs yet"}
+                </div>
+              </div>
+            </div>
+            <div className="glass-card">
+              <div className={styles.statCard}>
+                <div className={styles.statIcon} style={{ background: "rgba(245, 158, 11, 0.05)", color: "#f59e0b" }}>
+                  <Clock size={20} />
+                </div>
+                <div className={styles.statLabel}>Avg TTFB</div>
+                <div className={styles.statValue}>
+                  {stats?.avgTtfb ? `${stats.avgTtfb}ms` : "N/A"}
+                </div>
+                <div className={styles.statDetail}>
+                  {stats?.avgTtfb ? (stats.avgTtfb < 600 ? "🟢 Good response" : "🔴 Slow server setup") : "Time to first byte"}
+                </div>
+              </div>
+            </div>
+            <div className="glass-card">
+              <div className={styles.statCard}>
+                <div className={styles.statIcon} style={{ background: "rgba(59, 130, 246, 0.05)", color: "#3b82f6" }}>
+                  <Gauge size={20} />
+                </div>
+                <div className={styles.statLabel}>Avg First Paint (FCP)</div>
+                <div className={styles.statValue}>
+                  {stats?.avgFcp ? `${(stats.avgFcp / 1000).toFixed(2)}s` : "N/A"}
+                </div>
+                <div className={styles.statDetail}>
+                  {stats?.avgFcp ? (stats.avgFcp < 1800 ? "⚡ Excellent rendering" : "🐢 Delayed paint") : "First contentful paint"}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Breakdowns Grid */}
@@ -320,6 +367,44 @@ export default function AnalyticsDashboard() {
                         </div>
                       );
                     })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Page Speeds Breakdown */}
+              <div className="glass-card" style={{ marginTop: "2rem" }}>
+                <div className={styles.sectionCard}>
+                  <h2 className={styles.sectionTitle}>
+                    <Gauge size={18} />
+                    <span>Average Page Speeds</span>
+                  </h2>
+                  <div className={styles.barList}>
+                    {breakdowns?.pageSpeeds?.map((item, idx) => {
+                      const maxSpeed = Math.max(...breakdowns.pageSpeeds.map(p => p.avgSpeed), 1);
+                      const percentage = (item.avgSpeed / maxSpeed) * 100;
+                      
+                      let speedColor = "var(--primary)";
+                      if (item.avgSpeed > 2500) speedColor = "#ef4444";
+                      else if (item.avgSpeed > 1500) speedColor = "#f59e0b";
+                      else speedColor = "#10b981";
+
+                      return (
+                        <div key={idx} className={styles.barItem}>
+                          <div className={styles.barLabel}>
+                            <span className={styles.pathName}>{item.name}</span>
+                            <span className={styles.barCount}>
+                              {item.avgSpeed}ms (avg of {item.count})
+                            </span>
+                          </div>
+                          <div className={styles.progressBarBg}>
+                            <div className={styles.progressBarFill} style={{ width: `${percentage}%`, background: speedColor }} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {(!breakdowns?.pageSpeeds || breakdowns?.pageSpeeds.length === 0) && (
+                      <p style={{ color: "var(--foreground-muted)", fontSize: "0.85rem", margin: 0 }}>No speed data recorded yet.</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -393,12 +478,18 @@ export default function AnalyticsDashboard() {
                 ) : (
                   logs?.map((log, idx) => {
                     const timeString = new Date(log.timestamp).toLocaleTimeString();
+                    const speedStr = log.load_time ? ` in ${log.load_time}ms` : "";
                     return (
                       <div key={idx} className={styles.terminalLine}>
                         <span className={styles.termTime}>[{timeString}]</span>{" "}
                         <span className={styles.termCountry}>Visitor ({log.country})</span>{" "}
                         accessed{" "}
                         <span className={styles.termPath}>{log.page_path}</span>{" "}
+                        {speedStr && (
+                          <span style={{ color: log.load_time > 2000 ? "#ef4444" : log.load_time > 1000 ? "#f59e0b" : "#10b981", fontWeight: "600" }}>
+                            {speedStr}
+                          </span>
+                        )}{" "}
                         via{" "}
                         <span className={styles.termAgent}>{log.os} / {log.browser}</span>{" "}
                         (Ref: <span className={styles.termRef}>{log.referrer || "Direct"}</span>)
