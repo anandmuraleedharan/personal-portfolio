@@ -1,4 +1,4 @@
 {
-  "buildCommand": "pip install --break-system-packages mkdocs-material && mkdocs build",
+  "buildCommand": "pip install --break-system-packages mkdocs-material && python3 -m mkdocs build",
   "outputDirectory": "site"
 }
