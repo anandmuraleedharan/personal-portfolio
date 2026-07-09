@@ -37,9 +37,16 @@ export default function AnalyticsDashboard() {
         setSetupRequired(payload.setupRequired || false);
         setData(payload);
       } else {
-        setAuthenticated(false);
+        if (res.status === 401) {
+          setAuthenticated(false);
+        } else {
+          const payload = await res.json().catch(() => ({}));
+          setError(payload.error || `Server connection failed (HTTP ${res.status})`);
+          setAuthenticated(false);
+        }
       }
     } catch (err) {
+      setError("Database connection timed out. Please check your environment variables.");
       setAuthenticated(false);
     } finally {
       setLoading(false);
