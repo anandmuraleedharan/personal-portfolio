@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./Playground.module.css";
-import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare, FileText, Activity } from "lucide-react";
+import { Sparkles, ArrowUpRight, Cpu, Mail, GitCompare, FileText, Activity, BookOpen } from "lucide-react";
 
 export default function Playground() {
   const [appsData, setAppsData] = React.useState([
@@ -51,6 +51,15 @@ export default function Playground() {
       status: "Active"
     },
     {
+      title: "Lipi",
+      subtitle: "Malayalam Learning Game",
+      description: "A highly visual, gamified client-side workspace featuring guided character tracing, match grid/time-attack games, and spaced repetition flashcards.",
+      badges: ["Vite", "Vanilla JS", "Web Audio API", "Speech Synthesis", "LocalStorage"],
+      url: "https://lipi.anandmuraleedharan.com",
+      icon: <BookOpen size={22} className={styles.iconGreen} />,
+      status: "Active"
+    },
+    {
       title: "Visitor Analytics",
       subtitle: "Secure Telemetry Dashboard",
       description: "A private traffic observer. Uses a client-side tracking hook to push pageview events, resolves Vercel edge geolocations, executes a 100-row FIFO database clean-up, and gates access using Google Authenticator (TOTP) codes.",
@@ -80,6 +89,9 @@ export default function Playground() {
           }
           if (app.title === "Aileron") {
             return { ...app, url: "http://localhost:3005" };
+          }
+          if (app.title === "Lipi") {
+            return { ...app, url: "http://localhost:3006" };
           }
           return app;
         }));

@@ -21,7 +21,8 @@ import {
   Database,
   Sliders,
   ExternalLink,
-  Lock
+  Lock,
+  BookOpen
 } from "lucide-react";
 
 // App technical details and coordinates for animated SVG diagrams
@@ -395,6 +396,83 @@ export async function POST(request: NextRequest) {
         { key: "Dialog Array", type: "React State", purpose: "Retains prompt dialogue history locally for context mapping." }
       ],
       resilience: "Shields developer API tokens using Next.js serverless functions as proxies. Bypasses third-party rate limits and API outages by implementing a cascade retry system across OpenRouter free model endpoints."
+    }
+  },
+  lipi: {
+    title: "Lipi",
+    subtitle: "Gamified Malayalam Learning App",
+    description: "A client-side gamified learning application to master Malayalam script, vocabulary, and conversations. It operates 100% database-free and serverless, utilizing browser memory and localized speech synthesis.",
+    badges: ["Vite", "Vanilla JS", "Web Audio API", "Web Speech API (TTS/STT)", "LocalStorage"],
+    patterns: [
+      {
+        name: "Abstract Storage Bridge Pattern",
+        desc: "Decouples game engine state from persistent web platform storage, supporting memory-only fallback contexts so the app functions securely if local permissions are restricted."
+      },
+      {
+        name: "Responsive WebView Pattern",
+        desc: "Uses client-side fluid grid custom CSS that adapts layout flows dynamically between a sidebar desktop dashboard and a bottom-nav mobile layout, ready for Capacitor/webView wrappers."
+      },
+      {
+        name: "Dynamic Game Loop Subscription",
+        desc: "Leverages a publisher-subscriber model to sync progress updates (XP, streaks, level-ups, hearts, and achievements) across decoupled custom UI widgets."
+      }
+    ],
+    nodes: [
+      { id: 0, label: "Lipi UI Layout", sublabel: "Web / Mobile", x: 50, y: 110, w: 90, h: 50 },
+      { id: 1, label: "Gamification Store", sublabel: "State Manager", x: 185, y: 110, w: 95, h: 50 },
+      { id: 2, label: "Audio Synth Engine", sublabel: "Web Audio SFX", x: 320, y: 110, w: 95, h: 50 },
+      { id: 3, label: "Speech Engine", sublabel: "Web Speech API", x: 450, y: 110, w: 100, h: 50 },
+      { id: 4, label: "Storage Bridge", sublabel: "Local / In-Memory", x: 575, y: 110, w: 100, h: 50 }
+    ],
+    links: [
+      { from: 0, to: 1, path: "M 95 110 L 185 110" },
+      { from: 1, to: 2, path: "M 232.5 110 L 320 110" },
+      { from: 1, to: 3, path: "M 232.5 110 L 450 110" },
+      { from: 1, to: 4, path: "M 232.5 110 L 575 110" }
+    ],
+    simulationSteps: [
+      { nodeIds: [0], activeLink: -1, status: "User interacts with character tracing canvas, matching grid, or conversation choices." },
+      { nodeIds: [1], activeLink: 0, status: "GamificationEngine calculates XP gains, checks achievement criteria, and issues badges." },
+      { nodeIds: [2], activeLink: 1, status: "Triggers Web Audio API nodes to synthesize custom chime frequencies (success/failure arpeggios)." },
+      { nodeIds: [3], activeLink: 2, status: "Invokes Web Speech synthesis to read Malayalam phrases aloud, or listens to user microphone via webkitSpeechRecognition." },
+      { nodeIds: [4], activeLink: 3, status: "Saves player stats (streaks, level, hearts, badges) to LocalStorage via abstract StorageProvider." }
+    ],
+    code: `// Decoupled Storage Provider (Bridge Pattern)
+export const StorageProvider = {
+  get(key, defaultValue = null) {
+    const val = provider.getItem(key);
+    if (val === null) return defaultValue;
+    try {
+      return JSON.parse(val);
+    } catch {
+      return val;
+    }
+  },
+  set(key, value) {
+    provider.setItem(key, JSON.stringify(value));
+  },
+  saveGameState(state) {
+    this.set("lipi_game_state", state);
+  },
+  loadGameState() {
+    const state = this.get("lipi_game_state");
+    return state ? { ...DEFAULT_STATE, ...state } : { ...DEFAULT_STATE };
+  }
+};`,
+    docs: {
+      overview: "Lipi is an interactive Malayalam language learning platform built using vanilla JavaScript and Vite. It utilizes native browser capabilities to handle stroke-by-stroke character tracing, vocabulary matches, phrase assembly, and speech practice completely client-side.",
+      systemFlow: [
+        { step: "1. Interactive User Input", detail: "Accepts mouse/touch drawing coordinates or choice selection chips." },
+        { step: "2. Gamification Processing", detail: "Calculates arpeggio notes, increments user scores, levels, streaks, and updates mock competitor ranks on a simulated leaderboard." },
+        { step: "3. Sound FX Synthesis", detail: "Uses browser Web Audio API oscillator nodes to generate gameplay audio without external sound assets." },
+        { step: "4. Pronunciation Synthesis", detail: "Sends native text strings to the browser SpeechSynthesis engine to provide correct Malayalam pronunciation." },
+        { step: "5. Abstract Local Storage", detail: "Saves states across page reloads via a decoupled StorageProvider wrapper that defaults to in-memory." }
+      ],
+      stateStorage: [
+        { key: "Lipi Game State", type: "LocalStorage (or Memory)", purpose: "Stores player level, accumulated XP, streak count, heart count, unlocked badges, and completed lessons." },
+        { key: "Leitner SRS Boxes", type: "Nested JS Object", purpose: "Retains Leitner box levels (1 to 3) for each vocabulary item to schedule spaced repetition reviews." }
+      ],
+      resilience: "Provides native SpeechRecognition for voice response options, backed by typing inputs if mic access is denied. Falls back to browser memory if local database storage is blocked."
     }
   },
   portfolio: {
@@ -1030,6 +1108,13 @@ export default function ArchitecturePage() {
               >
                 <FileText size={16} />
                 <span>PDFForge</span>
+              </button>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'lipi' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('lipi')}
+              >
+                <BookOpen size={16} />
+                <span>Lipi</span>
               </button>
               <button 
                 className={`${styles.tabButton} ${activeTab === 'portfolio' ? styles.activeTab : ''}`}

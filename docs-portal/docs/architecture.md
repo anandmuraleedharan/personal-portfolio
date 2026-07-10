@@ -6,7 +6,7 @@ This page serves as the master engineering design catalog for Anand's digital po
 
 ## 1. Monorepo & Submodule System
 
-The project is structured as a Next.js monorepo tracking 5 git submodules under the `apps/` directory. This allows each application to maintain its own decoupled Git history, packages, and environment settings, while the parent hub handles routing and overall layout consistency.
+The project is structured as a Next.js monorepo tracking 6 git submodules under the `apps/` directory. This allows each application to maintain its own decoupled Git history, packages, and environment settings, while the parent hub handles routing and overall layout consistency.
 
 ```mermaid
 graph TD
@@ -15,6 +15,7 @@ graph TD
     Parent --> Sub3["apps/codeforge (Git Submodule)"]
     Parent --> Sub4["apps/pdfforge (Git Submodule)"]
     Parent --> Sub5["apps/aileron (Git Submodule)"]
+    Parent --> Sub6["apps/lipi (Git Submodule)"]
     
     style Parent fill:#0d1117,stroke:#00f2fe,stroke-width:2px,color:#fff
     style Sub1 fill:#161b22,stroke:#555,stroke-width:1px,color:#ccc
@@ -22,6 +23,7 @@ graph TD
     style Sub3 fill:#161b22,stroke:#555,stroke-width:1px,color:#ccc
     style Sub4 fill:#161b22,stroke:#555,stroke-width:1px,color:#ccc
     style Sub5 fill:#161b22,stroke:#555,stroke-width:1px,color:#ccc
+    style Sub6 fill:#161b22,stroke:#555,stroke-width:1px,color:#ccc
 ```
 
 ---
@@ -91,6 +93,14 @@ if (!myServerPresence || myServerPresence.voteCast !== localState.voteCast) {
 * **Design Pattern**: Client Sandbox Delegation / Proxy.
 * **Context**: Uploading files to server-side routes for text parsing or merging introduces security compliance issues, memory limitations, and increased hosting overhead.
 * **Solution**: By shipping libraries (`PDF.js` and `PDF-Lib`) directly to the client browser thread, all file reads, rendering, splits, and compilation occur within WebAssembly/Blob memory inside the browser sandbox. The server only proxies stateless API completions to OpenRouter, maintaining absolute privacy.
+
+---
+
+### Decoupled Storage Bridge & Partitioned Lookup API
+* **Design Pattern**: Bridge Pattern / Proxy Gateway.
+* **Context**: Direct local storage access can throw security exceptions if cookie settings are locked. Additionally, serving dictionary API searches on massive datasets (58k+ entries) can crash serverless functions if memory load limits are hit.
+* **Storage Bridge**: Lipi delegates all writes through a `StorageProvider` interface that falls back automatically to transient JavaScript memory if `localStorage` is blocked by browser policies.
+* **Partitioned API Gateway**: The dictionary API splits the Olam English-Malayalam Corpus into 27 small JSON letters files. The Next.js serverless function loads only the relevant partition on-demand, executing in sub-milliseconds without memory overflow risks, using OpenRouter only as a fallback.
 
 ---
 

@@ -12,7 +12,7 @@ This document records the architectural standards and core principles agreed upo
 ---
 
 ## 2. Micro-App Extensibility (Git Submodules)
-* **Isolated Sub-directories:** Multi-page app expansions should be structured as standalone Next.js apps under the `/apps` directory.
+* **Isolated Sub-directories:** Multi-page app expansions should be structured as standalone Next.js or Vite apps under the `/apps` directory.
 * **Git Submodule Pattern:** Each app in the `/apps` directory is an independent git repository referenced as a submodule. This prevents dependency bloat and ensures one app's updates cannot break another.
 * **Subdomain Routing:** Deploy each submodule to Vercel as a distinct project. Bind custom subdomains (e.g., `newsletter.anandmuraleedharan.com`) using CNAME records in the Spaceship DNS dashboard.
 * **Unified Discovery:** The main portfolio (`anandmuraleedharan.com`) acts as the directory hub, linking out to each subdomain via clean developer playground cards.

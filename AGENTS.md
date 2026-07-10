@@ -15,6 +15,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Port `3001`: Newsletter App (`apps/newsletter-generator`)
   - Port `3002`: CogPoker App (`apps/cogpoker`)
   - Port `3003`: CodeForge App (`apps/codeforge`)
+  - Port `3006`: Lipi App (`apps/lipi`)
 
 ## Backend & Cost Philosophy ("Minimal Backend, No-Money")
 - **Zero-DB / Stateless Lifecycles:** Prefer ephemeral, client-side, or in-memory synchronization (e.g., Supabase Realtime Channels Broadcast + Presence, localStorage) over persistent databases. Avoid database bloat, regulatory storage tracking, or servers that accrue monthly charges.
