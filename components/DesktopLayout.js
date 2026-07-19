@@ -1,0 +1,73 @@
+import React from "react";
+import Header from "./Header";
+import Hero from "./Hero";
+import About from "./About";
+import DrivesMe from "./DrivesMe";
+import Experience from "./Experience";
+import Projects from "./Projects";
+import RecruiterAgent from "./RecruiterAgent";
+import Recommendations from "./Recommendations";
+import Chatbot from "./Chatbot";
+
+export default function DesktopLayout() {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* Navigation Header */}
+      <Header />
+
+      {/* Main Content Layout */}
+      <main style={{ flexGrow: 1 }}>
+        {/* Hero Banner Section */}
+        <Hero />
+
+        {/* Bio, Education and Certifications */}
+        <About />
+
+        {/* Core Principles (What Drives Me) */}
+        <DrivesMe />
+
+        {/* Chronological Work Timeline */}
+        <Experience />
+
+        {/* Key Projects Showcase */}
+        <Projects />
+
+        {/* AI Recruiter Agent for Custom Resumes */}
+        <RecruiterAgent />
+
+        {/* Recommendations / Testimonials */}
+        <Recommendations />
+
+        {/* Interactive Resume Bot */}
+        <Chatbot />
+      </main>
+
+      {/* Page Footer */}
+      <footer style={{
+        padding: "3rem 0",
+        borderTop: "1px solid var(--border-color)",
+        background: "rgba(3, 7, 18, 0.9)",
+        textAlign: "center",
+        fontSize: "0.9rem",
+        color: "var(--foreground-muted)"
+      }}>
+        <div className="container" style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "center"
+        }}>
+          <p>© {new Date().getFullYear()} Anand Muraleedharan. All rights reserved.</p>
+          <p style={{ fontSize: "0.8rem", color: "var(--foreground-dim)" }}>
+            Built with Next.js and Vanilla CSS. Hosted on anandmuraleedharan.com
+          </p>
+          <div className="footer-links" style={{ display: "flex", gap: "1.5rem" }}>
+            <a href="mailto:anand.muraleedharan@gmail.com">Email</a>
+            <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/anand-muraleedharan/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -392,12 +392,11 @@
     print-color-adjust: exact !important;
   }
 
+  .resumePage:last-of-type {
+    page-break-after: avoid !important;
+  }
+
   .pageBreak {
-    display: block !important;
-    page-break-before: always !important;
-    height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
+    display: none !important;
   }
 }

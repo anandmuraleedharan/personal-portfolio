@@ -7,9 +7,9 @@ export function mountApiDocs(container, navigateToTab, triggerToast) {
   let loadingState = false;
 
   function getApiUrl() {
-    const apiHost = window.location.port === '3006' 
+    const apiHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       ? 'http://localhost:3000' 
-      : '';
+      : 'https://anandmuraleedharan.com';
     return `${apiHost}/api/lipi/dictionary?word=${encodeURIComponent(wordInput.trim())}`;
   }
 

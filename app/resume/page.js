@@ -222,8 +222,6 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div className="pageBreak" />
-
         {/* ================= PAGE 2 ================= */}
         <div className="resumePage">
           <div className="columnsContainer" style={{ height: "100%" }}>

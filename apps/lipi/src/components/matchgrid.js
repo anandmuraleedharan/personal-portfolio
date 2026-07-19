@@ -14,6 +14,10 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
   let timeLeft = 30; // 30 seconds start
   const maxTime = 30;
   
+  function isStillMounted() {
+    return container.querySelector('.matchgrid-container') !== null;
+  }
+  
   function initUI() {
     // Clear any timers
     if (timerInterval) clearInterval(timerInterval);
@@ -218,6 +222,7 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
           // If all 4 pairs matched, load 4 new pairs immediately to keep playing!
           if (activeCards.every(c => c.matched)) {
             setTimeout(() => {
+              if (!isStillMounted()) return;
               activeCards = generateMatchPairs();
               renderCards();
             }, 400);
@@ -290,6 +295,10 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
     updateTimerBar();
 
     timerInterval = setInterval(() => {
+      if (!isStillMounted()) {
+        clearInterval(timerInterval);
+        return;
+      }
       timeLeft--;
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
@@ -297,7 +306,8 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
         updateTimerBar();
         handleTimeAttackEnd();
       } else {
-        container.querySelector('#timerLabel').textContent = timeLeft;
+        const label = container.querySelector('#timerLabel');
+        if (label) label.textContent = timeLeft;
         updateTimerBar();
       }
     }, 1000);
@@ -317,6 +327,8 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
   }
 
   function handleTimeAttackEnd() {
+    if (!isStillMounted()) return;
+
     // Lock all interactions
     container.querySelectorAll('.match-card').forEach(el => {
       el.style.pointerEvents = 'none';
@@ -328,6 +340,7 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
     // Play level up if triggered
     if (result.leveledUp) {
       setTimeout(() => {
+        if (!isStillMounted()) return;
         AudioEngine.playLevelUp();
         triggerToast(`✨ LEVEL UP! You reached Level ${result.newLevel}! 🥳`);
       }, 1000);
@@ -337,6 +350,7 @@ export function mountMatchGrid(container, navigateToTab, triggerToast) {
     
     // Wait briefly, then show final stats
     setTimeout(() => {
+      if (!isStillMounted()) return;
       initUI(); // reset or give option to exit
     }, 3000);
   }

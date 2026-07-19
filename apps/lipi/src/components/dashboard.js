@@ -158,9 +158,11 @@ export function mountDashboard(container, navigateToTab, showToast) {
           <span class="loading-dot"></span> Searching databases...
         </div>
       `;
-
       try {
-        const response = await fetch(`/api/lipi/dictionary?word=${encodeURIComponent(query)}`);
+        const apiHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+          ? 'http://localhost:3000' 
+          : 'https://anandmuraleedharan.com';
+        const response = await fetch(`${apiHost}/api/lipi/dictionary?word=${encodeURIComponent(query)}`);
         if (!response.ok) throw new Error("API call failed");
         
         const data = await response.json();

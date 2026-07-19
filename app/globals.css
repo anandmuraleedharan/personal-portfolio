@@ -233,3 +233,29 @@ a {
   color: var(--primary);
 }
 
+@media (max-width: 576px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+  .section {
+    padding: 4.5rem 0 2rem 0;
+  }
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Layout views toggle */
+@media (max-width: 768px) {
+  .desktopView {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobileView {
+    display: none !important;
+  }
+}
+

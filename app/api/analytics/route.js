@@ -5,6 +5,7 @@ import { verifyTOTP } from "@/lib/totp";
 // Resolved credentials (dedicate project)
 const supabaseUrl = process.env.ANALYTICS_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:54321";
 const supabaseKey = process.env.ANALYTICS_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabaseServiceKey = process.env.ANALYTICS_SUPABASE_SERVICE_ROLE_KEY || supabaseKey;
 const totpSecret = process.env.ANALYTICS_TOTP_SECRET;
 
 // Helper to generate the session hash signature
@@ -63,8 +64,8 @@ export async function GET(request) {
     // Fetch logs from Supabase
     const res = await fetch(`${supabaseUrl}/rest/v1/visitor_logs?order=timestamp.desc&limit=100`, {
       headers: {
-        "apikey": supabaseKey,
-        "Authorization": `Bearer ${supabaseKey}`
+        "apikey": supabaseServiceKey,
+        "Authorization": `Bearer ${supabaseServiceKey}`
       }
     });
 
@@ -255,8 +256,8 @@ export async function POST(request) {
     // Fetch all logs ordered by timestamp desc (only get id)
     const listRes = await fetch(`${supabaseUrl}/rest/v1/visitor_logs?select=id&order=timestamp.desc`, {
       headers: {
-        "apikey": supabaseKey,
-        "Authorization": `Bearer ${supabaseKey}`
+        "apikey": supabaseServiceKey,
+        "Authorization": `Bearer ${supabaseServiceKey}`
       }
     });
 
@@ -270,8 +271,8 @@ export async function POST(request) {
         await fetch(`${supabaseUrl}/rest/v1/visitor_logs?id=in.(${excessIds.join(",")})`, {
           method: "DELETE",
           headers: {
-            "apikey": supabaseKey,
-            "Authorization": `Bearer ${supabaseKey}`
+            "apikey": supabaseServiceKey,
+            "Authorization": `Bearer ${supabaseServiceKey}`
           }
         });
       }

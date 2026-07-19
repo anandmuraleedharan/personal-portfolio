@@ -29,7 +29,7 @@ export default function About() {
             <div className="glass-card">
               <h3 className={styles.cardTitle}>Professional Overview</h3>
               <p className={styles.bio}>
-                I am a highly analytical **{profile.personal.title}** with a passion for designing resilient data architectures that scale. With over {profile.personal.experienceYears} years of hands-on experience, I bridge the gap between complex business mandates and clean, automated data pipelines. 
+                I am a highly analytical <strong style={{ color: "var(--heading-color)" }}>{profile.personal.title}</strong> with a passion for designing resilient data architectures that scale. With over {profile.personal.experienceYears} years of hands-on experience, I bridge the gap between complex business mandates and clean, automated data pipelines. 
               </p>
               <p className={styles.bio}>
                 My engineering philosophy is rooted in automation, early pipeline failure detection, and optimization. Whether optimizing dbt DAG runtimes by 200%-400%, writing robust post-hook macros for metadata analytics, or designing Kimball/Data Vault schemas, I focus on delivering performant, DRY (Don't Repeat Yourself) code.

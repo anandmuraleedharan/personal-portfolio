@@ -223,4 +223,15 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
+  .icon1 {
+    left: 10px;
+    top: -10px;
+  }
+  .icon2 {
+    right: 10px;
+    bottom: -10px;
+  }
+  .icon3 {
+    display: none;
+  }
 }

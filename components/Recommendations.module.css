@@ -163,3 +163,28 @@
     transform: translateX(0);
   }
 }
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    position: relative;
+    padding: 0 1.5rem;
+  }
+  .recommendationCard {
+    width: 100%;
+    max-width: 100%;
+  }
+  .navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(3, 7, 18, 0.8) !important;
+    border-color: var(--primary) !important;
+  }
+  .navButton:first-of-type {
+    left: -5px;
+  }
+  .navButton:last-of-type {
+    right: -5px;
+  }
+}
