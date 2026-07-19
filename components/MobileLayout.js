@@ -152,7 +152,7 @@ export default function MobileLayout() {
         e.preventDefault();
         setMobileMenuOpen(false);
         setTimeout(() => {
-          const element = document.getElementById(targetId);
+          const element = document.querySelector(`.mobileView #${targetId}`) || document.getElementById(targetId);
           if (element) {
             element.scrollIntoView({ behavior: "smooth" });
           }
