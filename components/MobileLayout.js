@@ -8,7 +8,8 @@ import {
   Server, Code, Briefcase, Calendar, MapPin, 
   Sparkles, FileText, Cpu, CheckCircle, 
   AlertTriangle, ArrowRight, RefreshCw, 
-  Quote, ChevronLeft, ChevronRight, MessageSquare
+  Quote, ChevronLeft, ChevronRight, MessageSquare,
+  Menu, X, Sun, Moon
 } from "lucide-react";
 
 // Custom SVG Icons for Brands (removed in newer lucide-react versions)
@@ -28,9 +29,42 @@ const LinkedinIcon = ({ size }) => (
 );
 
 export default function MobileLayout() {
+  // Navigation state
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState("dark");
+
   // Recommendations state
   const [recIndex, setRecIndex] = useState(0);
   const [recommendations, setRecommendations] = useState([]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Load and toggle theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (newTheme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  };
 
   // Recruiter Agent state
   const [jobDescription, setJobDescription] = useState("");
@@ -171,11 +205,48 @@ export default function MobileLayout() {
           <a href="mailto:anand.muraleedharan@gmail.com" className={styles.actionBtn} aria-label="Email">
             <Mail size={18} />
           </a>
-          <a href="/resume?print=true" target="_blank" rel="noopener noreferrer" className={styles.resumeBtn}>
-            Resume PDF
-          </a>
+          <button 
+            className={styles.mobileToggle} 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
       </header>
+
+      {/* Mobile Nav Overlay */}
+      {mobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <nav className={styles.mobileNav}>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
+            <a href="#skills" onClick={() => setMobileMenuOpen(false)}>Skills</a>
+            <a href="#experience" onClick={() => setMobileMenuOpen(false)}>Experience</a>
+            <a href="#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a>
+            <a href="/apps" onClick={() => setMobileMenuOpen(false)}>Apps</a>
+            <a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={() => setMobileMenuOpen(false)}>
+              Resume PDF
+            </a>
+            <button onClick={() => { window.dispatchEvent(new CustomEvent("portfolio-chat:open")); setMobileMenuOpen(false); }} className={styles.mobileChatLink}>
+              Interview AI
+            </button>
+            <div className={styles.mobileSocials}>
+              <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle Theme">
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+              <a href="mailto:anand.muraleedharan@gmail.com" aria-label="Email">
+                <Mail size={20} />
+              </a>
+              <a href="https://github.com/anandmuraleedharan" target="_blank" rel="noopener noreferrer">
+                <GithubIcon size={20} />
+              </a>
+              <a href="https://www.linkedin.com/in/anand-muraleedharan/" target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon size={20} />
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
 
       <main style={{ flexGrow: 1 }}>
         {/* HERO SECTION */}
@@ -217,7 +288,7 @@ export default function MobileLayout() {
         </section>
 
         {/* ABOUT & OVERVIEW */}
-        <section className={styles.section}>
+        <section id="about" className={styles.section}>
           <h2 className={styles.sectionTitle}>Overview</h2>
           <div className={styles.aboutContainer}>
             <div className="glass-card bioCard">
@@ -268,7 +339,7 @@ export default function MobileLayout() {
         </section>
 
         {/* SKILLS */}
-        <section className={styles.section}>
+        <section id="skills" className={styles.section}>
           <h2 className={styles.sectionTitle}>Skills</h2>
           <div className={styles.skillsContainer}>
             {profile.skills.groups.map((group, groupIdx) => (
@@ -299,7 +370,7 @@ export default function MobileLayout() {
         </section>
 
         {/* WORK EXPERIENCE */}
-        <section className={styles.section}>
+        <section id="experience" className={styles.section}>
           <h2 className={styles.sectionTitle}>Work History</h2>
           <div className={styles.experienceContainer}>
             {profile.experience.map((exp) => (
@@ -348,7 +419,7 @@ export default function MobileLayout() {
         </section>
 
         {/* PROJECTS */}
-        <section className={styles.section}>
+        <section id="projects" className={styles.section}>
           <h2 className={styles.sectionTitle}>Featured Projects</h2>
           <div className={styles.projectsGrid}>
             {projectsData.map((proj, idx) => (

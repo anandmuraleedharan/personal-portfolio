@@ -24,7 +24,7 @@ export default function Hero() {
               <MessageSquare size={18} />
               <span>Interview Anand (AI)</span>
             </button>
-            <a href="/resume?print=true" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}>
+            <a href="/resume" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ borderColor: 'var(--accent)', color: 'var(--accent)' }}>
               <span>Download A4 Resume</span>
             </a>
             <a href="mailto:anand.muraleedharan@gmail.com" className="btn btn-secondary">

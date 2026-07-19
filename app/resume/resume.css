@@ -379,6 +379,7 @@
     margin: 0 !important;
     width: 100% !important;
     min-height: auto !important;
+    gap: 0 !important;
   }
 
   .resumePage {
