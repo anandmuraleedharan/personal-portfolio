@@ -387,6 +387,7 @@
     box-shadow: none !important;
     width: 210mm !important;
     height: 297mm !important;
+    transform: none !important;
     page-break-after: always !important;
     page-break-inside: avoid !important;
     -webkit-print-color-adjust: exact !important;

@@ -6,6 +6,22 @@ import "./resume.css";
 
 export default function ResumePage() {
   const [activeProfile, setActiveProfile] = useState(profile);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 840) {
+        const factor = (width - 32) / 794;
+        setScale(factor);
+      } else {
+        setScale(1);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -77,9 +93,16 @@ export default function ResumePage() {
         </button>
       </div>
 
-      <div className="resumeContainer">
+      <div className="resumeContainer" style={{ overflowX: "hidden" }}>
         {/* ================= PAGE 1 ================= */}
-        <div className="resumePage">
+        <div 
+          className="resumePage"
+          style={{
+            transform: scale < 1 ? `scale(${scale})` : "none",
+            transformOrigin: "top center",
+            marginBottom: scale < 1 ? `calc(297mm * (${scale} - 1) + 2rem)` : "0"
+          }}
+        >
           {/* Blue Header Banner */}
           <div className="headerBanner">
             <h1 className="nameTitle">{activeProfile.personal.name}</h1>
@@ -223,7 +246,14 @@ export default function ResumePage() {
         </div>
 
         {/* ================= PAGE 2 ================= */}
-        <div className="resumePage">
+        <div 
+          className="resumePage"
+          style={{
+            transform: scale < 1 ? `scale(${scale})` : "none",
+            transformOrigin: "top center",
+            marginBottom: scale < 1 ? `calc(297mm * (${scale} - 1))` : "0"
+          }}
+        >
           <div className="columnsContainer" style={{ height: "100%" }}>
             {/* Left Column */}
             <div className="leftColumn">
