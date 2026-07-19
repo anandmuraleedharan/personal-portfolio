@@ -48,6 +48,23 @@ export default function Header() {
   };
 
   const handleNavClick = (e, path) => {
+    if (path.startsWith("/#") || path.startsWith("#")) {
+      const targetId = path.substring(path.indexOf("#") + 1);
+      // Check if we are on the homepage
+      const isHomepage = typeof window !== "undefined" && (window.location.pathname === "/" || window.location.pathname === "");
+      if (isHomepage) {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        setTimeout(() => {
+          const element = document.getElementById(targetId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+        return;
+      }
+    }
+    
     setTimeout(() => {
       setMobileMenuOpen(false);
     }, 150);
