@@ -47,6 +47,12 @@ export default function Header() {
     }
   };
 
+  const handleNavClick = (e, path) => {
+    setTimeout(() => {
+      setMobileMenuOpen(false);
+    }, 150);
+  };
+
   // Custom Inline SVG Icons for Brands (removed in newer lucide-react versions)
   const GithubIcon = ({ size }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -115,12 +121,12 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <nav className={styles.mobileNav}>
-            <a href="/#about" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="/#skills" onClick={() => setMobileMenuOpen(false)}>Skills</a>
-            <a href="/#experience" onClick={() => setMobileMenuOpen(false)}>Experience</a>
-            <a href="/#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a>
-            <a href="/apps" onClick={() => setMobileMenuOpen(false)}>Apps</a>
-            <a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={() => setMobileMenuOpen(false)}>
+            <a href="/#about" onClick={(e) => handleNavClick(e, "/#about")}>About</a>
+            <a href="/#skills" onClick={(e) => handleNavClick(e, "/#skills")}>Skills</a>
+            <a href="/#experience" onClick={(e) => handleNavClick(e, "/#experience")}>Experience</a>
+            <a href="/#projects" onClick={(e) => handleNavClick(e, "/#projects")}>Projects</a>
+            <a href="/apps" onClick={(e) => handleNavClick(e, "/apps")}>Apps</a>
+            <a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={(e) => handleNavClick(e, "/resume")}>
               Resume PDF
             </a>
             <button onClick={() => { window.dispatchEvent(new CustomEvent("portfolio-chat:open")); setMobileMenuOpen(false); }} className={styles.mobileChatLink}>

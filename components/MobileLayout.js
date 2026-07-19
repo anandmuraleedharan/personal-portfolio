@@ -143,6 +143,12 @@ export default function MobileLayout() {
     setRecIndex((prev) => (prev + 1) % recommendations.length);
   };
 
+  const handleNavClick = (e, path) => {
+    setTimeout(() => {
+      setMobileMenuOpen(false);
+    }, 150);
+  };
+
   const handleTailor = async () => {
     if (!jobDescription.trim() || isLoading) return;
     setIsLoading(true);
@@ -219,12 +225,12 @@ export default function MobileLayout() {
       {mobileMenuOpen && (
         <div className={styles.mobileMenu}>
           <nav className={styles.mobileNav}>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="#skills" onClick={() => setMobileMenuOpen(false)}>Skills</a>
-            <a href="#experience" onClick={() => setMobileMenuOpen(false)}>Experience</a>
-            <a href="#projects" onClick={() => setMobileMenuOpen(false)}>Projects</a>
-            <a href="/apps" onClick={() => setMobileMenuOpen(false)}>Apps</a>
-            <a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={() => setMobileMenuOpen(false)}>
+            <a href="/#about" onClick={(e) => handleNavClick(e, "/#about")}>About</a>
+            <a href="/#skills" onClick={(e) => handleNavClick(e, "/#skills")}>Skills</a>
+            <a href="/#experience" onClick={(e) => handleNavClick(e, "/#experience")}>Experience</a>
+            <a href="/#projects" onClick={(e) => handleNavClick(e, "/#projects")}>Projects</a>
+            <a href="/apps" onClick={(e) => handleNavClick(e, "/apps")}>Apps</a>
+            <a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.mobileResumeLink} onClick={(e) => handleNavClick(e, "/resume")}>
               Resume PDF
             </a>
             <button onClick={() => { window.dispatchEvent(new CustomEvent("portfolio-chat:open")); setMobileMenuOpen(false); }} className={styles.mobileChatLink}>
