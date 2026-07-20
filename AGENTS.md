@@ -28,10 +28,12 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - If Gemini limits are hit (e.g. rate limits or quota depletion), automatically fall back to **OpenRouter free models** via standard HTTPS requests to `https://openrouter.ai/api/v1/chat/completions`.
   - Target fallback models: `meta-llama/llama-3.3-70b-instruct:free`, `google/gemma-2-9b-it:free`, etc.
 
-## Mandatory Local Testing & Git Versioning Workflow
-- **Automated Testing Mandate:** `npm run build` alone is insufficient because builds pass even if zero tests exist. For every new project, feature, or API endpoint, unit or integration test suites MUST be created and executed (`npm test` / Vitest / Playwright). The test suite must run and pass locally alongside build verification before committing or deploying code.
-- **Local Testing Requirement:** ALWAYS test builds (`npm run build`) and run test suites locally BEFORE pushing or deploying.
-- **Git Tracking Requirement:** ALWAYS stage, commit, and push changes to GitHub (`git add . && git commit -m "..." && git push origin main`) for both the parent monorepo AND any submodules in `apps/*` BEFORE or alongside Vercel deployments. Never leave uncommitted or unpushed changes when shipping updates.
+## Mandatory Testing, TDD & Git Versioning Workflow
+- **TDD (Test-Driven Development) Mandate:** ALWAYS choose to develop via TDD. Write failing unit, integration, or contract tests BEFORE writing feature code, and refine implementation until all test assertions pass cleanly.
+- **Visual & Screenshot E2E Testing Mandate:** ALWAYS add visual E2E tests (using Playwright or headless browser tools to emulate desktop/mobile viewports, take screenshots, and verify visual alignment) and run them to test before closing any work item.
+- **Automated Testing Mandate:** `npm run build` alone is insufficient because builds pass even if zero tests exist. Unit, integration, and visual test suites MUST be created and executed (`npm test` / Vitest / Playwright). The test suite must run and pass locally alongside build verification before committing or deploying code.
+- **Git Commit & Push BEFORE Vercel Deploy Mandate:** Git commits and remote pushes to GitHub (`git add . && git commit -m "..." && git push origin main`) MUST ALWAYS happen BEFORE triggering Vercel production deployments. Never trigger Vercel deployments with uncommitted or unpushed changes.
+
 
 ## Mandatory Documentation Standards
 - **MkDocs Documentation Mandate:** Whenever a new micro-app is added to `apps/` or major features are launched, technical documentation MUST be created in `docs-portal/docs/apps/<app-name>.md`, registered in `docs-portal/mkdocs.yml` navigation, and updated in `docs-portal/docs/index.md` directory & port mapping tables.

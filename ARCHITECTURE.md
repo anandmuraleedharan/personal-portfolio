@@ -64,3 +64,11 @@ graph TD
     I -.-> A
 ```
 
+---
+
+## 7. Quality Assurance, TDD & Release Mandates
+* **Test-Driven Development (TDD):** Feature logic must be written to satisfy failing test assertions created first during design phase.
+* **Visual Playwright Testing:** Every task closure requires running Playwright / visual E2E tests with viewport screenshots (desktop & mobile) to verify layout integrity.
+* **Git Precedence Rule:** Code must be committed and pushed to GitHub (`git add . && git commit -m "..." && git push origin main`) for both the monorepo root and all submodules before initiating Vercel deployments.
+
+
