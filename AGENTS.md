@@ -28,9 +28,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - If Gemini limits are hit (e.g. rate limits or quota depletion), automatically fall back to **OpenRouter free models** via standard HTTPS requests to `https://openrouter.ai/api/v1/chat/completions`.
   - Target fallback models: `meta-llama/llama-3.3-70b-instruct:free`, `google/gemma-2-9b-it:free`, etc.
 
-- All apps in `apps/` must be structured as Git submodules to maintain separation of concerns while keeping them aggregated under the `personal-portfolio` repository.
+## Mandatory Local Testing & Git Versioning Workflow
+- **Local Testing Requirement:** ALWAYS test builds (`npm run build`) and verify functionality locally BEFORE pushing or deploying.
+- **Git Tracking Requirement:** ALWAYS stage, commit, and push changes to GitHub (`git add . && git commit -m "..." && git push origin main`) for both the parent monorepo AND any submodules in `apps/*` BEFORE or alongside Vercel deployments. Never leave uncommitted or unpushed changes when shipping updates.
 
-## Interactive Architecture Visualizer Updates
-- **Visualizer Maintenance:** Whenever a new micro-app is added to the `apps/` directory or significant architectural changes are made to any existing app, the Interactive Architecture Visualizer (`app/architecture/page.js`) must be updated. Ensure that the app metadata, design patterns list, SVG block diagrams, simulation steps, and code spotlights are updated to match the current state of the workspace.
 
 
