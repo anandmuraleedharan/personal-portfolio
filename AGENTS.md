@@ -35,6 +35,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Mandatory Documentation Standards
 - **MkDocs Documentation Mandate:** Whenever a new micro-app is added to `apps/` or major features are launched, technical documentation MUST be created in `docs-portal/docs/apps/<app-name>.md`, registered in `docs-portal/mkdocs.yml` navigation, and updated in `docs-portal/docs/index.md` directory & port mapping tables.
+- **MkDocs Vercel Deployment:** The documentation portal (`docs.anandmuraleedharan.com`) is a dedicated Vercel project located inside `docs-portal/`. Whenever documentation files or `mkdocs.yml` are modified, deploy `docs-portal/` using `npx vercel --prod --yes` inside `docs-portal/` alongside the parent monorepo.
 - **Interactive Architecture Visualizer Updates:** Whenever a new app is added or architecture changes, `app/architecture/page.js` MUST be updated with new SVG nodes, links, telemetry HUD stats, and code spotlights.
 
 
