@@ -951,6 +951,9 @@ export default function ArchitecturePage() {
   const [activeTab, setActiveTab] = useState("dailyread");
   const [simulationIndex, setSimulationIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isTrafficSpike, setIsTrafficSpike] = useState(false);
+  const [isChaosFailover, setIsChaosFailover] = useState(false);
+  const [selectedNode, setSelectedNode] = useState(null);
   const [copied, setCopied] = useState(false);
   const [docsUrl, setDocsUrl] = useState("https://docs.anandmuraleedharan.com");
 
@@ -961,6 +964,20 @@ export default function ArchitecturePage() {
   }, []);
 
   const activeData = APPS_ARCH_DATA[activeTab];
+
+  // Helper telemetry metrics per sub-app
+  const TELEMETRY_HUD = {
+    dailyread: { volume: "1 Run / Day (06:00 UTC)", latency: "~1.2s Total Build", health: "Primary/Lite Cascade", sla: "99.9% Uptime" },
+    cogpoker: { volume: isTrafficSpike ? "350 Msgs / min (Spike!)" : "60 Msgs / min", latency: isTrafficSpike ? "~45ms p99" : "<18ms p99", health: isChaosFailover ? "Failover: Polling API" : "Supabase WSS Active", sla: "100% Self-Healing" },
+    codeforge: { volume: "Instant Client Processing", latency: "<5ms GZIP Compression", health: "100% Offline Worker", sla: "Zero-Database URL Hash" },
+    pdfforge: { volume: "Multi-Page PDF Render", latency: "~850ms OpenRouter", health: isChaosFailover ? "Failover: Llama 3.3 -> Gemini" : "OpenRouter Cascade", sla: "100% Client Data Privacy" },
+    lipi: { volume: "10 Public REST Endpoints", latency: "~12ms Local Olam DB", health: "Olam Engine + OpenRouter", sla: "CC BY-SA 2.5 IN CORS" },
+    portfolio: { volume: isTrafficSpike ? "500 Req / min (Spike!)" : "45 Req / min", latency: "<150ms Gemini Chat", health: isChaosFailover ? "Failover: Regex Engine" : "Gemini 2.5 Flash", sla: "Stateless Session Cache" },
+    aileron: { volume: "FastAPI + DSPy Flywheel", latency: "~350ms SQL Trace", health: "SQLite + Supabase DB", sla: "Circuit Breaker Active" },
+    analytics: { volume: "Vercel Edge Headers", latency: "<8ms FIFO Pruning", health: "Crypto TOTP Gate", sla: "Strict 100-Row Limit" }
+  };
+
+  const hudData = TELEMETRY_HUD[activeTab] || TELEMETRY_HUD.dailyread;
 
   // Copy code utility
   const handleCopyCode = () => {
@@ -973,6 +990,9 @@ export default function ArchitecturePage() {
   useEffect(() => {
     setSimulationIndex(-1);
     setIsPlaying(false);
+    setIsTrafficSpike(false);
+    setIsChaosFailover(false);
+    setSelectedNode(null);
   }, [activeTab]);
 
   // Simulation play interval logic
@@ -987,10 +1007,10 @@ export default function ArchitecturePage() {
           }
           return prev + 1;
         });
-      }, 1500);
+      }, isTrafficSpike ? 600 : 1500);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, activeData]);
+  }, [isPlaying, isTrafficSpike, activeData]);
 
   const triggerSimulation = () => {
     setSimulationIndex(0);
@@ -1000,23 +1020,20 @@ export default function ArchitecturePage() {
   const resetSimulation = () => {
     setSimulationIndex(-1);
     setIsPlaying(false);
+    setIsTrafficSpike(false);
+    setIsChaosFailover(false);
   };
 
   // Helper to highlight syntax for code spotlights
   const renderHighlightedCode = (codeText) => {
     return codeText.split("\n").map((line, idx) => {
-      // Very basic keyword & comment coloring for visual excellence
       let processed = line;
-      
-      // Comments
-      if (line.trim().startsWith("//")) {
+      if (line.trim().startsWith("//") || line.trim().startsWith("#")) {
         return <div key={idx} className={styles.comment}>{line}</div>;
       }
-      
-      // Process simple tokens
       const words = line.split(/(\s+|=|\(|\)|\{|\}|\[|\]|;|,|\.|\`|\$|:)/);
       const elements = words.map((word, wIdx) => {
-        if (['async', 'function', 'const', 'let', 'export', 'import', 'from', 'return', 'await', 'for', 'of', 'throw', 'new', 'try', 'catch', 'class', 'if', 'else', 'interface', 'private', 'constructor', 'try'].includes(word.trim())) {
+        if (['async', 'function', 'const', 'let', 'export', 'import', 'from', 'return', 'await', 'for', 'of', 'throw', 'new', 'try', 'catch', 'class', 'if', 'else', 'interface', 'private', 'def'].includes(word.trim())) {
           return <span key={wIdx} className={styles.keyword}>{word}</span>;
         }
         if (['Promise', 'string', 'number', 'boolean', 'Uint8Array', 'TextEncoder', 'ReadableStream', 'CompressionStream', 'Response', 'NextRequest', 'NextResponse', 'GoogleGenAI', 'MockRealtimeChannel'].includes(word.trim())) {
@@ -1183,9 +1200,30 @@ export default function ArchitecturePage() {
                 </div>
               </div>
 
-              {/* Right Panel: Animated Canvas & Simulation Controls */}
+              {/* Right Panel: Animated Canvas, Telemetry HUD & Controls */}
               <div className="glass-card">
                 <div className={styles.infoCard}>
+                  
+                  {/* Live Telemetry HUD Bar */}
+                  <div className={styles.hudPanel}>
+                    <div className={styles.hudItem}>
+                      <span className={styles.hudLabel}>Throughput</span>
+                      <span className={styles.hudVal}>{hudData.volume}</span>
+                    </div>
+                    <div className={styles.hudItem}>
+                      <span className={styles.hudLabel}>Latency SLA</span>
+                      <span className={styles.hudVal}>{hudData.latency}</span>
+                    </div>
+                    <div className={styles.hudItem}>
+                      <span className={styles.hudLabel}>System Health</span>
+                      <span className={styles.hudVal}>{hudData.health}</span>
+                    </div>
+                    <div className={styles.hudItem}>
+                      <span className={styles.hudLabel}>Resilience SLA</span>
+                      <span className={styles.hudVal}>{hudData.sla}</span>
+                    </div>
+                  </div>
+
                   <div className={styles.diagramTitle}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                       <Network size={16} />
@@ -1214,9 +1252,33 @@ export default function ArchitecturePage() {
                     </div>
                   </div>
 
+                  {/* Mode Toggles: Traffic Spike & Chaos Test */}
+                  <div className={styles.simControlsBar}>
+                    <div className={styles.modeToggleGroup}>
+                      <button 
+                        className={`${styles.modeBtn} ${isTrafficSpike ? styles.modeBtnSpike : ''}`}
+                        onClick={() => setIsTrafficSpike(!isTrafficSpike)}
+                        title="Simulate sudden high-traffic message spike"
+                      >
+                        <Zap size={13} />
+                        <span>{isTrafficSpike ? "Spike Active ⚡" : "Simulate Spike"}</span>
+                      </button>
+                      <button 
+                        className={`${styles.modeBtn} ${isChaosFailover ? styles.modeBtnFailed : ''}`}
+                        onClick={() => setIsChaosFailover(!isChaosFailover)}
+                        title="Simulate node failure & dynamic rerouting"
+                      >
+                        <Activity size={13} />
+                        <span>{isChaosFailover ? "Chaos Test 🔥" : "Simulate Failover"}</span>
+                      </button>
+                    </div>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--foreground-muted)' }}>
+                      💡 Click any node to inspect details
+                    </span>
+                  </div>
+
                   <div className={styles.diagramCanvas}>
                     <svg viewBox="0 0 650 250" className={styles.svgContainer}>
-                      {/* Define defs for arrows and gradients */}
                       <defs>
                         <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                           <path d="M 0 2 L 8 5 L 0 8 z" fill="rgba(255, 255, 255, 0.2)" />
@@ -1256,22 +1318,31 @@ export default function ArchitecturePage() {
                           nodeClass += ` ${styles.diagramNodeSuccess}`;
                         }
 
-                        // Check if it's a fallback sub-node (e.g. DDG, mock polling, Gemini fallback)
-                        if (activeTab === 'dailyread' && (node.id === 2 || node.id === 3) && isActive) {
-                          nodeClass += ` ${styles.diagramNodeFallback}`;
+                        // Traffic Spike glow highlight
+                        if (isTrafficSpike && (node.id === 1 || node.id === 0)) {
+                          nodeClass += ` ${styles.diagramNodeSpike}`;
                         }
-                        if (activeTab === 'cogpoker' && (node.id === 2 || node.id === 3) && isActive) {
-                          nodeClass += ` ${styles.diagramNodeFallback}`;
+
+                        // Chaos Failover node failure state highlight
+                        const isPrimaryNodeFailed = isChaosFailover && node.id === 1;
+                        if (isPrimaryNodeFailed) {
+                          nodeClass += ` ${styles.diagramNodeFailed}`;
                         }
-                        if (activeTab === 'portfolio' && (node.id === 1 || node.id === 2) && isActive) {
-                          nodeClass += ` ${styles.diagramNodeFallback}`;
-                        }
-                        if (activeTab === 'aileron' && (node.id === 2 || node.id === 3) && isActive) {
+
+                        // Fallback sub-nodes
+                        if ((activeTab === 'dailyread' && (node.id === 2 || node.id === 3) && (isActive || isChaosFailover)) ||
+                            (activeTab === 'cogpoker' && (node.id === 2 || node.id === 3) && (isActive || isChaosFailover)) ||
+                            (activeTab === 'portfolio' && (node.id === 1 || node.id === 2) && (isActive || isChaosFailover)) ||
+                            (activeTab === 'aileron' && (node.id === 2 || node.id === 3) && (isActive || isChaosFailover))) {
                           nodeClass += ` ${styles.diagramNodeFallback}`;
                         }
 
                         return (
-                          <g key={node.id}>
+                          <g 
+                            key={node.id} 
+                            onClick={() => setSelectedNode(node)} 
+                            style={{ cursor: 'pointer' }}
+                          >
                             <rect 
                               x={node.x}
                               y={node.y - node.h/2}
@@ -1281,10 +1352,10 @@ export default function ArchitecturePage() {
                               className={nodeClass}
                             />
                             <text x={node.x + node.w/2} y={node.y - 2} className={styles.diagramLabel}>
-                              {node.label}
+                              {isPrimaryNodeFailed ? "⚠️ Degraded" : node.label}
                             </text>
                             <text x={node.x + node.w/2} y={node.y + 12} className={styles.diagramSublabel}>
-                              {node.sublabel}
+                              {isPrimaryNodeFailed ? "Failover Route" : node.sublabel}
                             </text>
                           </g>
                         );
@@ -1308,8 +1379,12 @@ export default function ArchitecturePage() {
                   }}>
                     <Zap size={14} className={simulationIndex !== -1 ? styles.activeText : ''} style={{ color: simulationIndex === -1 ? 'var(--foreground-dim)' : 'var(--primary)', flexShrink: 0 }} />
                     <span>
-                      {simulationIndex === -1 
-                        ? "Click 'Simulate' to watch the stateless message pipeline execution flow."
+                      {isChaosFailover
+                        ? "🔥 Chaos Test Active: Simulating primary node degradation and fallback circuit execution."
+                        : isTrafficSpike
+                        ? "⚡ Traffic Spike Active: High-volume message influx streaming across pipeline nodes."
+                        : simulationIndex === -1 
+                        ? "Click 'Simulate' to watch the pipeline execution flow, or click any node to inspect details."
                         : activeData.simulationSteps[simulationIndex]?.status
                       }
                     </span>
@@ -1317,6 +1392,37 @@ export default function ArchitecturePage() {
                 </div>
               </div>
             </div>
+
+            {/* Node Inspector Drawer */}
+            <AnimatePresence>
+              {selectedNode && (
+                <motion.div 
+                  className={styles.inspectorDrawer}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 30 }}
+                >
+                  <div className={styles.inspectorHeader}>
+                    <h4 className={styles.inspectorTitle}>🔍 Node Inspector: {selectedNode.label}</h4>
+                    <button className={styles.closeInspectorBtn} onClick={() => setSelectedNode(null)}>✕</button>
+                  </div>
+                  <div style={{ fontSize: '0.88rem', color: 'var(--foreground-muted)', lineHeight: '1.5' }}>
+                    <p style={{ margin: '0 0 0.75rem 0' }}>
+                      <strong>Sublabel:</strong> <code style={{ color: '#38bdf8' }}>{selectedNode.sublabel}</code>
+                    </p>
+                    <p style={{ margin: '0 0 0.75rem 0' }}>
+                      <strong>Application Context:</strong> {activeData.title} ({activeData.subtitle})
+                    </p>
+                    <p style={{ margin: '0 0 0.75rem 0' }}>
+                      <strong>Failover Mechanism:</strong> Automatic retry & fallback cascade enabled.
+                    </p>
+                    <p style={{ margin: '0', fontSize: '0.8rem', color: 'var(--foreground-dim)' }}>
+                      Position: X={selectedNode.x}, Y={selectedNode.y} | Status: Operational
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Code Spotlight Section */}
             <div className={styles.codeSpotlightSection}>

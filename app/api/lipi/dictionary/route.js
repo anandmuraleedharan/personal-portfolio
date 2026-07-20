@@ -10,7 +10,8 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Max-Age": "86400"
+  "Access-Control-Max-Age": "86400",
+  "X-Data-License": "CC BY-SA 2.5 IN (Olam English-Malayalam Corpus)"
 };
 
 // Response helper that wraps JSON with CORS headers only when enabled

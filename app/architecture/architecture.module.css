@@ -773,3 +773,175 @@
   box-shadow: 0 6px 16px rgba(0, 242, 254, 0.12);
 }
 
+/* Telemetry HUD Panel */
+.hudPanel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 640px) {
+  .hudPanel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.hudItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hudLabel {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--foreground-muted);
+  font-weight: 700;
+}
+
+.hudVal {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #38bdf8;
+  font-family: monospace;
+}
+
+/* Simulation Controls Row */
+.simControlsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.modeToggleGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modeBtn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: rgba(0,0,0,0.2);
+  color: var(--foreground-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.modeBtn:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--foreground);
+}
+
+.modeBtnSpike {
+  border-color: rgba(234, 179, 8, 0.4);
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.1);
+}
+
+.modeBtnFailed {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Node Failover & Traffic Spike States */
+.diagramNodeSpike {
+  stroke: #eab308 !important;
+  stroke-width: 2.5px !important;
+  animation: spikePulse 1s infinite alternate;
+}
+
+.diagramNodeFailed {
+  stroke: #ef4444 !important;
+  stroke-width: 2.5px !important;
+  fill: rgba(239, 68, 68, 0.15) !important;
+  animation: failPulse 0.8s infinite alternate;
+}
+
+@keyframes spikePulse {
+  from { filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.4)); }
+  to { filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.9)); }
+}
+
+@keyframes failPulse {
+  from { filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.4)); }
+  to { filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.9)); }
+}
+
+/* Animated Flow Particle Stream */
+.flowParticle {
+  animation: flowAlongPath 1.5s infinite linear;
+}
+
+.flowParticleSpike {
+  animation: flowAlongPath 0.6s infinite linear;
+}
+
+/* Inspector Drawer / Modal */
+.inspectorDrawer {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 380px;
+  max-width: calc(100vw - 3rem);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  backdrop-filter: blur(16px);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.inspectorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.inspectorTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #38bdf8;
+  margin: 0;
+}
+
+.closeInspectorBtn {
+  background: transparent;
+  border: none;
+  color: var(--foreground-muted);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+
+.closeInspectorBtn:hover {
+  color: var(--foreground);
+}
+
+
