@@ -38,6 +38,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **MkDocs Vercel Deployment:** The documentation portal (`docs.anandmuraleedharan.com`) is a dedicated Vercel project located inside `docs-portal/`. Whenever documentation files or `mkdocs.yml` are modified, deploy `docs-portal/` using `npx vercel --prod --yes` inside `docs-portal/` alongside the parent monorepo.
 - **Interactive Architecture Visualizer Updates:** Whenever a new app is added or architecture changes, `app/architecture/page.js` MUST be updated with new SVG nodes, links, telemetry HUD stats, and code spotlights.
 
+## Mandatory Subdomain & Vercel Domain Binding Rule
+- **Automated Vercel Domain Binding:** Whenever a new sub-app or micro-project is created in `apps/`, the AI agent MUST automatically bind the custom subdomain on Vercel via CLI:
+  `npx vercel domains add <subdomain>.anandmuraleedharan.com <project-name>`
+- **Spaceship DNS Reminder:** The AI agent MUST always remind the user to add the matching CNAME record in Spaceship DNS:
+  - **Host:** `<subdomain>`
+  - **Target:** `cname.vercel-dns.com`
+
+
 
 
 
