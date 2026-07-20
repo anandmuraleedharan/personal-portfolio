@@ -29,8 +29,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Target fallback models: `meta-llama/llama-3.3-70b-instruct:free`, `google/gemma-2-9b-it:free`, etc.
 
 ## Mandatory Local Testing & Git Versioning Workflow
-- **Local Testing Requirement:** ALWAYS test builds (`npm run build`) and verify functionality locally BEFORE pushing or deploying.
+- **Automated Testing Mandate:** `npm run build` alone is insufficient because builds pass even if zero tests exist. For every new project, feature, or API endpoint, unit or integration test suites MUST be created and executed (`npm test` / Vitest / Playwright). The test suite must run and pass locally alongside build verification before committing or deploying code.
+- **Local Testing Requirement:** ALWAYS test builds (`npm run build`) and run test suites locally BEFORE pushing or deploying.
 - **Git Tracking Requirement:** ALWAYS stage, commit, and push changes to GitHub (`git add . && git commit -m "..." && git push origin main`) for both the parent monorepo AND any submodules in `apps/*` BEFORE or alongside Vercel deployments. Never leave uncommitted or unpushed changes when shipping updates.
+
 
 
 
