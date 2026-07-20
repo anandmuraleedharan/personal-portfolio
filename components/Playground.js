@@ -67,6 +67,15 @@ export default function Playground() {
       url: "/analytics",
       icon: <Activity size={22} className={styles.iconCyan || styles.iconBlue} />,
       status: "Active"
+    },
+    {
+      title: "InterviewForge",
+      subtitle: "AI Interview Coach & Prep Suite",
+      description: "A stateless AI career platform for real-time mock interviews with Web Speech audio practice, ATS resume match scoring, STAR story formatting, and salary negotiation cheat-sheets.",
+      badges: ["Next.js 16", "Gemini 2.5", "Web Speech STT/TTS", "OpenRouter API", "Print PDF"],
+      url: "https://interviewforge.anandmuraleedharan.com",
+      icon: <Sparkles size={22} className={styles.iconBlue} />,
+      status: "Active"
     }
   ]);
 
@@ -92,6 +101,9 @@ export default function Playground() {
           }
           if (app.title === "Lipi") {
             return { ...app, url: "http://localhost:3006" };
+          }
+          if (app.title === "InterviewForge") {
+            return { ...app, url: "http://localhost:3007" };
           }
           return app;
         }));

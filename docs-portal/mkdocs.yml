@@ -49,4 +49,5 @@ nav:
     - Personal Portfolio: apps/portfolio.md
     - Aileron Flywheel: apps/aileron.md
     - Visitor Analytics: apps/analytics.md
+    - InterviewForge: apps/interviewforge.md
   - Tech Stack & Cost: cost_breakdown.md

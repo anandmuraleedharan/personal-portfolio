@@ -17,3 +17,8 @@
 [submodule "apps/lipi"]
 	path = apps/lipi
 	url = https://github.com/anandmuraleedharan/lipi.git
+
+[submodule "apps/interviewforge"]
+	path = apps/interviewforge
+	url = ./apps/interviewforge
+

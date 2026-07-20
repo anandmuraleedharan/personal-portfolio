@@ -22,7 +22,8 @@ import {
   Sliders,
   ExternalLink,
   Lock,
-  BookOpen
+  BookOpen,
+  Sparkles
 } from "lucide-react";
 
 // App technical details and coordinates for animated SVG diagrams
@@ -738,6 +739,92 @@ export function verifyTOTP(token: string, secret: string): boolean {
       ],
       resilience: "TOTP passcode verification runs strictly locally on edge servers, requiring zero third-party auth services or external networks. If database write calls return errors, the client tracker fails silently without disrupting the visitor's page transition."
     }
+  },
+  interviewforge: {
+    title: "InterviewForge",
+    subtitle: "AI Interview Coach & Resume Prep Suite",
+    description: "A stateless AI platform for real-time mock interviews with Web Speech audio practice, ATS resume match scoring, STAR story formatting, and salary negotiation cheat-sheets.",
+    badges: ["Next.js 16", "Gemini 2.5", "Web Speech STT/TTS", "OpenRouter API", "Print PDF"],
+    patterns: [
+      {
+        name: "Audio Web Speech Loop Pattern",
+        desc: "Combines browser-native SpeechRecognition (STT) and SpeechSynthesis (TTS) with Gemini LLM prompt orchestration for real-time audio mock interview practice."
+      },
+      {
+        name: "Stateless ATS Matcher Engine",
+        desc: "Cross-references job requirements and candidate resumes in memory, computing a 0-100% ATS score and generating print-ready PDF/JSON exports without database persistence."
+      },
+      {
+        name: "LLM Cascade Proxy Pattern",
+        desc: "Routes inference requests to primary Gemini 2.5 Flash endpoints, automatically failing over to OpenRouter Llama 3.3 free endpoints if rate limits are hit."
+      }
+    ],
+    nodes: [
+      { id: 0, label: "Candidate UI", sublabel: "Audio / Text", x: 50, y: 110, w: 95, h: 50 },
+      { id: 1, label: "Unified AI Proxy", sublabel: "/api/ai", x: 190, y: 110, w: 100, h: 50 },
+      { id: 2, label: "Gemini 2.5 Flash", sublabel: "Primary LLM", x: 330, y: 50, w: 105, h: 50 },
+      { id: 3, label: "OpenRouter Llama", sublabel: "Fallback LLM", x: 330, y: 170, w: 110, h: 50 },
+      { id: 4, label: "Web Speech Engine", sublabel: "STT / TTS Audio", x: 470, y: 50, w: 115, h: 50 },
+      { id: 5, label: "Print Exporter", sublabel: "PDF / Cheat-Sheet", x: 470, y: 170, w: 115, h: 50 }
+    ],
+    links: [
+      { from: 0, to: 1, path: "M 95 110 L 190 110" },
+      { from: 1, to: 2, path: "M 290 110 L 330 50" },
+      { from: 1, to: 3, path: "M 290 110 L 330 170" },
+      { from: 2, to: 4, path: "M 435 50 L 470 50" },
+      { from: 2, to: 5, path: "M 435 50 L 470 170" },
+      { from: 3, to: 5, path: "M 440 170 L 470 170" }
+    ],
+    simulationSteps: [
+      { nodeIds: [0], activeLink: -1, status: "Candidate enters mock interview room, uploads resume, or pastes target job description." },
+      { nodeIds: [1], activeLink: 0, status: "Dispatches evaluation payload to serverless AI proxy route (/api/ai)." },
+      { nodeIds: [2], activeLink: 1, status: "Gemini 2.5 Flash processes role context, computes ATS score, or evaluates answer structure." },
+      { nodeIds: [4], activeLink: 3, status: "Triggers Web Speech Synthesis (TTS) to read interview questions aloud to candidate." },
+      { nodeIds: [5], activeLink: 4, status: "Formats tailored ATS resume, STAR story, or 1-page interview cheat-sheet for print export." }
+    ],
+    code: `// Unified AI Proxy with OpenRouter Fallback
+export async function POST(request) {
+  const { prompt, systemInstruction } = await request.json();
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (apiKey) {
+    try {
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: { systemInstruction }
+      });
+      return Response.json({ result: response.text, provider: "gemini-2.5-flash" });
+    } catch (err) {
+      console.warn("Gemini error, failing over to OpenRouter:", err);
+    }
+  }
+
+  // OpenRouter Fallback
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ model: "meta-llama/llama-3.3-70b-instruct:free", messages: [{ role: "user", content: prompt }] })
+  });
+  const data = await res.json();
+  return Response.json({ result: data.choices[0].message.content });
+}`,
+    docs: {
+      overview: "InterviewForge is a comprehensive, stateless AI career preparation suite. It combines real-time Web Speech audio practice, ATS resume match scoring, STAR behavioral story formatting, and salary negotiation cheat-sheet generators into a zero-database platform.",
+      systemFlow: [
+        { step: "1. Input Gathering", detail: "Candidate inputs target JD, base resume, or audio answer." },
+        { step: "2. Serverless AI Dispatch", detail: "Sends prompt payloads through Next.js proxy (/api/ai)." },
+        { step: "3. Primary/Fallback Inference", detail: "Executes on Gemini 2.5 Flash; automatically fails over to OpenRouter Llama 3.3 free tier if quotas hit." },
+        { step: "4. Web Speech Synthesis", detail: "Reads generated interview questions back to candidate using browser Web Speech TTS." },
+        { step: "5. PDF & Cheat-Sheet Print", detail: "Compiles formatted ATS resumes and 1-page negotiation cheat-sheets for PDF export." }
+      ],
+      stateStorage: [
+        { key: "Session Storage", type: "Browser Storage", purpose: "Retains interview progress and ATS scores during active browser session." },
+        { key: "Stateless PDF Export", type: "CSS Print Styles", purpose: "Renders print-ready A4 document layouts without server storage." }
+      ],
+      resilience: "Integrates automatic LLM model failover from Gemini 2.5 to OpenRouter Llama 3.3, ensuring uninterrupted mock interview sessions during API rate limits."
+    }
   }
 };
 
@@ -974,7 +1061,8 @@ export default function ArchitecturePage() {
     lipi: { volume: "10 Public REST Endpoints", latency: "~12ms Local Olam DB", health: "Olam Engine + OpenRouter", sla: "CC BY-SA 2.5 IN CORS" },
     portfolio: { volume: isTrafficSpike ? "500 Req / min (Spike!)" : "45 Req / min", latency: "<150ms Gemini Chat", health: isChaosFailover ? "Failover: Regex Engine" : "Gemini 2.5 Flash", sla: "Stateless Session Cache" },
     aileron: { volume: "FastAPI + DSPy Flywheel", latency: "~350ms SQL Trace", health: "SQLite + Supabase DB", sla: "Circuit Breaker Active" },
-    analytics: { volume: "Vercel Edge Headers", latency: "<8ms FIFO Pruning", health: "Crypto TOTP Gate", sla: "Strict 100-Row Limit" }
+    analytics: { volume: "Vercel Edge Headers", latency: "<8ms FIFO Pruning", health: "Crypto TOTP Gate", sla: "Strict 100-Row Limit" },
+    interviewforge: { volume: "Web Speech STT/TTS", latency: "~850ms Gemini AI", health: isChaosFailover ? "Failover: Llama 3.3" : "Gemini 2.5 Active", sla: "Stateless PDF Export" }
   };
 
   const hudData = TELEMETRY_HUD[activeTab] || TELEMETRY_HUD.dailyread;
@@ -1153,6 +1241,13 @@ export default function ArchitecturePage() {
               >
                 <Activity size={16} />
                 <span>Visitor Analytics</span>
+              </button>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'interviewforge' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('interviewforge')}
+              >
+                <Sparkles size={16} />
+                <span>InterviewForge</span>
               </button>
             </div>
 

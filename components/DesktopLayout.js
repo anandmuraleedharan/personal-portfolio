@@ -5,7 +5,6 @@ import About from "./About";
 import DrivesMe from "./DrivesMe";
 import Experience from "./Experience";
 import Projects from "./Projects";
-import RecruiterAgent from "./RecruiterAgent";
 import Recommendations from "./Recommendations";
 import Chatbot from "./Chatbot";
 
@@ -31,9 +30,6 @@ export default function DesktopLayout() {
 
         {/* Key Projects Showcase */}
         <Projects />
-
-        {/* AI Recruiter Agent for Custom Resumes */}
-        <RecruiterAgent />
 
         {/* Recommendations / Testimonials */}
         <Recommendations />
