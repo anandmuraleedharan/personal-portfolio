@@ -20,7 +20,9 @@ personal-portfolio/ (Main Repo)
     ├── cogpoker/              # "CogPoker" Card Story Pointer
     ├── codeforge/             # "CodeForge" Dev Utility Suite
     ├── pdfforge/              # "PDFForge" PDF Editor & Chat
-    └── aileron/               # "Aileron" SQL Prompt Flywheel
+    ├── aileron/               # "Aileron" SQL Prompt Flywheel
+    ├── lipi/                  # "Lipi" Malayalam Suite & Game
+    └── interviewforge/         # "InterviewForge" AI Coach & Resume Prep
 ```
 
 ---
@@ -39,6 +41,8 @@ When running the entire workspace concurrently via `npm run dev:all`, services a
 | **PDFForge** | `3004` | `apps/pdfforge` | Next.js, PDF.js, PDF-Lib, OpenRouter |
 | **Aileron UI** | `3005` | `apps/aileron` | Next.js, SQL Sandbox |
 | **Aileron Backend** | `8005` | `apps/aileron/backend` | FastAPI Python, SQLite, DSPy |
+| **Lipi** | `3006` | `apps/lipi` | Vite, Vanilla JS, Speech Synthesis |
+| **InterviewForge** | `3007` | `apps/interviewforge` | Next.js 16, Gemini 2.5, Web Speech |
 
 > [!NOTE]
 > The **Visitor Analytics Dashboard** (`/analytics`) is built directly into the **Portfolio Hub** on port `3000` rather than running as a standalone server submodule.

@@ -33,6 +33,11 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Local Testing Requirement:** ALWAYS test builds (`npm run build`) and run test suites locally BEFORE pushing or deploying.
 - **Git Tracking Requirement:** ALWAYS stage, commit, and push changes to GitHub (`git add . && git commit -m "..." && git push origin main`) for both the parent monorepo AND any submodules in `apps/*` BEFORE or alongside Vercel deployments. Never leave uncommitted or unpushed changes when shipping updates.
 
+## Mandatory Documentation Standards
+- **MkDocs Documentation Mandate:** Whenever a new micro-app is added to `apps/` or major features are launched, technical documentation MUST be created in `docs-portal/docs/apps/<app-name>.md`, registered in `docs-portal/mkdocs.yml` navigation, and updated in `docs-portal/docs/index.md` directory & port mapping tables.
+- **Interactive Architecture Visualizer Updates:** Whenever a new app is added or architecture changes, `app/architecture/page.js` MUST be updated with new SVG nodes, links, telemetry HUD stats, and code spotlights.
+
+
 
 
 
