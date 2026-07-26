@@ -8,7 +8,7 @@ import {
   Server, Code, Briefcase, Calendar, MapPin, 
   Sparkles, FileText, Cpu, CheckCircle, 
   AlertTriangle, ArrowRight, RefreshCw, 
-  Quote, ChevronLeft, ChevronRight, MessageSquare,
+  Quote, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, MessageSquare,
   Menu, X, Sun, Moon
 } from "lucide-react";
 
@@ -36,6 +36,11 @@ export default function MobileLayout() {
   // Recommendations state
   const [recIndex, setRecIndex] = useState(0);
   const [recommendations, setRecommendations] = useState([]);
+
+  // Mobile optimization states
+  const [activeSkillTab, setActiveSkillTab] = useState(0);
+  const [expandedExperience, setExpandedExperience] = useState({ autodeskFull: true });
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -364,31 +369,44 @@ export default function MobileLayout() {
         {/* SKILLS */}
         <section id="skills" className={styles.section}>
           <h2 className={styles.sectionTitle}>Skills</h2>
-          <div className={styles.skillsContainer}>
+          
+          <div className={styles.skillsTabs}>
             {profile.skills.groups.map((group, groupIdx) => (
-              <div key={groupIdx} className={`${styles.skillGroupCard} glass-card`}>
-                <div className={styles.cardTitle}>
-                  {getGroupIcon(groupIdx)}
-                  <h3 style={{ margin: 0, fontSize: "1.1rem" }}>{group.title}</h3>
-                </div>
-                <div className={styles.skillsList}>
-                  {group.skills.slice(0, 5).map((skill, skillIdx) => (
-                    <div key={skillIdx} className={styles.skillItem}>
-                      <div className={styles.skillMeta}>
-                        <span className={styles.skillName}>{skill.name}</span>
-                        <span className={styles.skillLevel}>{skill.level}</span>
-                      </div>
-                      <div className={styles.progressBg}>
-                        <div 
-                          className={styles.progressFill}
-                          style={{ width: skill.level === "Expert" ? "95%" : "80%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <button
+                key={groupIdx}
+                className={`${styles.skillsTabBtn} ${activeSkillTab === groupIdx ? styles.skillsTabBtnActive : ""}`}
+                onClick={() => setActiveSkillTab(groupIdx)}
+              >
+                {getGroupIcon(groupIdx)}
+                <span>{group.title.split(" & ")[0]}</span>
+              </button>
             ))}
+          </div>
+
+          <div className={styles.skillsContainer}>
+            {profile.skills.groups.map((group, groupIdx) => {
+              if (activeSkillTab !== groupIdx) return null;
+              return (
+                <div key={groupIdx} className={`${styles.skillGroupCard} glass-card`}>
+                  <div className={styles.skillsList}>
+                    {group.skills.map((skill, skillIdx) => (
+                      <div key={skillIdx} className={styles.skillItem}>
+                        <div className={styles.skillMeta}>
+                          <span className={styles.skillName}>{skill.name}</span>
+                          <span className={styles.skillLevel}>{skill.level}</span>
+                        </div>
+                        <div className={styles.progressBg}>
+                          <div 
+                            className={styles.progressFill}
+                            style={{ width: skill.level === "Expert" ? "95%" : "80%" }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -396,81 +414,126 @@ export default function MobileLayout() {
         <section id="experience" className={styles.section}>
           <h2 className={styles.sectionTitle}>Work History</h2>
           <div className={styles.experienceContainer}>
-            {profile.experience.map((exp) => (
-              <div key={exp.key} className={`${styles.expCard} glass-card`}>
-                <div className={styles.expHeader}>
-                  <div className={styles.expRoleRow}>
-                    <h3 className={styles.expRole}>{exp.role}</h3>
-                    <span className={styles.expTag}>
-                      {exp.isJourney ? "Journey" : "Full-Time"}
-                    </span>
+            {profile.experience.map((exp) => {
+              const isExpanded = !!expandedExperience[exp.key];
+              return (
+                <div key={exp.key} className={`${styles.expCard} glass-card`}>
+                  <div className={styles.expHeader}>
+                    <div className={styles.expRoleRow}>
+                      <h3 className={styles.expRole}>{exp.role}</h3>
+                      <span className={styles.expTag}>
+                        {exp.isJourney ? "Journey" : "Full-Time"}
+                      </span>
+                    </div>
+                    <div className={styles.expCompanyMeta}>
+                      <span style={{ fontWeight: 700, color: "var(--heading-color)" }}>{exp.company}</span>
+                      <span className={styles.expMetaItem}>
+                        <Calendar size={12} style={{ color: "var(--foreground-dim)" }} />
+                        {exp.period}
+                      </span>
+                      <span className={styles.expMetaItem}>
+                        <MapPin size={12} style={{ color: "var(--foreground-dim)" }} />
+                        {exp.location}
+                      </span>
+                    </div>
                   </div>
-                  <div className={styles.expCompanyMeta}>
-                    <span style={{ fontWeight: 700, color: "var(--heading-color)" }}>{exp.company}</span>
-                    <span className={styles.expMetaItem}>
-                      <Calendar size={12} style={{ color: "var(--foreground-dim)" }} />
-                      {exp.period}
-                    </span>
-                    <span className={styles.expMetaItem}>
-                      <MapPin size={12} style={{ color: "var(--foreground-dim)" }} />
-                      {exp.location}
-                    </span>
-                  </div>
-                </div>
 
-                {!exp.isJourney ? (
-                  <ul className={styles.expBulletList}>
-                    {exp.details.slice(0, 4).map((bullet, i) => (
-                      <li key={i} dangerouslySetInnerHTML={{ __html: bullet.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}></li>
-                    ))}
-                  </ul>
-                ) : (
-                  <ul className={styles.expBulletList}>
-                    {exp.roles.map((subRole, idx) => (
-                      <li key={idx}>
-                        <strong>{subRole.title}</strong> ({subRole.period})
-                        <div style={{ fontSize: "0.8rem", marginTop: "0.25rem", color: "var(--foreground-dim)" }}>
-                          {subRole.details[0]}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+                  <div className={styles.expDetailsWrapper}>
+                    {!isExpanded ? (
+                      <p className={styles.expCollapsedSummary}>
+                        {exp.description}
+                      </p>
+                    ) : (
+                      <div className={styles.expExpandedDetails}>
+                        {!exp.isJourney ? (
+                          <ul className={styles.expBulletList}>
+                            {exp.details.slice(0, 4).map((bullet, i) => (
+                              <li key={i} dangerouslySetInnerHTML={{ __html: bullet.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}></li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <ul className={styles.expBulletList}>
+                            {exp.roles.map((subRole, idx) => (
+                              <li key={idx}>
+                                <strong>{subRole.title}</strong> ({subRole.period})
+                                <div style={{ fontSize: "0.8rem", marginTop: "0.25rem", color: "var(--foreground-dim)" }}>
+                                  {subRole.details[0]}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => setExpandedExperience(prev => ({ ...prev, [exp.key]: !prev[exp.key] }))}
+                    className={styles.toggleDetailsBtn}
+                  >
+                    <span>{isExpanded ? "Hide Details" : "Show Details"}</span>
+                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </section>
 
         {/* PROJECTS */}
         <section id="projects" className={styles.section}>
           <h2 className={styles.sectionTitle}>Featured Projects</h2>
-          <div className={styles.projectsGrid}>
-            {projectsData.map((proj, idx) => (
-              <div key={idx} className={`${styles.projectCard} glass-card`}>
-                <div className={styles.projHeader}>
-                  <span style={{ fontSize: "0.75rem", color: "var(--primary)", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
-                    {proj.client}
-                  </span>
-                  <div className={styles.projIconBg}>
-                    <Briefcase size={16} />
-                  </div>
-                </div>
-                <h3 className={styles.projTitle}>{proj.title}</h3>
-                <p className={styles.projDesc}>{proj.description}</p>
-                
-                {proj.impact && (
-                  <div className={styles.impactBadge}>
-                    <span className={styles.impactLabel}>IMPACT:</span>
-                    <span className={styles.impactVal}>{proj.impact}</span>
-                  </div>
-                )}
+          <div className={styles.carousel}>
+            <button className={styles.recNavBtn} onClick={() => setActiveProjectIndex((prev) => (prev - 1 + projectsData.length) % projectsData.length)} aria-label="Previous Project">
+              <ChevronLeft size={16} />
+            </button>
 
-                <div className={styles.projTags}>
-                  {proj.tags.slice(0, 3).map((tag, tIdx) => (
-                    <span key={tIdx} className={styles.projTag}>{tag}</span>
-                  ))}
-                </div>
-              </div>
+            <div className={`${styles.projectCard} ${styles.projectCarouselCard} glass-card`}>
+              {(() => {
+                const proj = projectsData[activeProjectIndex];
+                return (
+                  <div key={activeProjectIndex} className={styles.projCardContent}>
+                    <div className={styles.projHeader}>
+                      <span style={{ fontSize: "0.75rem", color: "var(--primary)", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
+                        {proj.client}
+                      </span>
+                      <div className={styles.projIconBg}>
+                        <Briefcase size={16} />
+                      </div>
+                    </div>
+                    <h3 className={styles.projTitle}>{proj.title}</h3>
+                    <p className={styles.projDesc}>{proj.description}</p>
+                    
+                    {proj.impact && (
+                      <div className={styles.impactBadge}>
+                        <span className={styles.impactLabel}>IMPACT:</span>
+                        <span className={styles.impactVal}>{proj.impact}</span>
+                      </div>
+                    )}
+
+                    <div className={styles.projTags}>
+                      {proj.tags.slice(0, 4).map((tag, tIdx) => (
+                        <span key={tIdx} className={styles.projTag}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+
+            <button className={styles.recNavBtn} onClick={() => setActiveProjectIndex((prev) => (prev + 1) % projectsData.length)} aria-label="Next Project">
+              <ChevronRight size={16} />
+            </button>
+          </div>
+
+          <div className={styles.indicators}>
+            {projectsData.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveProjectIndex(idx)}
+                className={`${styles.indicatorDot} ${activeProjectIndex === idx ? styles.indicatorDotActive : ""}`}
+                aria-label={`Go to project ${idx + 1}`}
+              />
             ))}
           </div>
         </section>
@@ -479,34 +542,47 @@ export default function MobileLayout() {
         <section className={styles.section} style={{ paddingBottom: "5rem" }}>
           <h2 className={styles.sectionTitle}>Recommendations</h2>
           {recommendations.length > 0 && (
-            <div className={styles.carousel}>
-              <button className={styles.recNavBtn} onClick={handlePrevRec} aria-label="Previous">
-                <ChevronLeft size={16} />
-              </button>
+            <>
+              <div className={styles.carousel}>
+                <button className={styles.recNavBtn} onClick={handlePrevRec} aria-label="Previous">
+                  <ChevronLeft size={16} />
+                </button>
 
-              <div className={`${styles.recCard} glass-card`}>
-                <div className={styles.quoteHeader}>
-                  <Quote className={styles.quoteIcon} size={24} />
-                  <div className={styles.recUser}>
-                    <h4 className={styles.recName}>{recommendations[recIndex].name}</h4>
-                    <span className={styles.recTitle}>{recommendations[recIndex].title}</span>
-                    <span className={styles.recTag}>{recommendations[recIndex].relation}</span>
+                <div className={`${styles.recCard} glass-card`}>
+                  <div className={styles.quoteHeader}>
+                    <Quote className={styles.quoteIcon} size={24} />
+                    <div className={styles.recUser}>
+                      <h4 className={styles.recName}>{recommendations[recIndex].name}</h4>
+                      <span className={styles.recTitle}>{recommendations[recIndex].title}</span>
+                      <span className={styles.recTag}>{recommendations[recIndex].relation}</span>
+                    </div>
+                  </div>
+                  <p className={styles.quoteText}>&quot;{recommendations[recIndex].text}&quot;</p>
+                  <div className={styles.recFooter}>
+                    <span>{recommendations[recIndex].date}</span>
+                    <span style={{ display: "flex", alignItems: "center" }}>
+                      <MessageSquare size={10} style={{ color: "var(--secondary)", marginRight: "0.2rem" }} />
+                      LinkedIn Rec
+                    </span>
                   </div>
                 </div>
-                <p className={styles.quoteText}>"{recommendations[recIndex].text}"</p>
-                <div className={styles.recFooter}>
-                  <span>{recommendations[recIndex].date}</span>
-                  <span style={{ display: "flex", alignItems: "center" }}>
-                    <MessageSquare size={10} style={{ color: "var(--secondary)", marginRight: "0.2rem" }} />
-                    LinkedIn Rec
-                  </span>
-                </div>
+
+                <button className={styles.recNavBtn} onClick={handleNextRec} aria-label="Next">
+                  <ChevronRight size={16} />
+                </button>
               </div>
 
-              <button className={styles.recNavBtn} onClick={handleNextRec} aria-label="Next">
-                <ChevronRight size={16} />
-              </button>
-            </div>
+              <div className={styles.indicators}>
+                {recommendations.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setRecIndex(idx)}
+                    className={`${styles.indicatorDot} ${recIndex === idx ? styles.indicatorDotActive : ""}`}
+                    aria-label={`Go to recommendation ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </section>
       </main>
