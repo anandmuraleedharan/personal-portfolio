@@ -47,8 +47,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - **Host:** `<subdomain>`
   - **Target:** `cname.vercel-dns.com`
 
-
-
-
-
+## Supabase CLI Access & Authentication
+- **CLI Authentication:** The Supabase CLI is fully logged in and authenticated on this machine using a persistent Personal Access Token stored in `~/.config/supabase/access-token`.
+- **Database Projects:** You have full CLI access to manage database projects (such as `portfolio-analytics`, ID: `rrftgydknlnruhbfmzdu`) directly using `npx supabase` commands without needing any login or environment variables. Do NOT tell the user that you do not have Supabase access.
 
