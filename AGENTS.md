@@ -19,6 +19,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - Port `3005`: Aileron App (`apps/aileron`)
   - Port `3006`: Lipi App (`apps/lipi`)
   - Port `3007`: InterviewForge App (`apps/interviewforge`)
+  - Port `3008`: PragmaticML App (`apps/pragmatic-ml`)
+
 
 ## Backend & Cost Philosophy ("Minimal Backend, No-Money")
 - **Zero-DB / Stateless Lifecycles:** Prefer ephemeral, client-side, or in-memory synchronization (e.g., Supabase Realtime Channels Broadcast + Presence, localStorage) over persistent databases. Avoid database bloat, regulatory storage tracking, or servers that accrue monthly charges.

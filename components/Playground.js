@@ -76,6 +76,15 @@ export default function Playground() {
       url: "https://interviewforge.anandmuraleedharan.com",
       icon: <Sparkles size={22} className={styles.iconBlue} />,
       status: "Active"
+    },
+    {
+      title: "PragmaticML",
+      subtitle: "The Anti-LLM Playbook",
+      description: "Comprehensive study curriculum and architectural reference for right-sized machine learning. Master the classical algorithms, graph models, and specialized encoders that beat LLMs on cost and latency.",
+      badges: ["Next.js 16", "TypeScript", "Mermaid.js", "KaTeX", "Tailwind CSS v4"],
+      url: "https://ml.anandmuraleedharan.com",
+      icon: <Cpu size={22} className={styles.iconCyan || styles.iconBlue} />,
+      status: "Active"
     }
   ]);
 
@@ -105,11 +114,15 @@ export default function Playground() {
           if (app.title === "InterviewForge") {
             return { ...app, url: "http://localhost:3007" };
           }
+          if (app.title === "PragmaticML") {
+            return { ...app, url: "http://localhost:3008" };
+          }
           return app;
         }));
       }
     }
   }, []);
+
 
   return (
     <section id="playground" className="section">

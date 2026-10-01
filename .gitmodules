@@ -22,3 +22,8 @@
 	path = apps/interviewforge
 	url = ./apps/interviewforge
 
+[submodule "apps/pragmatic-ml"]
+	path = apps/pragmatic-ml
+	url = ./apps/pragmatic-ml
+
+

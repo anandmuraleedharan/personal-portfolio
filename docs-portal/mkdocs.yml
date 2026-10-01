@@ -50,4 +50,6 @@ nav:
     - Aileron Flywheel: apps/aileron.md
     - Visitor Analytics: apps/analytics.md
     - InterviewForge: apps/interviewforge.md
+    - PragmaticML: apps/pragmatic-ml.md
   - Tech Stack & Cost: cost_breakdown.md
+

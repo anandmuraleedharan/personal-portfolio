@@ -22,7 +22,8 @@ personal-portfolio/ (Main Repo)
     ├── pdfforge/              # "PDFForge" PDF Editor & Chat
     ├── aileron/               # "Aileron" SQL Prompt Flywheel
     ├── lipi/                  # "Lipi" Malayalam Suite & Game
-    └── interviewforge/         # "InterviewForge" AI Coach & Resume Prep
+    ├── interviewforge/        # "InterviewForge" AI Coach & Resume Prep
+    └── pragmatic-ml/          # "PragmaticML" Right-Sized ML & Anti-LLM Engine
 ```
 
 ---
@@ -43,6 +44,8 @@ When running the entire workspace concurrently via `npm run dev:all`, services a
 | **Aileron Backend** | `8005` | `apps/aileron/backend` | FastAPI Python, SQLite, DSPy |
 | **Lipi** | `3006` | `apps/lipi` | Vite, Vanilla JS, Speech Synthesis |
 | **InterviewForge** | `3007` | `apps/interviewforge` | Next.js 16, Gemini 2.5, Web Speech |
+| **PragmaticML** | `3008` | `apps/pragmatic-ml` | Next.js 16, Mermaid, KaTeX |
+
 
 > [!NOTE]
 > The **Visitor Analytics Dashboard** (`/analytics`) is built directly into the **Portfolio Hub** on port `3000` rather than running as a standalone server submodule.
