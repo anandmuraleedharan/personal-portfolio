@@ -3,13 +3,13 @@
 	url = https://github.com/anandmuraleedharan/newsletter-generator.git
 [submodule "apps/cogpoker"]
 	path = apps/cogpoker
-	url = ./apps/cogpoker
+	url = https://github.com/anandmuraleedharan/cogpoker.git
 [submodule "apps/codeforge"]
 	path = apps/codeforge
 	url = https://github.com/anandmuraleedharan/codeforge.git
 [submodule "apps/pdfforge"]
 	path = apps/pdfforge
-	url = ./apps/pdfforge
+	url = https://github.com/anandmuraleedharan/pdfforge.git
 [submodule "apps/aileron"]
 	path = apps/aileron
 	url = https://github.com/anandmuraleedharan/aileron.git
@@ -20,7 +20,7 @@
 
 [submodule "apps/interviewforge"]
 	path = apps/interviewforge
-	url = ./apps/interviewforge
+	url = https://github.com/anandmuraleedharan/interviewforge.git
 
 [submodule "apps/pragmatic-ml"]
 	path = apps/pragmatic-ml

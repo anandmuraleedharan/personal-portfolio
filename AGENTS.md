@@ -49,7 +49,20 @@ This version has breaking changes — APIs, conventions, and file structure may 
   - **Host:** `<subdomain>`
   - **Target:** `cname.vercel-dns.com`
 
+## Mandatory New App Registration & Deployment Lifecycle
+Whenever any new app or micro-project is added to `apps/` or modified:
+1. **Developer Playground & Apps Page (`/apps`):** ALWAYS add an entry to `components/Playground.js` (which powers both the `/apps` route and the homepage playground section) with `title`, `subtitle`, `description`, `badges`, `url`, `icon`, `status`, and the local development port mapping in `useEffect`.
+2. **Interactive Architecture Visualizer:** ALWAYS add an entry to `app/architecture/page.js` with interactive SVG nodes, data-flow links, simulation steps, and telemetry HUD metrics.
+3. **MkDocs Technical Documentation:** ALWAYS add documentation to `docs-portal/docs/apps/<app-name>.md`, register it in `docs-portal/mkdocs.yml` navigation, and update `docs-portal/docs/index.md` tables.
+4. **Git Submodule & Standalone GitHub Repo:** ALWAYS create a standalone public GitHub repository (`https://github.com/anandmuraleedharan/<app-name>.git`), configure it in `.gitmodules` with its canonical GitHub HTTPS URL, push the standalone repo to GitHub, and commit the submodule pointer in the root monorepo.
+5. **Vercel Custom Domain & Spaceship DNS:** ALWAYS add the custom domain via `npx vercel domains add <subdomain>.anandmuraleedharan.com <app-name>` and remind the user of the Spaceship CNAME record (`Host: <subdomain>, Target: cname.vercel-dns.com`).
+6. **Triple Production Deployment Mandate:** ALWAYS deploy all three affected surfaces to Vercel production:
+   - The sub-app itself: `cd apps/<app-name> && npx vercel --prod --yes`
+   - The documentation portal: `cd docs-portal && npx vercel --prod --yes`
+   - The **main portfolio monorepo**: `npx vercel --prod --yes` in root so that `anandmuraleedharan.com`, `/apps`, and `/architecture` immediately reflect the new app in production.
+
 ## Supabase CLI Access & Authentication
 - **CLI Authentication:** The Supabase CLI is fully logged in and authenticated on this machine using a persistent Personal Access Token stored in `~/.config/supabase/access-token`.
 - **Database Projects:** You have full CLI access to manage database projects (such as `portfolio-analytics`, ID: `rrftgydknlnruhbfmzdu`) directly using `npx supabase` commands without needing any login or environment variables. Do NOT tell the user that you do not have Supabase access.
+
 
