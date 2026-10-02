@@ -82,7 +82,7 @@ export default function Playground() {
       subtitle: "The Anti-LLM Playbook",
       description: "Comprehensive study curriculum and architectural reference for right-sized machine learning. Master the classical algorithms, graph models, and specialized encoders that beat LLMs on cost and latency.",
       badges: ["Next.js 16", "TypeScript", "Mermaid.js", "KaTeX", "Tailwind CSS v4"],
-      url: "https://ml.anandmuraleedharan.com",
+      url: "https://pragmatic-ml.anandmuraleedharan.com",
       icon: <Cpu size={22} className={styles.iconCyan || styles.iconBlue} />,
       status: "Active"
     }

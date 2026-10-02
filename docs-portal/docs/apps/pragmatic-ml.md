@@ -37,7 +37,7 @@
 * **Diagram Engine:** Mermaid.js client-side rendering
 * **Math Typesetting:** KaTeX (`katex.renderToString`)
 * **Local Port Mapping:** `3008` (`http://localhost:3008`)
-* **Target Subdomain:** `https://ml.anandmuraleedharan.com` (or `https://pragmatic-ml.anandmuraleedharan.com`)
+* **Production Domain:** `https://pragmatic-ml.anandmuraleedharan.com`
 
 ---
 
@@ -51,11 +51,11 @@ npx vercel --prod --yes
 
 ### 2. Custom Subdomain Binding
 ```bash
-npx vercel domains add ml.anandmuraleedharan.com pragmatic-ml
+npx vercel domains add pragmatic-ml.anandmuraleedharan.com pragmatic-ml
 ```
 
 ### 3. Spaceship DNS Configuration
 Add a DNS CNAME record in Spaceship DNS:
-* **Host:** `ml`
+* **Host:** `pragmatic-ml`
 * **Type:** `CNAME`
 * **Target:** `cname.vercel-dns.com`

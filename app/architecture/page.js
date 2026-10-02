@@ -825,6 +825,85 @@ export async function POST(request) {
       ],
       resilience: "Integrates automatic LLM model failover from Gemini 2.5 to OpenRouter Llama 3.3, ensuring uninterrupted mock interview sessions during API rate limits."
     }
+  },
+  pragmaticml: {
+    title: "PragmaticML",
+    subtitle: "The Anti-LLM Playbook & Architectural Manual",
+    description: "An educational curriculum, decision catalogue, and architectural reference for right-sized machine learning. Master classical algorithms, graph models, and specialized encoders that beat LLMs on cost and latency with deterministic guarantees.",
+    badges: ["Next.js 16", "TypeScript", "Mermaid.js", "KaTeX", "Tailwind CSS v4"],
+    patterns: [
+      {
+        name: "Config-Driven Modular Schema",
+        desc: "Curriculum pillars, formulas, code recipes, and diagrams are declared via strongly-typed TypeScript registries, enabling zero-latency Static Site Generation (SSG)."
+      },
+      {
+        name: "Right-Sized Model Prescription Engine",
+        desc: "Diagnostics filter problem domain, latency budget (<5ms), and data volume to prescribe classical SOTA models (GLiNER, BM25, PageRank) over costly generative LLMs."
+      },
+      {
+        name: "7-Stage Interactive Carousel Deck",
+        desc: "Mobile-first slide deck breaking complex ML concepts into Intuition, SVG Architecture Diagrams, KaTeX Mathematics, Bounds, Code Recipes, and Principal System Design Interviews."
+      }
+    ],
+    nodes: [
+      { id: 0, label: "Engineer / UI", sublabel: "Constraint Input", x: 50, y: 110, w: 100, h: 50 },
+      { id: 1, label: "Decision Engine", sublabel: "SLA Matcher", x: 195, y: 110, w: 105, h: 50 },
+      { id: 2, label: "Curriculum SSG", sublabel: "10 Pillars", x: 340, y: 50, w: 105, h: 50 },
+      { id: 3, label: "Interactive Deck", sublabel: "7-Stage Carousel", x: 340, y: 170, w: 115, h: 50 },
+      { id: 4, label: "KaTeX & SVG", sublabel: "Math & Arch", x: 495, y: 50, w: 100, h: 50 },
+      { id: 5, label: "Executive Sheet", sublabel: "Print Matrix", x: 495, y: 170, w: 105, h: 50 }
+    ],
+    links: [
+      { from: 0, to: 1, path: "M 100 110 L 195 110" },
+      { from: 1, to: 2, path: "M 300 110 L 340 50" },
+      { from: 1, to: 3, path: "M 300 110 L 340 170" },
+      { from: 2, to: 4, path: "M 445 50 L 495 50" },
+      { from: 3, to: 5, path: "M 455 170 L 495 170" }
+    ],
+    simulationSteps: [
+      { nodeIds: [0], activeLink: -1, status: "ML Engineer inputs system design constraints (SLA < 5ms, zero labels, high throughput)." },
+      { nodeIds: [1], activeLink: 0, status: "Decision engine evaluates criteria and prescribes right-sized classical SOTA pipeline." },
+      { nodeIds: [2], activeLink: 1, status: "Loads statically generated pillar curriculum and architectural blueprint." },
+      { nodeIds: [4], activeLink: 3, status: "Renders KaTeX mathematical loss objectives and responsive SVG data-flow diagram." },
+      { nodeIds: [5], activeLink: 4, status: "Generates executive cheat-sheet with Big-O bounds and zero-cost CPU trade-offs." }
+    ],
+    code: `// Decision Engine: Anti-LLM Prescription Rule
+export function evaluateArchitectureConstraints(domain, latencySLA, dataSize) {
+  if (domain === "ner" && latencySLA <= 20) {
+    return {
+      prescribedModel: "GLiNER (Zero-shot Bi-Encoder)",
+      antiPatternLLM: "Prompting 70B LLM with JSON schema",
+      latencyP99: "15ms (CPU)",
+      costRatio: "100% Free / CPU ($0.00)",
+      failureModePrevented: "JSON schema drift & character offset hallucinations"
+    };
+  }
+
+  if (domain === "search" && latencySLA <= 5) {
+    return {
+      prescribedModel: "Okapi BM25 Sparse Inverted Index",
+      antiPatternLLM: "Full-text vector search or LLM doc scan",
+      latencyP99: "0.8ms (CPU)",
+      costRatio: "100% Free / In-Memory ($0.00)",
+      failureModePrevented: "Token subword blur & exact part number mismatch"
+    };
+  }
+}`,
+    docs: {
+      overview: "PragmaticML is an educational platform and architectural manual built to counteract LLM over-engineering. It equips Principal ML Engineers with right-sized, classical, and specialized algorithms that execute deterministically on CPUs with sub-5ms latencies and zero API overhead.",
+      systemFlow: [
+        { step: "1. Diagnostic Input", detail: "Engineer inputs task domain, latency budget (<5ms), and labeled training data size." },
+        { step: "2. Decision Engine Mapping", detail: "Matches constraints to classical SOTA alternatives (GLiNER, BM25, PageRank, Dijkstra, XGBoost)." },
+        { step: "3. SSG Curriculum Prerender", detail: "Next.js 16 pre-renders 10 curriculum pillars at build time with 0ms server latency." },
+        { step: "4. Multi-Stage Visual Deck", detail: "Interactive 7-stage carousel breaks down intuition, math, architecture, and code." },
+        { step: "5. Executive Cheat-Sheet", detail: "Printable reference matrix comparing Big-O complexity, mathematical loss objectives, and TCO." }
+      ],
+      stateStorage: [
+        { key: "TypeScript Registry", type: "Compile-Time Schema", purpose: "Decouples mathematical formulas, diagrams, and interview questions from UI components." },
+        { key: "Stateless Filter States", type: "React State", purpose: "Filters 10 pillars and diagnostic decision rules in memory without server calls." }
+      ],
+      resilience: "100% deterministic execution on micro-instances or edge runtimes with zero external AI API dependencies or cloud database failure modes."
+    }
   }
 };
 
@@ -1062,7 +1141,8 @@ export default function ArchitecturePage() {
     portfolio: { volume: isTrafficSpike ? "500 Req / min (Spike!)" : "45 Req / min", latency: "<150ms Gemini Chat", health: isChaosFailover ? "Failover: Regex Engine" : "Gemini 2.5 Flash", sla: "Stateless Session Cache" },
     aileron: { volume: "FastAPI + DSPy Flywheel", latency: "~350ms SQL Trace", health: "SQLite + Supabase DB", sla: "Circuit Breaker Active" },
     analytics: { volume: "Vercel Edge Headers", latency: "<8ms FIFO Pruning", health: "Crypto TOTP Gate", sla: "Strict 100-Row Limit" },
-    interviewforge: { volume: "Web Speech STT/TTS", latency: "~850ms Gemini AI", health: isChaosFailover ? "Failover: Llama 3.3" : "Gemini 2.5 Active", sla: "Stateless PDF Export" }
+    interviewforge: { volume: "Web Speech STT/TTS", latency: "~850ms Gemini AI", health: isChaosFailover ? "Failover: Llama 3.3" : "Gemini 2.5 Active", sla: "Stateless PDF Export" },
+    pragmaticml: { volume: "10 Curriculum Pillars", latency: "<5ms Classical P99", health: "Deterministic CPU SOTA", sla: "Zero-GPU Cost ($0.00)" }
   };
 
   const hudData = TELEMETRY_HUD[activeTab] || TELEMETRY_HUD.dailyread;
@@ -1248,6 +1328,13 @@ export default function ArchitecturePage() {
               >
                 <Sparkles size={16} />
                 <span>InterviewForge</span>
+              </button>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'pragmaticml' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('pragmaticml')}
+              >
+                <Cpu size={16} />
+                <span>PragmaticML</span>
               </button>
             </div>
 

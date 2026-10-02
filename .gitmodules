@@ -24,6 +24,6 @@
 
 [submodule "apps/pragmatic-ml"]
 	path = apps/pragmatic-ml
-	url = ./apps/pragmatic-ml
+	url = https://github.com/anandmuraleedharan/pragmatic-ml.git
 
 
